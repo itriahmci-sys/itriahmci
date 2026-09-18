@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>日本特定健診・保健指導制度流程圖</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #fffbeb 50%, #f0fff4 100%);
+    font-family: 'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif;
+  }
+  h1 { text-align:center; color:#1a202c; font-size:1.4em; margin:0 0 4px; letter-spacing:.03em; }
+  .subtitle { text-align:center; color:#718096; font-size:12px; margin:0 0 14px; }
+  .wrap { background:white; border-radius:16px; padding:26px 20px 18px;
+          box-shadow:0 6px 32px rgba(0,0,0,.11); overflow-x:auto; }
+  svg text { font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif; }
+  .legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:10px;
+            justify-content:center; font-size:12px; color:#4a5568; }
+  .li { display:flex; align-items:center; gap:5px; }
+  .lb { width:16px; height:11px; border-radius:3px; flex-shrink:0; }
+  .lline { width:28px; height:3px; border-radius:2px; flex-shrink:0; }
+
+  :root{ --info-accent:#e0577a; --info-accent-dark:#c53030; --info-tint1:#fff5f5; --info-tint2:#fed7e2; }
+  .info-section{ max-width:1150px; margin:30px auto 0; }
+  .info-intro{
+    background:linear-gradient(135deg, var(--info-tint1), var(--info-tint2));
+    border-radius:16px; padding:20px 22px; margin-bottom:20px;
+    font-size:13.5px; line-height:1.95; color:#33344a; box-shadow:0 4px 14px rgba(0,0,0,.05);
+  }
+  .info-h2{ font-size:1.2em; color:#1a202c; margin:0 0 16px; display:flex; align-items:center; gap:9px; font-weight:800; }
+  .info-h2 .bar{ width:6px; height:22px; border-radius:3px; background:var(--info-accent); display:inline-block; }
+  .info-block{ margin-bottom:24px; }
+  .info-block-title{ font-size:1.03em; font-weight:800; color:var(--info-accent-dark); margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .info-card{ background:#fff; border:1px solid #f0eaea; border-left:4px solid var(--info-accent); border-radius:10px; padding:14px 16px; font-size:12.8px; line-height:1.8; color:#4a5568; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .info-card b, .info-card strong{ color:#1a202c; }
+  .k-num{ display:inline-block; background:var(--info-tint2); color:var(--info-accent-dark); font-weight:800; padding:1px 8px; border-radius:999px; font-size:11.5px; }
+  .info-stats{ display:flex; flex-wrap:wrap; gap:12px; margin:16px 0 4px; }
+  .stat-pill{ flex:1 1 150px; background:linear-gradient(135deg,var(--info-accent),var(--info-accent-dark)); color:#fff; border-radius:12px; padding:14px 14px; text-align:center; box-shadow:0 4px 12px rgba(197,48,48,.25); }
+  .stat-pill .num{ font-size:1.35em; font-weight:800; display:block; }
+  .stat-pill .lab{ font-size:11px; opacity:.92; }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+<h1>日本特定健診・保健指導制度 ── 資金與服務流向圖</h1>
+<p class="subtitle">以醫療保險者為核心的代謝症候群預防管理機制</p>
+<div class="wrap">
+<svg viewBox="0 0 1160 780" style="width:100%;max-width:1160px;display:block;margin:auto;"
+     xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- END arrowheads per source colour -->
+  <marker id="ae-navy"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#1a365d"/></marker>
+  <marker id="ae-blue"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#2c5282"/></marker>
+  <marker id="ae-teal"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#285e61"/></marker>
+  <marker id="ae-red"    markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#9b2c2c"/></marker>
+  <marker id="ae-purple" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#553c9a"/></marker>
+  <marker id="ae-orange" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#c05621"/></marker>
+  <marker id="ae-green"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#22543d"/></marker>
+  <!-- Drop shadow -->
+  <filter id="sh" x="-12%" y="-18%" width="124%" height="148%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#00000030"/>
+  </filter>
+  <!-- Hub glow: Insurer -->
+  <filter id="glow-r" x="-18%" y="-22%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#c5303066"/>
+  </filter>
+  <!-- MedInst glow -->
+  <filter id="glow-g" x="-14%" y="-18%" width="128%" height="148%">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#22543d55"/>
+  </filter>
+</defs>
+
+<!-- ═══════════════ ZONE BACKGROUNDS ═══════════════ -->
+
+<!-- 政府行政層 (top-left band: State + Municipality) -->
+<rect x="60" y="52" width="270" height="308" rx="14"
+      fill="#eff6ff" stroke="#2b6cb0" stroke-width="1.8" stroke-dasharray="8,4" opacity=".85"/>
+<text x="78" y="74" font-size="11.5" fill="#1a365d" font-weight="bold">🏛  政府・行政層</text>
+
+<!-- 都道府縣 (top-right: Prefecture solo) -->
+<rect x="808" y="52" width="296" height="102" rx="14"
+      fill="#ebf8ff" stroke="#2c5282" stroke-width="1.8" stroke-dasharray="8,4" opacity=".85"/>
+<text x="826" y="74" font-size="11.5" fill="#2c5282" font-weight="bold">🗾  都道府縣</text>
+
+<!-- 被保險者層 (lower-left: Employer + Individual) -->
+<rect x="60" y="432" width="680" height="120" rx="14"
+      fill="#faf5ff" stroke="#553c9a" stroke-width="1.8" stroke-dasharray="8,4" opacity=".85"/>
+<text x="78" y="454" font-size="11.5" fill="#553c9a" font-weight="bold">👥  被保險者層</text>
+
+<!-- 服務提供端 (bottom) -->
+<rect x="60" y="610" width="540" height="146" rx="14"
+      fill="#f0fff4" stroke="#22543d" stroke-width="1.8" stroke-dasharray="8,4" opacity=".85"/>
+<text x="78" y="632" font-size="11.5" fill="#22543d" font-weight="bold">🏥  醫療・健診機構</text>
+
+<!-- ═══════════════ ARROWS ═══════════════ -->
+
+<!-- 1. State → Insurer: 後期高齡者支援金加減算 (10%獎懲) -->
+<path d="M296,92 C430,92 470,188 470,262"
+      stroke="#1a365d" stroke-width="2.2" fill="none" marker-end="url(#ae-navy)"/>
+<rect x="302" y="138" width="130" height="44" rx="4" fill="#eff6ff" opacity=".95"/>
+<text x="367" y="152" text-anchor="middle" font-size="9.5" fill="#1a365d">後期高齡者支援金</text>
+<text x="367" y="165" text-anchor="middle" font-size="9.5" fill="#1a365d">加減算</text>
+<text x="367" y="177" text-anchor="middle" font-size="9" fill="#2c5282" font-weight="bold">(10% 獎懲機制)</text>
+
+<!-- 2. State → Municipality: 1/3 補助 -->
+<line x1="195" y1="120" x2="195" y2="250"
+      stroke="#1a365d" stroke-width="2.2" marker-end="url(#ae-navy)"/>
+<rect x="200" y="174" width="118" height="28" rx="4" fill="#eff6ff" opacity=".95"/>
+<text x="259" y="186" text-anchor="middle" font-size="9.5" fill="#1a365d">1/3 實施</text>
+<text x="259" y="198" text-anchor="middle" font-size="9.5" fill="#1a365d">經費補助</text>
+
+<!-- 3. Prefecture → Municipality: 1/3 補助 (route over top) -->
+<path d="M956,52 C956,16 195,16 195,250"
+      stroke="#2c5282" stroke-width="2" fill="none" stroke-dasharray="7,3" marker-end="url(#ae-blue)"/>
+<rect x="488" y="8" width="166" height="28" rx="4" fill="#ebf8ff" opacity=".95"/>
+<text x="571" y="20" text-anchor="middle" font-size="9.5" fill="#2c5282">都道府縣：1/3 實施經費補助</text>
+<text x="571" y="32" text-anchor="middle" font-size="9" fill="#2c5282">(針對市町村國保)</text>
+
+<!-- 4. Employer → Insurer: 1/2 保費 -->
+<path d="M296,490 C400,490 470,400 470,330"
+      stroke="#553c9a" stroke-width="2.2" fill="none" marker-end="url(#ae-purple)"/>
+<rect x="310" y="390" width="108" height="28" rx="4" fill="#faf5ff" opacity=".95"/>
+<text x="364" y="402" text-anchor="middle" font-size="9.5" fill="#553c9a">負擔約 1/2</text>
+<text x="364" y="414" text-anchor="middle" font-size="9.5" fill="#553c9a">保費</text>
+
+<!-- 5. Employer → MedInst: 職場勞安健診費 -->
+<path d="M195,552 C195,622 268,640 268,642"
+      stroke="#553c9a" stroke-width="2" fill="none" marker-end="url(#ae-purple)"/>
+<rect x="110" y="578" width="132" height="28" rx="4" fill="#faf5ff" opacity=".95"/>
+<text x="176" y="590" text-anchor="middle" font-size="9.5" fill="#553c9a">支付職場</text>
+<text x="176" y="602" text-anchor="middle" font-size="9.5" fill="#553c9a">勞安健診費</text>
+
+<!-- 6. Individual → Insurer: 保費 -->
+<line x1="590" y1="464" x2="590" y2="330"
+      stroke="#c05621" stroke-width="2.2" marker-end="url(#ae-orange)"/>
+<rect x="596" y="380" width="100" height="28" rx="4" fill="#fff8f0" opacity=".95"/>
+<text x="646" y="392" text-anchor="middle" font-size="9.5" fill="#c05621">支付保費</text>
+<text x="646" y="404" text-anchor="middle" font-size="9.5" fill="#c05621">(及自付額)</text>
+
+<!-- 7. Individual → MedInst: 接受檢查與指導 -->
+<path d="M502,552 C472,600 450,630 450,642"
+      stroke="#c05621" stroke-width="2" fill="none" marker-end="url(#ae-orange)"/>
+<rect x="438" y="586" width="120" height="28" rx="4" fill="#fff8f0" opacity=".95"/>
+<text x="498" y="598" text-anchor="middle" font-size="9.5" fill="#c05621">接受檢查</text>
+<text x="498" y="610" text-anchor="middle" font-size="9.5" fill="#c05621">與指導</text>
+
+<!-- 8. Insurer → MedInst: 支付特定健診費 -->
+<path d="M516,330 C488,450 400,540 370,642"
+      stroke="#9b2c2c" stroke-width="2.2" fill="none" marker-end="url(#ae-red)"/>
+<rect x="390" y="462" width="128" height="44" rx="4" fill="#fff5f5" opacity=".95"/>
+<text x="454" y="474" text-anchor="middle" font-size="9.5" fill="#9b2c2c">支付特定健診</text>
+<text x="454" y="486" text-anchor="middle" font-size="9.5" fill="#9b2c2c">與保健指導</text>
+<text x="454" y="498" text-anchor="middle" font-size="9" fill="#9b2c2c">費用</text>
+
+<!-- 9. Insurer → ElderlySystem: 繳納支援金 -->
+<path d="M710,296 C830,296 920,420 940,528"
+      stroke="#9b2c2c" stroke-width="2.2" fill="none" marker-end="url(#ae-red)"/>
+<rect x="774" y="364" width="134" height="44" rx="4" fill="#fff5f5" opacity=".95"/>
+<text x="841" y="376" text-anchor="middle" font-size="9.5" fill="#9b2c2c">繳納後期高齡者</text>
+<text x="841" y="388" text-anchor="middle" font-size="9.5" fill="#9b2c2c">支援金</text>
+<text x="841" y="400" text-anchor="middle" font-size="9" fill="#9b2c2c">(約占 4 成財源)</text>
+
+<!-- 10. Municipality → Insurer: 1/3 實施經費 -->
+<path d="M305,296 L470,296"
+      stroke="#285e61" stroke-width="2.2" fill="none" marker-end="url(#ae-teal)"/>
+<rect x="318" y="278" width="134" height="16" rx="4" fill="#e6fffa" opacity=".95"/>
+<text x="385" y="290" text-anchor="middle" font-size="9.5" fill="#285e61">以保費支應 1/3 實施經費</text>
+
+<!-- ═══════════════ NODES ═══════════════ -->
+
+<!-- State │ 國家/政府 -->
+<rect x="100" y="66" width="190" height="54" rx="11"
+      fill="#1a365d" stroke="#0f2044" stroke-width="1.5" filter="url(#sh)"/>
+<text x="195" y="88" text-anchor="middle" fill="white" font-size="13" font-weight="bold">國家 / 政府</text>
+<text x="195" y="108" text-anchor="middle" fill="#bee3f8" font-size="10">中央財政・政策制定</text>
+
+<!-- Prefecture │ 都道府縣 -->
+<rect x="818" y="66" width="200" height="54" rx="11"
+      fill="#2c5282" stroke="#1a365d" stroke-width="1.5" filter="url(#sh)"/>
+<text x="918" y="88" text-anchor="middle" fill="white" font-size="13" font-weight="bold">都道府縣</text>
+<text x="918" y="108" text-anchor="middle" fill="#bee3f8" font-size="10">Prefecture</text>
+
+<!-- Municipality │ 市町村/地方政府 -->
+<rect x="90" y="250" width="210" height="72" rx="11"
+      fill="#285e61" stroke="#1d4044" stroke-width="1.5" filter="url(#sh)"/>
+<text x="195" y="273" text-anchor="middle" fill="white" font-size="12" font-weight="bold">市町村 / 地方政府</text>
+<text x="195" y="292" text-anchor="middle" fill="#b2f5ea" font-size="10">國保保險者</text>
+<text x="195" y="311" text-anchor="middle" fill="#b2f5ea" font-size="9">負責國民健康保險管理</text>
+
+<!-- Insurer │ 醫療保險者 (CENTRAL HUB) -->
+<rect x="470" y="248" width="240" height="96" rx="13"
+      fill="#c53030" stroke="#9b2c2c" stroke-width="2.5" filter="url(#glow-r)"/>
+<text x="590" y="270" text-anchor="middle" fill="white" font-size="13" font-weight="bold">醫療保險者</text>
+<text x="590" y="290" text-anchor="middle" fill="#fed7e2" font-size="10.5">健保組合・協會健保・國保</text>
+<text x="590" y="308" text-anchor="middle" fill="#feb2b2" font-size="9.5">特定健診・保健指導義務主體</text>
+<text x="590" y="325" text-anchor="middle" fill="#fc8181" font-size="9" font-style="italic">▶  達成率低 → 支援金加算</text>
+
+<!-- Employer │ 雇主/企業 -->
+<rect x="80" y="464" width="230" height="72" rx="11"
+      fill="#553c9a" stroke="#44337a" stroke-width="1.5" filter="url(#sh)"/>
+<text x="195" y="486" text-anchor="middle" fill="white" font-size="12" font-weight="bold">雇主 / 企業</text>
+<text x="195" y="504" text-anchor="middle" fill="#e9d8fd" font-size="10">Employee-side Insurer</text>
+<text x="195" y="521" text-anchor="middle" fill="#d6bcfa" font-size="9">負擔約 1/2 保費 + 勞安健診費</text>
+
+<!-- Individual │ 個人/加入者 -->
+<rect x="490" y="464" width="200" height="72" rx="11"
+      fill="#c05621" stroke="#9c4221" stroke-width="1.5" filter="url(#sh)"/>
+<text x="590" y="486" text-anchor="middle" fill="white" font-size="12" font-weight="bold">個人 / 加入者</text>
+<text x="590" y="504" text-anchor="middle" fill="#feebc8" font-size="10">Insured Individual</text>
+<text x="590" y="521" text-anchor="middle" fill="#fbd38d" font-size="9">保費・部分自付額</text>
+
+<!-- MedInst │ 醫療/健診機構 -->
+<rect x="160" y="648" width="440" height="90" rx="12"
+      fill="#22543d" stroke="#1c4532" stroke-width="2" filter="url(#glow-g)"/>
+<text x="380" y="672" text-anchor="middle" fill="white" font-size="13" font-weight="bold">醫療 / 健診機構</text>
+<text x="380" y="692" text-anchor="middle" fill="#c6f6d5" font-size="10.5">Medical Institutions</text>
+<text x="380" y="710" text-anchor="middle" fill="#9ae6b4" font-size="9.5">執行特定健診・保健指導 / 職場勞安健診</text>
+<text x="380" y="726" text-anchor="middle" fill="#68d391" font-size="9">提供健診數據供保險者使用</text>
+
+<!-- ElderlySystem │ 後期高齡者醫療制度 -->
+<rect x="808" y="528" width="284" height="96" rx="12"
+      fill="#702459" stroke="#521b41" stroke-width="2" filter="url(#sh)"/>
+<text x="950" y="552" text-anchor="middle" fill="white" font-size="12" font-weight="bold">後期高齡者醫療制度</text>
+<text x="950" y="572" text-anchor="middle" fill="#fbb6ce" font-size="10">75 歲以上高齡者醫療體系</text>
+<text x="950" y="590" text-anchor="middle" fill="#fed7e2" font-size="9.5">財源：支援金 + 患者自付 + 公費</text>
+<text x="950" y="608" text-anchor="middle" fill="#feb2b2" font-size="9">保險者按達成率被加減算</text>
+
+<!-- ═══════════════ FLOW ANNOTATIONS ═══════════════ -->
+<!-- 💰 Money flow badge on edge 4 (Employer→Insurer) -->
+<circle cx="370" cy="440" r="10" fill="#553c9a" opacity=".9"/>
+<text x="370" y="444" text-anchor="middle" fill="white" font-size="10" font-weight="bold">¥</text>
+
+<!-- 💰 Money flow badge on edge 6 (Individual→Insurer) -->
+<circle cx="618" cy="398" r="10" fill="#c05621" opacity=".9"/>
+<text x="618" y="402" text-anchor="middle" fill="white" font-size="10" font-weight="bold">¥</text>
+
+<!-- 💰 Money flow badge on edge 9 (Insurer→ElderlySystem) -->
+<circle cx="846" cy="296" r="10" fill="#9b2c2c" opacity=".9"/>
+<text x="846" y="300" text-anchor="middle" fill="white" font-size="10" font-weight="bold">¥</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="lb" style="background:#1a365d"></div>國家政府</div>
+  <div class="li"><div class="lb" style="background:#2c5282"></div>都道府縣</div>
+  <div class="li"><div class="lb" style="background:#285e61"></div>市町村/國保</div>
+  <div class="li"><div class="lb" style="background:#c53030"></div>醫療保險者（核心）</div>
+  <div class="li"><div class="lb" style="background:#553c9a"></div>雇主/企業</div>
+  <div class="li"><div class="lb" style="background:#c05621"></div>個人/加入者</div>
+  <div class="li"><div class="lb" style="background:#22543d"></div>醫療・健診機構</div>
+  <div class="li"><div class="lb" style="background:#702459"></div>後期高齡者醫療制度</div>
+  <div class="li" style="margin-left:10px; color:#718096; font-size:11px">
+    ─── 直接流向 &nbsp; - - - 補助/監管 &nbsp;
+    <span style="background:#553c9a;color:white;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold">¥</span>
+    &nbsp;資金流
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="info-intro">
+    🇯🇵 高齡海嘯步步進逼，日本選擇用「制度的力量」提前攔截代謝症候群。2008 年，日本依據《高齡者醫療之確保相關法律》（通稱「高確法」）正式啟動<strong>特定健診・保健指導制度</strong>，把糖尿病、高血壓等生活習慣病的預防責任，明確交到每一個「醫療保險者」手上──企業健保組合、國民健康保險、共濟組合，一個都不能置身事外。目的很直白：早期揪出代謝症候群預備軍，用前端干預換取中長期健保財政的喘息空間。
+  </div>
+
+  <h2 class="info-h2"><span class="bar"></span>制度說明：從篩檢到給付的完整旅程</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">🔍 特定健康診查與三級風險分層</div>
+      篩檢對象鎖定 <span class="k-num">40–74 歲</span> 的所有醫療保險加入者（被保險者＋被扶養者），檢測項目涵蓋腹圍（男 ≥85cm／女 ≥90cm）、BMI、血糖、血脂、肝功能、尿檢與血壓。依結果精準分三級：<b>資訊提供</b>（低風險，僅提供判讀建議）、<b>動機提升支援</b>（中風險，內臟脂肪型肥滿＋1項追加風險）、<b>積極支援</b>（高風險，肥滿＋2項以上追加風險）。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">💪 特定保健指導：分級介入</div>
+      由醫師、保健師、管理營養士主導，引導對象「自己」訂目標：動機提升支援僅需一次專業指導；積極支援則要 <span class="k-num">3個月以上</span> 持續追蹤（面談、電話、Email、視訊、App 皆可）。2024 年起的第四期新制更引入成果導向──只要達成「腹圍 −2cm ＋ 體重 −2kg」，不論指導次數，直接視為完成（獲得 180 點）。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">💰 給付與財務激勵：支援金加減算</div>
+      這是日本制度最鋒利的政策槓桿。保險者若特定健診／保健指導實施率<b>未達標</b>，國家對其應繳的「後期高齡者支援金」（約佔 75 歲以上長者醫療財源 4 成）加收最多 <span class="k-num">10%</span> 懲罰金；反之執行成效優良者可獲最多 10% 的減免回饋。對個人也設計了誘因：完成指導可獲健康點數（180點）、禮券或商品，健診當天或一週內完成面談還有早期介入加分。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🔗 醫療銜接與排除規則</div>
+      篩檢出極高風險或疑似已患病者，會強制「受診勸獎」轉介就醫；而已在服藥治療高血壓、糖尿病、血脂異常的患者，則直接<b>排除</b>在保健指導對象之外，交由主治醫師管理──劃清界線，避免預防資源與健保給付重複投入。
+    </div>
+  </div>
+
+  <div class="info-stats">
+    <div class="stat-pill"><span class="num">40%+</span><span class="lab">積極支援男性成功改善風險層級</span></div>
+    <div class="stat-pill"><span class="num">56%+</span><span class="lab">積極支援女性成功改善風險層級</span></div>
+    <div class="stat-pill"><span class="num">¥53,014</span><span class="lab">參與者人均醫療費用降幅</span></div>
+    <div class="stat-pill"><span class="num">10%</span><span class="lab">支援金加減算的獎懲上限</span></div>
+  </div>
+</section>
+
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+<a href="../">← 回首頁</a>
+</body>
+</html>

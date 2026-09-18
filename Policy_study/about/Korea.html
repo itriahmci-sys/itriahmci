@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>韓國慢性病管理模式架構圖</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: linear-gradient(135deg, #e8f0fe 0%, #f0fdf4 100%);
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
+  }
+  h1 {
+    text-align: center; color: #1a202c;
+    font-size: 1.4em; margin: 0 0 4px;
+    letter-spacing: 0.03em;
+  }
+  .subtitle {
+    text-align: center; color: #718096; font-size: 12px; margin: 0 0 14px;
+  }
+  .wrap {
+    background: white; border-radius: 16px;
+    padding: 24px 20px 16px;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.10);
+    overflow-x: auto;
+  }
+  svg text { font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif; }
+  .legend {
+    margin-top: 16px;
+    display: flex; flex-wrap: wrap;
+    gap: 10px; justify-content: center;
+    font-size: 12px; color: #4a5568;
+  }
+  .li { display: flex; align-items: center; gap: 5px; }
+  .lb { width: 16px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  .badge { border-radius: 5px; padding: 2px 8px; font-size: 11px; }
+
+  :root{ --info-accent:#8b5fc9; --info-accent-dark:#6b3fa6; --info-tint1:#f6efff; --info-tint2:#e9dcff; }
+  .info-section{ max-width:1150px; margin:30px auto 0; }
+  .info-intro{
+    background:linear-gradient(135deg, var(--info-tint1), #eaf3ff);
+    border-radius:16px; padding:20px 22px; margin-bottom:20px;
+    font-size:13.5px; line-height:1.95; color:#33344a; box-shadow:0 4px 14px rgba(0,0,0,.05);
+  }
+  .info-h2{ font-size:1.2em; color:#1a202c; margin:0 0 16px; display:flex; align-items:center; gap:9px; font-weight:800; }
+  .info-h2 .bar{ width:6px; height:22px; border-radius:3px; background:var(--info-accent); display:inline-block; }
+  .info-block{ margin-bottom:24px; }
+  .info-block-title{ font-size:1.03em; font-weight:800; color:var(--info-accent-dark); margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .info-card{ background:#fff; border:1px solid #f1ecf7; border-left:4px solid var(--info-accent); border-radius:10px; padding:14px 16px; font-size:12.8px; line-height:1.8; color:#4a5568; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .info-card b, .info-card strong{ color:#1a202c; }
+  .k-num{ display:inline-block; background:var(--info-tint2); color:var(--info-accent-dark); font-weight:800; padding:1px 8px; border-radius:999px; font-size:11.5px; }
+  .info-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .info-stats{ display:flex; flex-wrap:wrap; gap:12px; margin:16px 0 4px; }
+  .stat-pill{ flex:1 1 150px; background:linear-gradient(135deg,var(--info-accent),#2b6cb0); color:#fff; border-radius:12px; padding:14px 14px; text-align:center; box-shadow:0 4px 12px rgba(139,95,201,.25); }
+  .stat-pill .num{ font-size:1.35em; font-weight:800; display:block; }
+  .stat-pill .lab{ font-size:11px; opacity:.92; }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+<h1>韓國慢性病整合管理模式（韓國 AX 計畫）</h1>
+<p class="subtitle">以基層診所為核心的多方協作治理架構</p>
+<div class="wrap">
+<svg viewBox="0 0 1150 730" style="width:100%;max-width:1150px;display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Arrowheads -->
+  <marker id="a0"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#3b5998"/></marker>
+  <marker id="a1"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#2b6cb0"/></marker>
+  <marker id="a2"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#22543d"/></marker>
+  <marker id="a3"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#285e61"/></marker>
+  <marker id="a4"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#553c9a"/></marker>
+  <marker id="a5"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#c05621"/></marker>
+  <marker id="a6"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#97266d"/></marker>
+  <marker id="ag"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#718096"/></marker>
+  <!-- Double-head (start) -->
+  <marker id="as" markerWidth="9" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="9 0,0 3.5,9 7" fill="#718096"/></marker>
+  <!-- Node drop shadow -->
+  <filter id="sh" x="-10%" y="-10%" width="120%" height="140%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0003"/>
+  </filter>
+  <!-- Hub glow -->
+  <filter id="glow" x="-15%" y="-15%" width="130%" height="140%">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#22543d55"/>
+  </filter>
+</defs>
+
+<!-- ============================================================ -->
+<!--  ARROWS  (drawn first so nodes sit on top)                   -->
+<!-- ============================================================ -->
+
+<!-- A1. MOHW → NHIS │ 制定國家肥胖/慢病政策與AX計畫 -->
+<path d="M508,83 C450,122 390,142 323,160"
+      stroke="#3b5998" stroke-width="2" fill="none" marker-end="url(#a0)"/>
+<rect x="352" y="103" width="145" height="28" rx="4" fill="#ebf4ff" opacity="0.95"/>
+<text x="424" y="115" text-anchor="middle" font-size="9.5" fill="#2c3e7a">制定國家肥胖/慢病政策</text>
+<text x="424" y="127" text-anchor="middle" font-size="9.5" fill="#2c3e7a">與 AX 計畫</text>
+
+<!-- A2. NHIS → Clinics │ 支付『慢性病管理費』 -->
+<path d="M412,200 C470,255 505,300 510,350"
+      stroke="#2b6cb0" stroke-width="2" fill="none" marker-end="url(#a1)"/>
+<rect x="420" y="246" width="112" height="28" rx="4" fill="#ebf8ff" opacity="0.95"/>
+<text x="476" y="258" text-anchor="middle" font-size="9.5" fill="#1a365d">支付『慢性病</text>
+<text x="476" y="270" text-anchor="middle" font-size="9.5" fill="#1a365d">管理費』</text>
+
+<!-- A3. NHIS → Patient │ 健檢費用/補助金 + 篩檢通知 -->
+<path d="M248,213 C205,370 240,560 436,638"
+      stroke="#2b6cb0" stroke-width="1.8" fill="none" stroke-dasharray="5,2" marker-end="url(#a1)"/>
+<rect x="155" y="370" width="112" height="44" rx="4" fill="#ebf8ff" opacity="0.95"/>
+<text x="211" y="382" text-anchor="middle" font-size="9" fill="#1a365d">負擔健檢費用</text>
+<text x="211" y="394" text-anchor="middle" font-size="9" fill="#1a365d">發放補助金點數</text>
+<text x="211" y="406" text-anchor="middle" font-size="9" fill="#1a365d">強制健檢篩檢通知</text>
+
+<!-- A4. HIRA → Clinics │ 審核健保申報&建立臨床實踐指南 -->
+<path d="M756,200 C710,258 680,300 662,350"
+      stroke="#2b6cb0" stroke-width="2" fill="none" marker-end="url(#a1)"/>
+<rect x="650" y="243" width="120" height="28" rx="4" fill="#ebf8ff" opacity="0.95"/>
+<text x="710" y="255" text-anchor="middle" font-size="9.5" fill="#1a365d">審核健保申報</text>
+<text x="710" y="267" text-anchor="middle" font-size="9.5" fill="#1a365d">臨床實踐指南</text>
+
+<!-- A5. NHIS ↔ HIRA │ 建立國民健康資訊資料庫NHID (double-headed) -->
+<line x1="450" y1="183" x2="710" y2="183"
+      stroke="#718096" stroke-width="1.8" stroke-dasharray="7,3"
+      marker-start="url(#as)" marker-end="url(#ag)"/>
+<rect x="498" y="162" width="165" height="16" rx="4" fill="#f7fafc" opacity="0.95"/>
+<text x="580" y="174" text-anchor="middle" font-size="9.5" fill="#4a5568">建立國民健康資訊資料庫 NHID</text>
+
+<!-- A6. Clinics → Patient │ 個人化管理計畫&臨床決策 -->
+<line x1="558" y1="415" x2="558" y2="612"
+      stroke="#22543d" stroke-width="2.2" marker-end="url(#a2)"/>
+<rect x="568" y="493" width="118" height="28" rx="4" fill="#f0fff4" opacity="0.95"/>
+<text x="627" y="505" text-anchor="middle" font-size="9.5" fill="#1c4532">建立個人化管理計畫</text>
+<text x="627" y="517" text-anchor="middle" font-size="9.5" fill="#1c4532">& 臨床決策</text>
+
+<!-- A7. Clinics ↔ Coordinators │ 團隊協作:指導與資訊共享 (double-headed) -->
+<line x1="716" y1="374" x2="774" y2="374"
+      stroke="#718096" stroke-width="1.8"
+      marker-start="url(#as)" marker-end="url(#ag)"/>
+<line x1="716" y1="388" x2="774" y2="388"
+      stroke="#718096" stroke-width="1" stroke-dasharray="4,2"/>
+<rect x="680" y="330" width="130" height="28" rx="4" fill="#f7fafc" opacity="0.95"/>
+<text x="745" y="342" text-anchor="middle" font-size="9.5" fill="#4a5568">團隊協作</text>
+<text x="745" y="354" text-anchor="middle" font-size="9.5" fill="#4a5568">指導與資訊共享</text>
+
+<!-- A8. Coordinators → Patient │ 居家生理監測&生活衛教諮詢 -->
+<path d="M888,410 C888,520 800,610 716,638"
+      stroke="#285e61" stroke-width="2" fill="none" marker-end="url(#a3)"/>
+<rect x="813" y="500" width="115" height="28" rx="4" fill="#e6fffa" opacity="0.95"/>
+<text x="870" y="512" text-anchor="middle" font-size="9.5" fill="#234e52">居家生理監測</text>
+<text x="870" y="524" text-anchor="middle" font-size="9.5" fill="#234e52">生活衛教諮詢</text>
+
+<!-- A9. Patient → Clinics │ 支付門診自付額 (由30%→20%) -->
+<path d="M716,632 C762,560 755,465 718,415"
+      stroke="#97266d" stroke-width="1.8" fill="none" stroke-dasharray="4,2" marker-end="url(#a6)"/>
+<rect x="733" y="506" width="115" height="28" rx="4" fill="#fff5f5" opacity="0.95"/>
+<text x="790" y="518" text-anchor="middle" font-size="9.5" fill="#97266d">支付門診自付額</text>
+<text x="790" y="530" text-anchor="middle" font-size="9.5" fill="#97266d">30% 降至 20%</text>
+
+<!-- A10. Clinics → Hospitals │ 疑難重症轉診 -->
+<path d="M716,370 C748,390 762,450 774,480"
+      stroke="#285e61" stroke-width="1.8" fill="none" marker-end="url(#a3)"/>
+<rect x="722" y="405" width="72" height="28" rx="4" fill="#e6fffa" opacity="0.95"/>
+<text x="758" y="417" text-anchor="middle" font-size="9.5" fill="#234e52">疑難重症</text>
+<text x="758" y="429" text-anchor="middle" font-size="9.5" fill="#234e52">轉診</text>
+
+<!-- A11. Hospitals → Clinics │ 病況穩定後轉回基層 -->
+<path d="M774,500 C748,480 732,450 718,402"
+      stroke="#285e61" stroke-width="1.8" fill="none" stroke-dasharray="5,2" marker-end="url(#a3)"/>
+<rect x="640" y="446" width="75" height="28" rx="4" fill="#e6fffa" opacity="0.95"/>
+<text x="677" y="458" text-anchor="middle" font-size="9" fill="#234e52">穩定後轉回</text>
+<text x="677" y="470" text-anchor="middle" font-size="9" fill="#234e52">基層管理</text>
+
+<!-- A12. AI_Tech → Clinics │ 提供醫患聯結平台(如iCareD) -->
+<line x1="200" y1="375" x2="436" y2="375"
+      stroke="#553c9a" stroke-width="2" marker-end="url(#a4)"/>
+<rect x="210" y="354" width="118" height="28" rx="4" fill="#faf5ff" opacity="0.95"/>
+<text x="269" y="366" text-anchor="middle" font-size="9.5" fill="#44337a">醫患聯結平台</text>
+<text x="269" y="378" text-anchor="middle" font-size="9.5" fill="#44337a">(如 iCareD)</text>
+
+<!-- A13. Clinics ↔ PHC │ 連動社區資源 (double-headed) -->
+<path d="M444,410 C380,445 270,480 202,516"
+      stroke="#718096" stroke-width="1.8" fill="none"
+      marker-start="url(#as)" marker-end="url(#ag)"/>
+<rect x="262" y="448" width="122" height="28" rx="4" fill="#f7fafc" opacity="0.95"/>
+<text x="323" y="460" text-anchor="middle" font-size="9.5" fill="#4a5568">連動社區資源</text>
+<text x="323" y="472" text-anchor="middle" font-size="9.5" fill="#4a5568">解決照護人力不足</text>
+
+<!-- A14. PHC → Patient │ 社區營養與運動實體課程 -->
+<path d="M130,542 C160,598 310,638 434,643"
+      stroke="#c05621" stroke-width="2" fill="none" marker-end="url(#a5)"/>
+<rect x="150" y="570" width="122" height="28" rx="4" fill="#fff8f0" opacity="0.95"/>
+<text x="211" y="582" text-anchor="middle" font-size="9.5" fill="#7b341e">社區營養與</text>
+<text x="211" y="594" text-anchor="middle" font-size="9.5" fill="#7b341e">運動實體課程</text>
+
+<!-- A15. Patient → AI_Tech │ 透過App上傳生活日誌PGHD -->
+<path d="M444,648 C320,628 200,598 115,544"
+      stroke="#553c9a" stroke-width="1.8" fill="none" stroke-dasharray="5,2" marker-end="url(#a4)"/>
+<rect x="218" y="622" width="122" height="28" rx="4" fill="#faf5ff" opacity="0.95"/>
+<text x="279" y="634" text-anchor="middle" font-size="9.5" fill="#44337a">App 上傳生活</text>
+<text x="279" y="646" text-anchor="middle" font-size="9.5" fill="#44337a">日誌數據 (PGHD)</text>
+
+<!-- ============================================================ -->
+<!--  NODES                                                        -->
+<!-- ============================================================ -->
+
+<!-- MOHW │ 衛生福利部 -->
+<rect x="455" y="30" width="240" height="53" rx="11" fill="#1a365d" stroke="#0f2044" stroke-width="1.5" filter="url(#sh)"/>
+<text x="575" y="52" text-anchor="middle" fill="white" font-size="13" font-weight="bold">衛生福利部</text>
+<text x="575" y="72" text-anchor="middle" fill="#bee3f8" font-size="11">MOHW</text>
+
+<!-- NHIS │ 國民健康保險公團 -->
+<rect x="192" y="160" width="260" height="53" rx="11" fill="#2b6cb0" stroke="#1a365d" stroke-width="1.5" filter="url(#sh)"/>
+<text x="322" y="181" text-anchor="middle" fill="white" font-size="11" font-weight="bold">國民健康保險公團</text>
+<text x="322" y="200" text-anchor="middle" fill="#bee3f8" font-size="11">NHIS</text>
+
+<!-- HIRA │ 健康保險審查評價院 -->
+<rect x="710" y="160" width="250" height="53" rx="11" fill="#2c5282" stroke="#1a365d" stroke-width="1.5" filter="url(#sh)"/>
+<text x="835" y="181" text-anchor="middle" fill="white" font-size="11" font-weight="bold">健康保險審查評價院</text>
+<text x="835" y="200" text-anchor="middle" fill="#bee3f8" font-size="11">HIRA</text>
+
+<!-- AI_Tech │ 數位醫療/AI企業 -->
+<rect x="20" y="351" width="180" height="53" rx="11" fill="#553c9a" stroke="#44337a" stroke-width="1.5" filter="url(#sh)"/>
+<text x="110" y="372" text-anchor="middle" fill="white" font-size="11" font-weight="bold">數位醫療 / AI 企業</text>
+<text x="110" y="391" text-anchor="middle" fill="#e9d8fd" font-size="10">Digital Health Tech</text>
+
+<!-- Clinics │ 社區基層診所 (HUB - larger + glow) -->
+<rect x="434" y="347" width="284" height="68" rx="13" fill="#22543d" stroke="#1c4532" stroke-width="2.5" filter="url(#glow)"/>
+<text x="576" y="370" text-anchor="middle" fill="white" font-size="13" font-weight="bold">社區基層診所</text>
+<text x="576" y="388" text-anchor="middle" fill="#c6f6d5" font-size="10.5">主治醫師（照護核心）</text>
+<text x="576" y="404" text-anchor="middle" fill="#9ae6b4" font-size="9.5">Primary Care Clinics</text>
+
+<!-- Coordinators │ 個案管理師 -->
+<rect x="772" y="351" width="236" height="53" rx="11" fill="#276749" stroke="#1c4532" stroke-width="1.5" filter="url(#sh)"/>
+<text x="890" y="372" text-anchor="middle" fill="white" font-size="11" font-weight="bold">個案管理師</text>
+<text x="890" y="391" text-anchor="middle" fill="#c6f6d5" font-size="10">護理師 / 營養師</text>
+
+<!-- PHC │ 社區保健所 -->
+<rect x="20" y="487" width="180" height="53" rx="11" fill="#c05621" stroke="#9c4221" stroke-width="1.5" filter="url(#sh)"/>
+<text x="110" y="508" text-anchor="middle" fill="white" font-size="11" font-weight="bold">社區保健所</text>
+<text x="110" y="527" text-anchor="middle" fill="#feebc8" font-size="10">基層醫療支援中心</text>
+
+<!-- Hospitals │ 大型綜合醫院 -->
+<rect x="772" y="474" width="236" height="53" rx="11" fill="#234e52" stroke="#1d4044" stroke-width="1.5" filter="url(#sh)"/>
+<text x="890" y="495" text-anchor="middle" fill="white" font-size="11" font-weight="bold">大型綜合醫院</text>
+<text x="890" y="514" text-anchor="middle" fill="#b2f5ea" font-size="10">Secondary / Tertiary Hospitals</text>
+
+<!-- Patient │ 患者/國民 (bottom center - target) -->
+<rect x="432" y="610" width="288" height="62" rx="13" fill="#97266d" stroke="#702459" stroke-width="2" filter="url(#sh)"/>
+<text x="576" y="633" text-anchor="middle" fill="white" font-size="13" font-weight="bold">患者 / 國民</text>
+<text x="576" y="652" text-anchor="middle" fill="#fed7e2" font-size="10.5">慢性病管理服務對象</text>
+
+<!-- ============================================================ -->
+<!--  FLOW DIRECTION LABEL                                         -->
+<!-- ============================================================ -->
+<text x="1130" y="680" text-anchor="end" font-size="10" fill="#a0aec0" font-style="italic">TB = Top → Bottom</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="lb" style="background:#1a365d"></div>政策主管機關</div>
+  <div class="li"><div class="lb" style="background:#2b6cb0"></div>保險/評審機構</div>
+  <div class="li"><div class="lb" style="background:#22543d"></div>基層診所（核心）</div>
+  <div class="li"><div class="lb" style="background:#276749"></div>個案管理師</div>
+  <div class="li"><div class="lb" style="background:#234e52"></div>大型醫院</div>
+  <div class="li"><div class="lb" style="background:#c05621"></div>社區保健所</div>
+  <div class="li"><div class="lb" style="background:#553c9a"></div>數位醫療/AI</div>
+  <div class="li"><div class="lb" style="background:#97266d"></div>患者/國民</div>
+  <div class="li" style="margin-left:8px; color:#718096; font-size:11px">
+    ─── 直接流向 &nbsp; - - - 資金/數據流 &nbsp; ←──→ 雙向協作
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="info-intro">
+    🇰🇷 韓國成年人代謝症候群盛行率長年超過 <span class="k-num">30%</span>，面對這場慢性病海嘯，韓國在 2024 年正式推出導入 AI 的 <strong>AX Project</strong>，走出一條「金剛手段＋菩薩慈悲」並行的路──一手是《健康促進法》《健康保險法》的強制篩檢與精準分群，一手是數位關懷與真金白銀的經濟補助，軟硬兼施把民眾留在基層診所的照護網裡。
+  </div>
+
+  <h2 class="info-h2"><span class="bar"></span>制度說明：一、核心運作架構</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">📋 法律強制篩檢與精準分群</div>
+      依法義務保險對象<b>每兩年</b>強制健檢一次，數據即時回饋至國民健康資訊資料庫（NHID），整合生理、血液與臨床紀錄。篩檢後精確分為健康群、健康風險群、代謝症候群患者三類，健保公團會主動通知並提供 <span class="k-num">24 週</span>免費追蹤管理。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🧑‍⚕️ 基層診所為核心的團隊協作</div>
+      <b>醫師</b>負責建立年度個人化 Care Plan、臨床決策與轉診協調；<b>個案管理師</b>（護理師或營養師擔任）負責生活習慣調查、衛教指導，並彙整患者居家生理監測數據——兩者分工明確、緊密協作。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🤖 AX Project 與數位 AI 深度融合</div>
+      政府資助 AI 工具協助基層醫師預防併發症、自動生成結構化病歷並自動對帳，減輕行政負擔；<b>iCareD 平台</b>結合醫師監測與遠距協作，臨床證實血糖血壓成效優於純 App 管理；<b>My-Healthway</b> 則整合個人健康紀錄，支援跨機構資料共享與精準醫療。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">⚖️ 國家肥胖防制策略</div>
+      推動制定《肥胖管理法》，每五年訂定綜合計畫，將肥胖正式定位為「國家干預疾病」——內容涵蓋重度肥胖者的減重手術給付、校園周邊食品販售規管，以及利用 IoT 設備縮小城鄉醫療差距。
+    </div>
+  </div>
+
+  <h2 class="info-h2" style="margin-top:26px;"><span class="bar"></span>制度說明：二、給付與雙向經濟激勵</h2>
+  <div class="info-cols">
+    <div class="info-card">
+      <div class="info-block-title">🏥 供給側｜醫療機構獎勵</div>
+      獨立於藥品收入的<b>慢性病管理費</b>，專門補償醫師花在制定與追蹤 Care Plan 的時間價值；達成臨床指標改善的診所可獲<b>績效獎勵（P4P）</b>額外獎金；並透過差別化報銷比例作為<b>守門人機制</b>，引導病患優先在基層診所管理。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🙋 需求側｜患者誘因</div>
+      參與計畫者的門診與藥局自付額從 30% 降至 <span class="k-num">20%</span>；上傳步數與居家生理監測數據可換<b>健康生活補助點數</b>；血壓血糖達標更有<b>指標改善獎勵點數</b>，可直接抵繳醫療費用；也為排斥諮詢費用的高齡患者設計特別補貼。
+    </div>
+  </div>
+
+  <div class="info-stats">
+    <div class="stat-pill"><span class="num">2年</span><span class="lab">強制健檢週期</span></div>
+    <div class="stat-pill"><span class="num">24週</span><span class="lab">免費追蹤管理期</span></div>
+    <div class="stat-pill"><span class="num">30%→20%</span><span class="lab">參與者門診藥局自付額降幅</span></div>
+    <div class="stat-pill"><span class="num">30%+</span><span class="lab">成年人代謝症候群盛行率</span></div>
+  </div>
+</section>
+
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+</body>
+</html>

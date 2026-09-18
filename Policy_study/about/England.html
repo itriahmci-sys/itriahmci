@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>英國 ICS 整合醫療系統框架圖</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: #f0f4f8;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
+  }
+  h1 {
+    text-align: center; color: #1a202c;
+    font-size: 1.35em; margin: 0 0 14px;
+    letter-spacing: 0.02em;
+  }
+  .wrap {
+    background: white; border-radius: 14px;
+    padding: 22px 18px 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    overflow-x: auto;
+  }
+  svg text {
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
+  }
+  .legend {
+    margin-top: 16px;
+    display: flex; flex-wrap: wrap;
+    gap: 10px; justify-content: center;
+    font-size: 12px; color: #4a5568;
+  }
+  .li { display: flex; align-items: center; gap: 5px; }
+  .lb { width: 16px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  .badge {
+    border-radius: 4px; padding: 1px 7px; font-size: 11px;
+  }
+
+  :root{ --info-accent:#4c6ef5; --info-accent-dark:#3651c9; --info-tint1:#eef1ff; --info-tint2:#dbe3ff; }
+  .info-section{ max-width:1150px; margin:30px auto 0; }
+  .info-intro{
+    background:linear-gradient(135deg, var(--info-tint1), #fdf2f8);
+    border-radius:16px; padding:20px 22px; margin-bottom:20px;
+    font-size:13.5px; line-height:1.95; color:#33344a; box-shadow:0 4px 14px rgba(0,0,0,.05);
+  }
+  .info-h2{ font-size:1.2em; color:#1a202c; margin:0 0 16px; display:flex; align-items:center; gap:9px; font-weight:800; }
+  .info-h2 .bar{ width:6px; height:22px; border-radius:3px; background:var(--info-accent); display:inline-block; }
+  .info-block{ margin-bottom:24px; }
+  .info-block-title{ font-size:1.03em; font-weight:800; color:var(--info-accent-dark); margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .info-card{ background:#fff; border:1px solid #eceffb; border-left:4px solid var(--info-accent); border-radius:10px; padding:14px 16px; font-size:12.8px; line-height:1.8; color:#4a5568; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .info-card b, .info-card strong{ color:#1a202c; }
+  .k-num{ display:inline-block; background:var(--info-tint2); color:var(--info-accent-dark); font-weight:800; padding:1px 8px; border-radius:999px; font-size:11.5px; }
+  .info-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .info-stats{ display:flex; flex-wrap:wrap; gap:12px; margin:16px 0 4px; }
+  .stat-pill{ flex:1 1 150px; background:linear-gradient(135deg,var(--info-accent),#d53f8c); color:#fff; border-radius:12px; padding:14px 14px; text-align:center; box-shadow:0 4px 12px rgba(76,110,245,.25); }
+  .stat-pill .num{ font-size:1.35em; font-weight:800; display:block; }
+  .stat-pill .lab{ font-size:11px; opacity:.92; }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+<h1>英國整合醫療系統（ICS）治理架構圖</h1>
+<div class="wrap">
+<svg viewBox="0 0 1150 830" style="width:100%;max-width:1150px;display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr"       markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#444"/></marker>
+  <marker id="arr-blue"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#1a4b8f"/></marker>
+  <marker id="arr-green" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#22543d"/></marker>
+  <marker id="arr-teal"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#1d4044"/></marker>
+  <marker id="arr-gray"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#718096"/></marker>
+  <marker id="arr-red"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#c53030"/></marker>
+  <marker id="arr-purple"markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#553c9a"/></marker>
+
+  <!-- Node drop shadows -->
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="130%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0004"/>
+  </filter>
+</defs>
+
+<!-- ========== SUBGROUP BACKGROUNDS ========== -->
+
+<!-- Incentive_Mechanism: contains ICB, Providers, Sub_Providers -->
+<rect x="210" y="358" width="390" height="448" rx="16"
+      fill="#fdf2f8" stroke="#d53f8c" stroke-width="2.5" stroke-dasharray="8,4" opacity="0.85"/>
+<text x="230" y="384" font-size="20" fill="#97266d" font-weight="bold">拆帳與分潤機制 (Incentive Mechanism)</text>
+
+<!-- Citizens_Engagement: contains NHSE, Citizens, ICP -->
+<rect x="638" y="222" width="412" height="488" rx="16"
+      fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="8,4" opacity="0.85"/>
+<text x="658" y="248" font-size="20" fill="#1e3a8a" font-weight="bold">民眾與社區 (Citizens Engagement)</text>
+
+<!-- ========== ARROWS ========== -->
+
+<!-- 1. HMT → DHSC │ 國家預算 -->
+<line x1="120" y1="84" x2="120" y2="143" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="128" y="107" width="68" height="16" rx="3" fill="#faf5ff"/>
+<text x="162" y="119" text-anchor="middle" font-size="14" fill="#44337a">國家預算</text>
+
+<!-- 2. DHSC → NHSE │ 撥款 (Grant-in-Aid) -->
+<path d="M212,170 C370,170 540,256 695,285" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+<rect x="352" y="193" width="148" height="16" rx="3" fill="#fffbeb"/>
+<text x="426" y="205" text-anchor="middle" font-size="14" fill="#7b341e">撥款 (Grant-in-Aid)</text>
+
+<!-- 3. CQC -·-> ICS │ 系統質量評估 (dashed) -->
+<path d="M935,57 C820,57 720,122 584,162" stroke="#718096" stroke-width="1.5" fill="none"
+      stroke-dasharray="6,3" marker-end="url(#arr-gray)"/>
+<rect x="728" y="72" width="90" height="16" rx="3" fill="#f7fafc"/>
+<text x="773" y="84" text-anchor="middle" font-size="14" fill="#4a5568">系統質量評估</text>
+
+<!-- 4. NAO -·-> NHSE │ 價值與永續性審計 (dashed) -->
+<path d="M1035,197 C1035,248 948,258 908,283" stroke="#718096" stroke-width="1.5" fill="none"
+      stroke-dasharray="6,3" marker-end="url(#arr-gray)"/>
+<rect x="932" y="217" width="108" height="28" rx="3" fill="#f7fafc"/>
+<text x="986" y="229" text-anchor="middle" font-size="14" fill="#4a5568">價值與</text>
+<text x="986" y="241" text-anchor="middle" font-size="14" fill="#4a5568">永續性審計</text>
+
+<!-- 5. NHSE → ICB │ 績效評估 & 預算分配 -->
+<path d="M695,285 C578,285 515,370 467,413" stroke="#1a4b8f" stroke-width="2" fill="none"
+      marker-end="url(#arr-blue)"/>
+<rect x="516" y="295" width="140" height="30" rx="3" fill="#ebf8ff"/>
+<text x="586" y="308" text-anchor="middle" font-size="14" fill="#1a365d">年度績效評估與監管</text>
+<text x="586" y="321" text-anchor="middle" font-size="14" fill="#1a365d">分配 1,510 億英鎊預算</text>
+
+<!-- 6. ICB right → Place left │ PHM數據資源分配 (vertical at x=465) -->
+<line x1="465" y1="418" x2="465" y2="498" stroke="#22543d" stroke-width="1.8" marker-end="url(#arr-green)"/>
+<rect x="468" y="444" width="110" height="16" rx="3" fill="#f0fff4"/>
+<text x="523" y="456" text-anchor="middle" font-size="14" fill="#1c4532">PHM 數據資源分配</text>
+
+<!-- 7. Place bottom → Providers top │ 銜接醫院與社區服務 -->
+<path d="M558,553 C558,580 448,590 362,618" stroke="#553c9a" stroke-width="1.8" fill="none"
+      marker-end="url(#arr-purple)"/>
+<rect x="430" y="566" width="115" height="16" rx="3" fill="#faf5ff"/>
+<text x="487" y="578" text-anchor="middle" font-size="14" fill="#44337a">銜接醫院與社區服務</text>
+
+<!-- 8. ICB bottom → Providers top │ 服務委託/成果獎勵/利益共享 -->
+<line x1="338" y1="450" x2="338" y2="618" stroke="#22543d" stroke-width="2" marker-end="url(#arr-green)"/>
+<rect x="213" y="496" width="118" height="46" rx="3" fill="#f0fff4"/>
+<text x="222" y="509" font-size="14" fill="#1c4532">服務委託與資金撥付</text>
+<text x="222" y="522" font-size="14" fill="#1c4532">成果導向獎勵</text>
+<text x="222" y="535" font-size="14" fill="#1c4532">利益共享安排</text>
+
+<!-- 9. Providers bottom → Sub_Providers top │ 階段性目標撥付 -->
+<line x1="360" y1="678" x2="360" y2="739" stroke="#7b341e" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="368" y="700" width="112" height="16" rx="3" fill="#fffff0"/>
+<text x="424" y="712" text-anchor="middle" font-size="14" fill="#7b341e">階段性目標撥付</text>
+
+<!-- 10. Providers right → Citizens left │ 鄰里健康服務 -->
+<path d="M482,648 C580,648 628,572 693,505" stroke="#1a4b8f" stroke-width="1.8" fill="none"
+      marker-end="url(#arr-blue)"/>
+<rect x="548" y="598" width="96" height="16" rx="3" fill="#ebf8ff"/>
+<text x="596" y="610" text-anchor="middle" font-size="14" fill="#1a365d">鄰里健康服務</text>
+
+<!-- 11. Citizens top → NHSE bottom │ PPV合作/NHS App (upward) -->
+<line x1="778" y1="472" x2="778" y2="318" stroke="#c05621" stroke-width="1.8" marker-end="url(#arr-red)"/>
+<rect x="785" y="370" width="102" height="28" rx="3" fill="#fff5f5"/>
+<text x="836" y="382" text-anchor="middle" font-size="14" fill="#c05621">PPV 合作夥伴</text>
+<text x="836" y="394" text-anchor="middle" font-size="14" fill="#c05621">NHS App 管理</text>
+
+<!-- 12. Citizens bottom → ICP top │ 參與決策/共同製作 -->
+<line x1="822" y1="528" x2="822" y2="619" stroke="#1d4044" stroke-width="1.8" marker-end="url(#arr-teal)"/>
+<rect x="829" y="562" width="112" height="16" rx="3" fill="#e6fffa"/>
+<text x="885" y="574" text-anchor="middle" font-size="14" fill="#234e52">參與決策／共同製作</text>
+
+<!-- 13. Citizens left → ICB right │ 意見反饋/投訴 (dashed) -->
+<path d="M693,495 C600,495 548,450 467,432" stroke="#c53030" stroke-width="1.5" fill="none"
+      stroke-dasharray="4,2" marker-end="url(#arr-red)"/>
+<rect x="534" y="460" width="98" height="16" rx="3" fill="#fff5f5"/>
+<text x="583" y="472" text-anchor="middle" font-size="14" fill="#c53030">意見反饋／投訴</text>
+
+<!-- 14. ICP left → ICB right │ 制定整合護理戰略 -->
+<path d="M695,647 C585,647 515,545 467,440" stroke="#1d4044" stroke-width="1.8" fill="none"
+      marker-end="url(#arr-teal)"/>
+<rect x="536" y="562" width="115" height="16" rx="3" fill="#e6fffa"/>
+<text x="593" y="574" text-anchor="middle" font-size="14" fill="#234e52">制定整合護理戰略</text>
+
+<!-- ========== NODES ========== -->
+
+<!-- HMT │ 英國財政部 -->
+<rect x="30" y="32" width="180" height="52" rx="10" fill="#553c9a" stroke="#44337a" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="120" y="54" text-anchor="middle" fill="white" font-size="20" font-weight="bold">英國財政部</text>
+<text x="120" y="73" text-anchor="middle" fill="#e9d8fd" font-size="14">HMT</text>
+
+<!-- DHSC │ 衛生與社會照護部 -->
+<rect x="30" y="145" width="180" height="52" rx="10" fill="#97266d" stroke="#702459" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="120" y="167" text-anchor="middle" fill="white" font-size="14" font-weight="bold">衛生與社會照護部</text>
+<text x="120" y="186" text-anchor="middle" fill="#fed7e2" font-size="14">DHSC</text>
+
+<!-- CQC │ 護理品質調查委員會 -->
+<rect x="935" y="32" width="200" height="52" rx="10" fill="#c53030" stroke="#9b2c2c" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="1035" y="53" text-anchor="middle" fill="white" font-size="14" font-weight="bold">護理品質調查委員會</text>
+<text x="1035" y="72" text-anchor="middle" fill="#fed7e2" font-size="14">CQC</text>
+
+<!-- NAO │ 國家審計署 -->
+<rect x="935" y="145" width="200" height="52" rx="10" fill="#c05621" stroke="#9c4221" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="1035" y="166" text-anchor="middle" fill="white" font-size="14" font-weight="bold">國家審計署</text>
+<text x="1035" y="185" text-anchor="middle" fill="#feebc8" font-size="14">NAO</text>
+
+<!-- ICS │ 整合醫療系統 (standalone reference) -->
+<rect x="440" y="145" width="145" height="52" rx="10" fill="#718096" stroke="#4a5568" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="512" y="167" text-anchor="middle" fill="white" font-size="20" font-weight="bold">ICS</text>
+<text x="512" y="186" text-anchor="middle" fill="#e2e8f0" font-size="14">整合醫療系統</text>
+
+<!-- NHSE (inside Citizens_Engagement) │ 英格蘭國民保健署 -->
+<rect x="693" y="260" width="214" height="58" rx="10" fill="#1a365d" stroke="#0f2044" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="800" y="282" text-anchor="middle" fill="white" font-size="20" font-weight="bold">英格蘭國民保健署</text>
+<text x="800" y="304" text-anchor="middle" fill="#bee3f8" font-size="14">NHSE</text>
+
+<!-- ICB (inside Incentive_Mechanism) │ 整合醫療委員會 -->
+<rect x="253" y="395" width="214" height="55" rx="10" fill="#22543d" stroke="#1c4532" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="360" y="417" text-anchor="middle" fill="white" font-size="14" font-weight="bold">整合醫療委員會</text>
+<text x="360" y="438" text-anchor="middle" fill="#c6f6d5" font-size="14">ICB</text>
+
+<!-- Place (standalone) │ 地方層級夥伴關係 -->
+<rect x="463" y="500" width="192" height="53" rx="10" fill="#44337a" stroke="#322659" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="559" y="521" text-anchor="middle" fill="white" font-size="14" font-weight="bold">地方層級夥伴關係</text>
+<text x="559" y="541" text-anchor="middle" fill="#e9d8fd" font-size="14">Place Partnerships</text>
+
+<!-- Citizens (inside Citizens_Engagement) │ 民眾與居民 -->
+<rect x="693" y="472" width="214" height="56" rx="10" fill="#2b6cb0" stroke="#1a365d" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="800" y="494" text-anchor="middle" fill="white" font-size="14" font-weight="bold">民眾與居民</text>
+<text x="800" y="515" text-anchor="middle" fill="#bee3f8" font-size="14">Citizens</text>
+
+<!-- ICP (inside Citizens_Engagement) │ 整合醫療合夥關係 -->
+<rect x="693" y="619" width="214" height="56" rx="10" fill="#234e52" stroke="#1d4044" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="800" y="641" text-anchor="middle" fill="white" font-size="14" font-weight="bold">整合醫療合夥關係</text>
+<text x="800" y="661" text-anchor="middle" fill="#b2f5ea" font-size="14">ICP</text>
+
+<!-- Providers (inside Incentive_Mechanism) │ 醫療提供者 -->
+<rect x="238" y="618" width="246" height="60" rx="10" fill="#2a4365" stroke="#1a365d" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="361" y="641" text-anchor="middle" fill="white" font-size="14" font-weight="bold">醫療提供者</text>
+<text x="361" y="662" text-anchor="middle" fill="#bee3f8" font-size="14">Trusts / GPs / 數位提供者</text>
+
+<!-- Sub_Providers (inside Incentive_Mechanism) │ 專案執行單位 -->
+<rect x="253" y="741" width="214" height="52" rx="10" fill="#7b341e" stroke="#652b19" stroke-width="1.5" filter="url(#shadow)"/>
+<text x="360" y="763" text-anchor="middle" fill="white" font-size="14" font-weight="bold">專案執行單位</text>
+<text x="360" y="782" text-anchor="middle" fill="#fbd38d" font-size="14">Sub-Providers</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="lb" style="background:#553c9a"></div>財政/地方政府</div>
+  <div class="li"><div class="lb" style="background:#97266d"></div>衛生主管部門</div>
+  <div class="li"><div class="lb" style="background:#c53030"></div>監管機構</div>
+  <div class="li"><div class="lb" style="background:#c05621"></div>審計機構</div>
+  <div class="li"><div class="lb" style="background:#1a365d"></div>國家衛生體系</div>
+  <div class="li"><div class="lb" style="background:#22543d"></div>整合醫療委員會</div>
+  <div class="li"><div class="lb" style="background:#234e52"></div>整合醫療夥伴</div>
+  <div class="li"><div class="lb" style="background:#2a4365"></div>醫療提供者</div>
+  <div class="li"><div class="lb" style="background:#718096"></div>整合醫療系統</div>
+  <div class="li">
+    <span class="badge" style="border:1.5px solid #d53f8c; background:#fdf2f8; color:#97266d;">拆帳與分潤機制</span>
+  </div>
+  <div class="li">
+    <span class="badge" style="border:1.5px solid #3b82f6; background:#eff6ff; color:#1e3a8a;">民眾與社區</span>
+  </div>
+  <div class="li" style="margin-left:8px; color:#718096; font-style:italic; font-size:11px">
+    ─── 直接連結 &nbsp;&nbsp; - - - 監督/回饋
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="info-intro">
+    🇬🇧 2022 年《健康與照護法案》生效，終結了英格蘭長達 30 年的「內部市場競爭」，正式進入分權協作的新紀元。原本各自為政的基層醫療、社區服務、二級醫院與地方政府，被整合進 42 個法定的<strong>整合照護系統（ICS）</strong>，照護思維也從「有病才治」的反應式醫療，轉向數據驅動的<strong>主動預防</strong>。
+  </div>
+
+  <h2 class="info-h2"><span class="bar"></span>制度說明：治理架構與健康公平</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">🏛️ ICS 的法定架構</div>
+      廢除原有的 CCGs（臨床委託小組），全國成立 <span class="k-num">42 個</span>法定整合照護系統。ICS 的宗旨在於打破基層醫療、社區服務、二級醫院與地方政府之間的組織藩籬，促進跨部門的系統性協作。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">📊 人口健康管理（PHM）與主動預防</div>
+      系統利用大數據進行風險分層，精準鎖定全英格蘭<b>1% 承受 50% 醫療風險</b>的極高危族群，優化資源配置並主動介入——把治療的錢，提前花在預防上。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">⚖️ 健康平等框架（Core20PLUS5）</div>
+      鎖定社經最貧困的 20% 地區人口（Core20）與邊緣化、少數族裔族群（PLUS），聚焦血壓篩查、血脂最佳化等 <b>5 大核心臨床領域</b>，正面迎擊系統性的健康不平等問題。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🩺 標準化臨床干預路徑</div>
+      <b>NHS 健康檢查</b>：40–74 歲無既往症者每 5 年一次心血管與糖尿病風險評估（QRISK 評分），2025 年起試點「線上版健康檢查」擴大覆蓋。<b>糖尿病預防計畫（DPP）</b>：針對前期糖尿病（HbA1c 42–47）提供 9–12 個月營養運動行為支持。<b>肥胖與藥物層級管理（SWMS）</b>：導入 GLP-1 新藥（如 Semaglutide）須經三級減重服務多學科團隊評估，且若 6 個月內未達 <b>5% 體重減輕</b>將終止服務、24 個月內不得重新轉介。
+    </div>
+  </div>
+
+  <h2 class="info-h2" style="margin-top:26px;"><span class="bar"></span>制度說明：公私協力（PPP）的給付邏輯</h2>
+  <div class="info-cols">
+    <div class="info-card">
+      <div class="info-block-title">💰 價值導向與利益共享</div>
+      私人供應商（如 Oviva、Second Nature）的給付費用與患者<b>實際臨床減重成效</b>（≥5%）直接掛鉤，將臨床風險轉移給私部門；若管理方案能有效防範併發症、降低急診成本，企業還能分享節餘利潤（<b>Shared Savings</b>），並按病患註冊、課程完成度分階段撥付款項。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🔐 雙層採購與嚴格准入</div>
+      <b>國家框架協議</b>由 NHS 統一技術服務規範與價格上限，篩選合格供應商；<b>地方 ICB</b> 再依地方特色小型招標、彈性採購以縮短候診名單。私人數位工具必須通過 <b>DTAC 技術標準</b>，且數據須能與 GP 電子病歷系統（GP Connect）雙向對接，確保公私部門患者資料安全流暢地回流同步。
+    </div>
+  </div>
+
+  <div class="info-stats">
+    <div class="stat-pill"><span class="num">42</span><span class="lab">法定整合照護系統（ICS）</span></div>
+    <div class="stat-pill"><span class="num">1%→50%</span><span class="lab">極高危族群佔醫療風險比重</span></div>
+    <div class="stat-pill"><span class="num">≥5%</span><span class="lab">私人供應商給付掛鉤的減重門檻</span></div>
+    <div class="stat-pill"><span class="num">5年</span><span class="lab">NHS 健康檢查週期</span></div>
+  </div>
+</section>
+
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+</body>
+</html>

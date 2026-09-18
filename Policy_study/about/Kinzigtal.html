@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>德國 Kinzigtal 整合照護模式圖</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: linear-gradient(135deg, #e8eaf6 0%, #fce4ec 40%, #e8f5e9 100%);
+    font-family: 'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif;
+  }
+  h1 { text-align:center; color:#1a202c; font-size:1.4em; margin:0 0 4px; letter-spacing:.03em; }
+  .subtitle { text-align:center; color:#718096; font-size:12px; margin:0 0 14px; }
+  .wrap { background:white; border-radius:16px; padding:26px 20px 18px;
+          box-shadow:0 6px 32px rgba(0,0,0,.11); overflow-x:auto; }
+  svg text { font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif; }
+  .legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:10px;
+            justify-content:center; font-size:12px; color:#4a5568; }
+  .li { display:flex; align-items:center; gap:5px; }
+  .lb { width:16px; height:11px; border-radius:3px; flex-shrink:0; }
+
+  :root{ --info-accent:#e0972e; --info-accent-dark:#b5750f; --info-tint1:#fff7ea; --info-tint2:#ffe9c2; }
+  .info-section{ max-width:1150px; margin:30px auto 0; }
+  .info-intro{
+    background:linear-gradient(135deg, var(--info-tint1), #e8eaf6);
+    border-radius:16px; padding:20px 22px; margin-bottom:20px;
+    font-size:13.5px; line-height:1.95; color:#33344a; box-shadow:0 4px 14px rgba(0,0,0,.05);
+  }
+  .info-h2{ font-size:1.2em; color:#1a202c; margin:0 0 16px; display:flex; align-items:center; gap:9px; font-weight:800; }
+  .info-h2 .bar{ width:6px; height:22px; border-radius:3px; background:var(--info-accent); display:inline-block; }
+  .info-block{ margin-bottom:24px; }
+  .info-block-title{ font-size:1.03em; font-weight:800; color:var(--info-accent-dark); margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .info-card{ background:#fff; border:1px solid #f6efe3; border-left:4px solid var(--info-accent); border-radius:10px; padding:14px 16px; font-size:12.8px; line-height:1.8; color:#4a5568; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .info-card b, .info-card strong{ color:#1a202c; }
+  .k-num{ display:inline-block; background:var(--info-tint2); color:var(--info-accent-dark); font-weight:800; padding:1px 8px; border-radius:999px; font-size:11.5px; }
+  .info-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .info-stats{ display:flex; flex-wrap:wrap; gap:12px; margin:16px 0 4px; }
+  .stat-pill{ flex:1 1 150px; background:linear-gradient(135deg,var(--info-accent),#c0392b); color:#fff; border-radius:12px; padding:14px 14px; text-align:center; box-shadow:0 4px 12px rgba(224,151,46,.28); }
+  .stat-pill .num{ font-size:1.35em; font-weight:800; display:block; }
+  .stat-pill .lab{ font-size:11px; opacity:.92; }
+  .info-note{ font-size:12px; color:#8a8a9c; text-align:center; margin-top:10px; }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+<h1>德國 Kinzigtal 地區整合照護模式（GK GmbH）</h1>
+<p class="subtitle">以區域整合管理公司為樞紐的 Shared Savings 節餘分享機制</p>
+<div class="wrap">
+<svg viewBox="0 0 1150 820" style="width:100%;max-width:1150px;display:block;margin:auto;"
+     xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ae"        markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#444"/></marker>
+  <marker id="ae-navy"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#1a365d"/></marker>
+  <marker id="ae-purple" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#553c9a"/></marker>
+  <marker id="ae-teal"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#285e61"/></marker>
+  <marker id="ae-green"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#22543d"/></marker>
+  <marker id="ae-red"    markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#9b2c2c"/></marker>
+  <marker id="ae-gold"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#b7791f"/></marker>
+  <filter id="sh" x="-12%" y="-18%" width="124%" height="148%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#00000030"/>
+  </filter>
+  <filter id="glow-p" x="-18%" y="-22%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#553c9a55"/>
+  </filter>
+  <filter id="glow-b" x="-14%" y="-18%" width="128%" height="148%">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#1a365d44"/>
+  </filter>
+</defs>
+
+<!-- ═══════════════ ZONE BACKGROUNDS ═══════════════ -->
+
+<!-- 資金與監理層 (top) -->
+<rect x="18" y="18" width="1114" height="172" rx="14"
+      fill="#eff6ff" stroke="#2b6cb0" stroke-width="1.8" stroke-dasharray="9,4" opacity=".88"/>
+<text x="36" y="40" font-size="12.5" fill="#1a365d" font-weight="bold">💶  資金方與監理機構</text>
+
+<!-- 整合管理樞紐 (middle) -->
+<rect x="378" y="216" width="396" height="118" rx="14"
+      fill="#f3e8ff" stroke="#805ad5" stroke-width="2" stroke-dasharray="9,4" opacity=".88"/>
+<text x="396" y="238" font-size="12.5" fill="#553c9a" font-weight="bold">⚙️  整合管理樞紐</text>
+
+<!-- 服務提供層 (lower) -->
+<rect x="248" y="366" width="656" height="120" rx="14"
+      fill="#e6fffa" stroke="#285e61" stroke-width="1.8" stroke-dasharray="9,4" opacity=".88"/>
+<text x="266" y="388" font-size="12.5" fill="#285e61" font-weight="bold">🏥  醫療服務提供層</text>
+
+<!-- 病患層 (bottom) -->
+<rect x="338" y="518" width="476" height="120" rx="14"
+      fill="#fff5f5" stroke="#9b2c2c" stroke-width="1.8" stroke-dasharray="9,4" opacity=".88"/>
+<text x="356" y="540" font-size="12.5" fill="#9b2c2c" font-weight="bold">👨‍👩‍👧  參保病患 / 居民</text>
+
+<!-- ═══════════════ ARROWS ═══════════════ -->
+
+<!-- ── Bundle A: SHI → GK (edges 1, 2, 9) ── -->
+<path d="M348,118 C450,118 442,274 432,282"
+      stroke="#1a365d" stroke-width="2.8" fill="none" marker-end="url(#ae-navy)"/>
+<!-- Bundle A label box -->
+<rect x="278" y="160" width="162" height="68" rx="6" fill="#dbeafe" stroke="#1a365d" stroke-width="1.2" opacity=".97"/>
+<text x="289" y="178" font-size="10" fill="#1a365d" font-weight="bold">① 啟動資金 (€450萬)</text>
+<text x="289" y="194" font-size="10" fill="#1a365d">② 節餘分享合約</text>
+<text x="289" y="208" font-size="10" fill="#1a365d">⑨ 病患匿名常規數據</text>
+<text x="289" y="221" font-size="9" fill="#2c5282" font-style="italic">Shared Savings</text>
+
+<!-- ── Edge B: SHI → Providers (edge 4, FFS) ── -->
+<path d="M348,132 C760,132 756,400 756,396"
+      stroke="#1a365d" stroke-width="1.8" fill="none" stroke-dasharray="6,3"
+      marker-end="url(#ae-navy)"/>
+<rect x="666" y="224" width="140" height="44" rx="5" fill="#dbeafe" stroke="#1a365d" stroke-width="1" opacity=".95"/>
+<text x="736" y="240" text-anchor="middle" font-size="10" fill="#1a365d" font-weight="bold">④ 基本論量計酬</text>
+<text x="736" y="254" text-anchor="middle" font-size="10" fill="#1a365d">FFS (80–90%)</text>
+<text x="736" y="265" text-anchor="middle" font-size="9" fill="#2c5282" font-style="italic">繞過 GK 直接支付</text>
+
+<!-- ── Bundle C: GK → Providers (edges 3, 5, 8, 10) ── -->
+<path d="M576,344 L576,396"
+      stroke="#553c9a" stroke-width="3" fill="none" marker-end="url(#ae-purple)"/>
+<!-- Bundle C label box -->
+<rect x="588" y="348" width="172" height="84" rx="6" fill="#f3e8ff" stroke="#805ad5" stroke-width="1.2" opacity=".97"/>
+<text x="598" y="366" font-size="10" fill="#553c9a" font-weight="bold">③ 附加獎金 (5–15%)</text>
+<text x="598" y="381" font-size="10" fill="#553c9a">⑤ 招募管理協議</text>
+<text x="598" y="396" font-size="10" fill="#553c9a">⑧ 派駐健康教練</text>
+<text x="598" y="411" font-size="10" fill="#553c9a">⑩ 績效儀表板</text>
+<text x="598" y="424" font-size="9" fill="#6b46c1" font-style="italic">Gesundheitslotsen</text>
+
+<!-- ── Edge D: Providers → Patients (edge 6) ── -->
+<path d="M598,486 L598,548"
+      stroke="#285e61" stroke-width="2.2" fill="none" marker-end="url(#ae-teal)"/>
+<rect x="608" y="506" width="136" height="28" rx="5" fill="#e6fffa" opacity=".95"/>
+<text x="676" y="518" text-anchor="middle" font-size="10" fill="#285e61" font-weight="bold">⑥ 整合照護服務</text>
+<text x="676" y="530" text-anchor="middle" font-size="9" fill="#285e61">預防・治療・個案管理</text>
+
+<!-- ── Edge E: Patients → Providers (edge 7) ── -->
+<path d="M524,548 C500,500 500,480 524,478"
+      stroke="#9b2c2c" stroke-width="2" fill="none" marker-end="url(#ae-red)"/>
+<rect x="386" y="496" width="140" height="28" rx="5" fill="#fff5f5" opacity=".95"/>
+<text x="456" y="508" text-anchor="middle" font-size="10" fill="#9b2c2c" font-weight="bold">⑦ 選擇「信任醫師」</text>
+<text x="456" y="520" text-anchor="middle" font-size="9" fill="#9b2c2c">共同決策 SDM</text>
+
+<!-- ── Bundle F: EKIV → GK (edges 11, 12) ── -->
+<path d="M806,118 C740,118 726,274 720,282"
+      stroke="#22543d" stroke-width="2.2" fill="none" marker-end="url(#ae-green)"/>
+<!-- Bundle F label box -->
+<rect x="718" y="162" width="148" height="44" rx="6" fill="#c6f6d5" stroke="#22543d" stroke-width="1.2" opacity=".97"/>
+<text x="728" y="180" font-size="10" fill="#22543d" font-weight="bold">⑪ 外部效益評估</text>
+<text x="728" y="195" font-size="10" fill="#22543d">⑫ 質量審計 (ISO)</text>
+<text x="728" y="208" font-size="9" fill="#276749" font-style="italic">死亡率・成本效率</text>
+
+<!-- ── Edge G: EKIV → SHI (edge 13) ── -->
+<line x1="806" y1="84" x2="352" y2="84"
+      stroke="#22543d" stroke-width="2" stroke-dasharray="6,3"
+      marker-end="url(#ae-green)"/>
+<rect x="466" y="68" width="172" height="30" rx="5" fill="#c6f6d5" stroke="#22543d" stroke-width="1" opacity=".95"/>
+<text x="552" y="80" text-anchor="middle" font-size="10" fill="#22543d" font-weight="bold">⑬ 科學評估報告 → SHI</text>
+<text x="552" y="92" text-anchor="middle" font-size="9" fill="#276749">EKIV 獨立呈報</text>
+
+<!-- ── Edge H: Patients → EKIV (edge 14) ── -->
+<path d="M814,590 C910,590 990,430 990,150"
+      stroke="#9b2c2c" stroke-width="1.8" fill="none" stroke-dasharray="5,3"
+      marker-end="url(#ae-red)"/>
+<rect x="900" y="374" width="138" height="44" rx="5" fill="#fff5f5" stroke="#9b2c2c" stroke-width="1" opacity=".95"/>
+<text x="969" y="390" text-anchor="middle" font-size="10" fill="#9b2c2c" font-weight="bold">⑭ 滿意度調查</text>
+<text x="969" y="404" text-anchor="middle" font-size="10" fill="#9b2c2c">GEKIM + 申訴員</text>
+<text x="969" y="416" text-anchor="middle" font-size="9" fill="#c53030" font-style="italic">病患聲音回饋</text>
+
+<!-- ── Edge I: Patients → GK (edge 15) ── -->
+<path d="M480,548 C458,490 448,380 448,346"
+      stroke="#9b2c2c" stroke-width="1.8" fill="none" marker-end="url(#ae-red)"/>
+<rect x="310" y="434" width="140" height="28" rx="5" fill="#fff5f5" opacity=".95"/>
+<text x="380" y="446" text-anchor="middle" font-size="10" fill="#9b2c2c" font-weight="bold">⑮ 參與患者委員會</text>
+<text x="380" y="458" text-anchor="middle" font-size="9" fill="#c53030">病患共治 GK</text>
+
+<!-- ═══════════════ NODES ═══════════════ -->
+
+<!-- SHI │ 法定醫療保險公司 -->
+<rect x="88" y="58" width="264" height="96" rx="12"
+      fill="#1a365d" stroke="#0f2044" stroke-width="2" filter="url(#glow-b)"/>
+<text x="220" y="80" text-anchor="middle" fill="white" font-size="12.5" font-weight="bold">法定醫療保險公司</text>
+<text x="220" y="100" text-anchor="middle" fill="#bee3f8" font-size="11">SHI</text>
+<text x="220" y="118" text-anchor="middle" fill="#bee3f8" font-size="10">AOK &amp; SVLFG / LKK</text>
+<text x="220" y="135" text-anchor="middle" fill="#90cdf4" font-size="9">資金方・數據方・績效考核方</text>
+
+<!-- EKIV │ 獨立評估監理機構 -->
+<rect x="806" y="58" width="286" height="96" rx="12"
+      fill="#22543d" stroke="#1c4532" stroke-width="2" filter="url(#sh)"/>
+<text x="949" y="80" text-anchor="middle" fill="white" font-size="12.5" font-weight="bold">獨立評估與監理機構</text>
+<text x="949" y="100" text-anchor="middle" fill="#c6f6d5" font-size="11">EKIV</text>
+<text x="949" y="118" text-anchor="middle" fill="#c6f6d5" font-size="10">EKIV / 大學 / DQS</text>
+<text x="949" y="135" text-anchor="middle" fill="#9ae6b4" font-size="9">外部效益評估・ISO 質量認證</text>
+
+<!-- GK │ 區域整合管理公司 (CENTRAL HUB) -->
+<rect x="388" y="244" width="376" height="100" rx="13"
+      fill="#553c9a" stroke="#44337a" stroke-width="2.5" filter="url(#glow-p)"/>
+<text x="576" y="268" text-anchor="middle" fill="white" font-size="13.5" font-weight="bold">區域整合管理公司</text>
+<text x="576" y="290" text-anchor="middle" fill="#e9d8fd" font-size="12">GK GmbH</text>
+<text x="576" y="308" text-anchor="middle" fill="#d6bcfa" font-size="10.5">Gesundes Kinzigtal ── 整合照護樞紐</text>
+<text x="576" y="326" text-anchor="middle" fill="#b794f4" font-size="9.5">統籌合約・分配資源・監管績效・病患共治</text>
+
+<!-- Providers │ 醫療服務提供者 -->
+<rect x="258" y="396" width="636" height="90" rx="12"
+      fill="#285e61" stroke="#1d4044" stroke-width="2" filter="url(#sh)"/>
+<text x="576" y="420" text-anchor="middle" fill="white" font-size="12.5" font-weight="bold">醫療服務提供者</text>
+<text x="576" y="440" text-anchor="middle" fill="#b2f5ea" font-size="11">MQNK 醫師網絡・醫院・藥局・其他醫事人員</text>
+<text x="576" y="458" text-anchor="middle" fill="#81e6d9" font-size="10">260+ 合約夥伴 ── 整合預防・治療・個案管理</text>
+<text x="576" y="474" text-anchor="middle" fill="#4fd1c5" font-size="9.5">收入＝論量計酬 FFS (80–90%) ＋ 附加獎金 (5–15%)</text>
+
+<!-- Patients │ 參保病患/居民 -->
+<rect x="348" y="548" width="456" height="90" rx="12"
+      fill="#9b2c2c" stroke="#742a2a" stroke-width="2" filter="url(#sh)"/>
+<text x="576" y="572" text-anchor="middle" fill="white" font-size="13" font-weight="bold">參保病患 / 居民</text>
+<text x="576" y="592" text-anchor="middle" fill="#fed7e2" font-size="11">Insured Patients &amp; Residents</text>
+<text x="576" y="610" text-anchor="middle" fill="#feb2b2" font-size="10">自願加入・選擇「信任醫師」・參與患者委員會</text>
+<text x="576" y="626" text-anchor="middle" fill="#fc8181" font-size="9.5">通過 GEKIM 回饋滿意度 &amp; 申訴</text>
+
+<!-- ═══════════════ SHARED SAVINGS BADGE ═══════════════ -->
+<rect x="22" y="670" width="300" height="130" rx="12"
+      fill="#fffbeb" stroke="#b7791f" stroke-width="2" filter="url(#sh)"/>
+<text x="172" y="694" text-anchor="middle" font-size="12.5" fill="#92400e" font-weight="bold">💡 Shared Savings 機制</text>
+<text x="40" y="716" font-size="10.5" fill="#78350f">• SHI 設定年度標準醫療費用基準</text>
+<text x="40" y="734" font-size="10.5" fill="#78350f">• GK 若低於基準 → 節餘歸 SHI + GK 分享</text>
+<text x="40" y="752" font-size="10.5" fill="#78350f">• GK 若超出基準 → GK 承擔超支責任</text>
+<text x="40" y="770" font-size="10.5" fill="#78350f">• 激勵 GK 主動預防 ≫ 減少高成本住院</text>
+<text x="40" y="788" font-size="10.5" fill="#b7791f" font-style="italic">→ 實績：人均成本低 25.4% (2006–2010)</text>
+
+<!-- ═══════════════ CYCLE ANNOTATION ═══════════════ -->
+<rect x="840" y="672" width="290" height="114" rx="12"
+      fill="#faf5ff" stroke="#805ad5" stroke-width="2" filter="url(#sh)"/>
+<text x="985" y="696" text-anchor="middle" font-size="12.5" fill="#553c9a" font-weight="bold">⚙️ GK 核心職能</text>
+<text x="858" y="718" font-size="10.5" fill="#44337a">• 管理 260+ 合約夥伴</text>
+<text x="858" y="736" font-size="10.5" fill="#44337a">• 招募並培訓健康教練</text>
+<text x="858" y="754" font-size="10.5" fill="#44337a">• 運行 HSC Cockpit 儀表板</text>
+<text x="858" y="772" font-size="10.5" fill="#44337a">• 主持患者委員會 (共治)</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="lb" style="background:#1a365d"></div>法定醫療保險 SHI</div>
+  <div class="li"><div class="lb" style="background:#22543d"></div>獨立評估 EKIV</div>
+  <div class="li"><div class="lb" style="background:#553c9a"></div>整合管理公司 GK（核心）</div>
+  <div class="li"><div class="lb" style="background:#285e61"></div>醫療服務提供者</div>
+  <div class="li"><div class="lb" style="background:#9b2c2c"></div>參保病患</div>
+  <div class="li" style="margin-left:10px; color:#718096; font-size:11px">
+    ─── 主要資金/服務流 &nbsp; - - - 監管/回饋 &nbsp; 粗線＝多邊捆綁
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="info-intro">
+    🇩🇪 在黑森林深處的 Kinzigtal 山谷，藏著一套被國際健康政策圈奉為經典的區域照護實驗——<strong>Gesundes Kinzigtal（GK）</strong>。它的核心思維很簡單卻很少人做到：讓「把民眾照顧得更健康」這件事，直接變成一門能賺錢的生意。2005 年底計畫正式啟動，用一套精巧的財務機制，把預防醫學從「做功德」變成「有回報」。
+  </div>
+
+  <h2 class="info-h2"><span class="bar"></span>制度說明：一、GK 模式核心概述</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">📜 法源背景與目標</div>
+      德國於 <b>2004 年</b>通過《GKV 現代化法案》，規定保險基金撥出 <span class="k-num">1%</span> 總支出用於跨部門整合照護計畫，目標是克服門診與住院之間的制度性壁壘、避免過度醫療化。GK 計畫隔年底即在 Kinzigtal 地區正式啟動，成為這項政策最早、也最成功的示範場域。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">🤝 組織架構：醫師與數據公司合資</div>
+      由在地醫師網路 <b>MQNK</b>（持股 66.6%，確保臨床主導權）與健康經濟數據公司 <b>OptiMedis</b>（持股 33.3%，導入健康經濟學分析）合資成立<b>區域整合管理公司（GK GmbH）</b>，統籌當地的照護設計與大數據管理——臨床專業與數據科學，從股權結構上就綁在一起。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">💚 照護哲學：患者是「健康共同生產者」</div>
+      採用「最小干擾醫學」（MDM）哲學，把患者定位為 <b>Health Co-production</b> 的夥伴而非被動接受治療的對象。代表性方案「<b>健康體重計畫</b>」提供 12 個月漸進式生活型態干預，結合臨床監測、群體烹飪營養課程，以及計畫補貼的個人化運動處方。
+    </div>
+  </div>
+
+  <h2 class="info-h2" style="margin-top:26px;"><span class="bar"></span>制度說明：二、經典給付與財務激勵機制（2007–2018）</h2>
+
+  <div class="info-cols">
+    <div class="info-card">
+      <div class="info-block-title">💰 共同節餘機制（Shared Savings）</div>
+      保險基金依歷史開支、年齡、性別及 <b>Morbi-RSA</b> 風險調整參數，算出該地區保戶的「預測標準照護成本（Norm Cost）」。若實際醫療支出低於預測基準，所創造的<b>共同節餘</b>由 GK GmbH 與保險基金<b>對半平分</b>；而 GK GmbH 分到的利潤，必須 100% 重新投資於預防專案研發、健康顧問培訓與醫師激勵報酬——節餘不落入私人口袋，而是滾動投入下一輪預防。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">👨‍⚕️ 醫師激勵機制</div>
+      提供「加成給付」補償醫師與病人共同決策、制定個人健康目標協議所花的額外時間（<b>時間成本補償</b>）；並補助醫師參與跨科別品質小組的時間，每季發送「醫療品質與成本分析報告（HSC Digital Report）」進行同儕比較，持續拉高整體照護品質（<b>品質合作補助</b>）。
+    </div>
+  </div>
+
+  <div class="info-note">💡 想知道 2021 年公平競爭法改革後，Morbi-RSA 悖論如何逼出 2024 年 BVGK 新契約？完整故事在「德國政策治理架構圖」頁面。</div>
+
+  <div class="info-stats">
+    <div class="stat-pill"><span class="num">66.6%／33.3%</span><span class="lab">MQNK／OptiMedis 持股結構</span></div>
+    <div class="stat-pill"><span class="num">€1,820萬+</span><span class="lab">2007–2018 年淨節餘（法定保險基金）</span></div>
+    <div class="stat-pill"><span class="num">−14%</span><span class="lab">參保者 4 年追蹤全死因死亡率降幅</span></div>
+    <div class="stat-pill"><span class="num">92.1%</span><span class="lab">整體照護滿意度</span></div>
+  </div>
+</section>
+
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>德國整合照護政策治理架構圖</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: linear-gradient(135deg, #fff7ed 0%, #fef9c3 40%, #f0fdf4 100%);
+    font-family: 'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif;
+  }
+  h1 { text-align:center; color:#1a202c; font-size:1.4em; margin:0 0 4px; letter-spacing:.03em; }
+  .subtitle { text-align:center; color:#718096; font-size:12px; margin:0 0 14px; }
+  .wrap { background:white; border-radius:16px; padding:26px 20px 18px;
+          box-shadow:0 6px 32px rgba(0,0,0,.11); overflow-x:auto; }
+  svg text { font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',system-ui,sans-serif; }
+  .legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:10px;
+            justify-content:center; font-size:12px; color:#4a5568; }
+  .li { display:flex; align-items:center; gap:5px; }
+  .lb { width:16px; height:11px; border-radius:3px; flex-shrink:0; }
+
+  :root{ --info-accent:#d97706; --info-accent-dark:#9a5b0a; --info-tint1:#fff7ed; --info-tint2:#fde9c8; }
+  .info-section{ max-width:1150px; margin:30px auto 0; }
+  .info-intro{
+    background:linear-gradient(135deg, var(--info-tint1), #fef9c3);
+    border-radius:16px; padding:20px 22px; margin-bottom:20px;
+    font-size:13.5px; line-height:1.95; color:#33344a; box-shadow:0 4px 14px rgba(0,0,0,.05);
+  }
+  .info-h2{ font-size:1.2em; color:#1a202c; margin:0 0 16px; display:flex; align-items:center; gap:9px; font-weight:800; }
+  .info-h2 .bar{ width:6px; height:22px; border-radius:3px; background:var(--info-accent); display:inline-block; }
+  .info-block{ margin-bottom:24px; }
+  .info-block-title{ font-size:1.03em; font-weight:800; color:var(--info-accent-dark); margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .info-card{ background:#fff; border:1px solid #f7ecd8; border-left:4px solid var(--info-accent); border-radius:10px; padding:14px 16px; font-size:12.8px; line-height:1.8; color:#4a5568; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .info-card b, .info-card strong{ color:#1a202c; }
+  .k-num{ display:inline-block; background:var(--info-tint2); color:var(--info-accent-dark); font-weight:800; padding:1px 8px; border-radius:999px; font-size:11.5px; }
+  .info-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .info-stats{ display:flex; flex-wrap:wrap; gap:12px; margin:16px 0 4px; }
+  .stat-pill{ flex:1 1 150px; background:linear-gradient(135deg,var(--info-accent),#16a34a); color:#fff; border-radius:12px; padding:14px 14px; text-align:center; box-shadow:0 4px 12px rgba(217,119,6,.28); }
+  .stat-pill .num{ font-size:1.35em; font-weight:800; display:block; }
+  .stat-pill .lab{ font-size:11px; opacity:.92; }
+  .info-note{ font-size:12px; color:#8a8a9c; text-align:center; margin-top:10px; }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+<h1>德國整合照護模式 ── 政策治理與多層次架構</h1>
+<p class="subtitle">從聯邦立法到社區落地的完整制度鏈 (SHI + Morbi-RSA + GK GmbH)</p>
+<div class="wrap">
+<svg viewBox="0 0 1150 830" style="width:100%;max-width:1150px;display:block;margin:auto;"
+     xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ae-orange" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#c05621"/></marker>
+  <marker id="ae-navy"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#1a365d"/></marker>
+  <marker id="ae-purple" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#553c9a"/></marker>
+  <marker id="ae-teal"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#285e61"/></marker>
+  <marker id="ae-green"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#22543d"/></marker>
+  <marker id="ae-red"    markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#9b2c2c"/></marker>
+  <marker id="ae-amber"  markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#b7791f"/></marker>
+  <marker id="ae-gray"   markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#718096"/></marker>
+  <filter id="sh" x="-12%" y="-18%" width="124%" height="148%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#00000030"/>
+  </filter>
+  <filter id="glow-p" x="-18%" y="-24%" width="136%" height="158%">
+    <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#70245966"/>
+  </filter>
+  <filter id="glow-b" x="-14%" y="-18%" width="128%" height="148%">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#1a365d44"/>
+  </filter>
+  <filter id="glow-o" x="-14%" y="-18%" width="128%" height="148%">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#c0562144"/>
+  </filter>
+</defs>
+
+<!-- ═══════════════ ZONE BACKGROUNDS ═══════════════ -->
+
+<!-- Zone 1: 政策治理層 (top) -->
+<rect x="18" y="18" width="1114" height="160" rx="14"
+      fill="#fff7ed" stroke="#c05621" stroke-width="2" stroke-dasharray="9,4" opacity=".9"/>
+<text x="36" y="41" font-size="12.5" fill="#7b341e" font-weight="bold">🏛  聯邦政策治理層 ── 立法・資金・評估</text>
+
+<!-- Zone 2: 財務整合層 (SHI) -->
+<rect x="80" y="200" width="520" height="128" rx="14"
+      fill="#eff6ff" stroke="#1a365d" stroke-width="1.8" stroke-dasharray="9,4" opacity=".88"/>
+<text x="98" y="222" font-size="12.5" fill="#1a365d" font-weight="bold">💳  法定醫療保險 ── 資金樞紐</text>
+
+<!-- Zone 3: 整合管理樞紐 (GK) -->
+<rect x="292" y="362" width="524" height="132" rx="14"
+      fill="#f3e8ff" stroke="#805ad5" stroke-width="2" stroke-dasharray="9,4" opacity=".88"/>
+<text x="310" y="384" font-size="12.5" fill="#553c9a" font-weight="bold">⚙️  整合管理樞紐 GK GmbH</text>
+
+<!-- Zone 4: 服務與受益層 (bottom) -->
+<rect x="80" y="530" width="990" height="280" rx="14"
+      fill="#f0fff4" stroke="#285e61" stroke-width="1.8" stroke-dasharray="9,4" opacity=".88"/>
+<text x="98" y="552" font-size="12.5" fill="#285e61" font-weight="bold">🌿  服務提供 & 社區受益層</text>
+
+<!-- ═══════════════ ARROWS ═══════════════ -->
+
+<!-- 1+4. Gov → SHI: bundle (立法賦權 + 品質規範) -->
+<path d="M460,130 C420,188 390,218 378,242"
+      stroke="#c05621" stroke-width="2.8" fill="none" marker-end="url(#ae-orange)"/>
+<rect x="288" y="158" width="155" height="54" rx="5" fill="#fff7ed" stroke="#c05621" stroke-width="1.1" opacity=".97"/>
+<text x="296" y="173" font-size="10" fill="#7b341e" font-weight="bold">① 立法賦權</text>
+<text x="296" y="187" font-size="9.5" fill="#7b341e">  (2004 SHI 現代化法案)</text>
+<text x="296" y="201" font-size="10" fill="#7b341e" font-weight="bold">④ 品質與服務規範</text>
+<text x="296" y="213" font-size="9.5" fill="#c05621" font-style="italic">  G-BA 聯邦聯合委員會</text>
+
+<!-- 2. Gov → EKIV: 創新基金 (upper horizontal y=74) -->
+<line x1="684" y1="74" x2="822" y2="74"
+      stroke="#c05621" stroke-width="2" marker-end="url(#ae-orange)"/>
+<rect x="686" y="56" width="132" height="28" rx="5" fill="#fff7ed" opacity=".95"/>
+<text x="752" y="68" text-anchor="middle" font-size="10" fill="#7b341e" font-weight="bold">② 創新基金資助</text>
+<text x="752" y="80" text-anchor="middle" font-size="9" fill="#c05621">(GKV-VSG)</text>
+
+<!-- 3. RSA → SHI: 風險補償分配資金 -->
+<path d="M244,100 C300,160 340,208 348,242"
+      stroke="#b7791f" stroke-width="2.2" fill="none" marker-end="url(#ae-amber)"/>
+<rect x="246" y="126" width="106" height="44" rx="5" fill="#fffbeb" stroke="#b7791f" stroke-width="1" opacity=".97"/>
+<text x="299" y="143" text-anchor="middle" font-size="9.5" fill="#92400e" font-weight="bold">③ 風險補償</text>
+<text x="299" y="157" text-anchor="middle" font-size="9.5" fill="#92400e">資金分配</text>
+<text x="299" y="169" text-anchor="middle" font-size="9" fill="#b7791f" font-style="italic">依人口健康</text>
+
+<!-- 5. SHI → GK: 啟動資金＋節餘分享 -->
+<path d="M510,288 C548,348 562,382 562,400"
+      stroke="#1a365d" stroke-width="2.5" fill="none" marker-end="url(#ae-navy)"/>
+<rect x="518" y="312" width="152" height="44" rx="5" fill="#dbeafe" stroke="#1a365d" stroke-width="1.1" opacity=".97"/>
+<text x="594" y="328" text-anchor="middle" font-size="10" fill="#1a365d" font-weight="bold">⑤ 啟動資金</text>
+<text x="594" y="342" text-anchor="middle" font-size="10" fill="#1a365d">+ 節餘分享合約</text>
+<text x="594" y="354" text-anchor="middle" font-size="9" fill="#2c5282" font-style="italic">Shared Savings</text>
+
+<!-- 6. GK → Providers: 附加獎金 -->
+<path d="M472,492 C440,528 408,548 395,568"
+      stroke="#553c9a" stroke-width="2.2" fill="none" marker-end="url(#ae-purple)"/>
+<rect x="378" y="502" width="144" height="30" rx="5" fill="#f3e8ff" opacity=".97"/>
+<text x="450" y="515" text-anchor="middle" font-size="10" fill="#553c9a" font-weight="bold">⑥ 附加獎金</text>
+<text x="450" y="527" text-anchor="middle" font-size="9.5" fill="#553c9a">(5–15%)</text>
+
+<!-- 7. SHI → Providers: 基本論量計酬 FFS (route left side) -->
+<path d="M248,314 C200,420 200,530 222,568"
+      stroke="#1a365d" stroke-width="2" fill="none" stroke-dasharray="7,3"
+      marker-end="url(#ae-navy)"/>
+<rect x="96" y="402" width="140" height="44" rx="5" fill="#dbeafe" stroke="#1a365d" stroke-width="1" opacity=".95"/>
+<text x="166" y="418" text-anchor="middle" font-size="10" fill="#1a365d" font-weight="bold">⑦ 基本論量</text>
+<text x="166" y="432" text-anchor="middle" font-size="10" fill="#1a365d">計酬 FFS</text>
+<text x="166" y="444" text-anchor="middle" font-size="9" fill="#2c5282">(80–90%)</text>
+
+<!-- 8. GK → LocalGov: 區域健康促進 -->
+<path d="M730,458 C780,510 810,542 818,568"
+      stroke="#553c9a" stroke-width="2" fill="none" marker-end="url(#ae-purple)"/>
+<rect x="726" y="488" width="136" height="28" rx="5" fill="#f3e8ff" opacity=".97"/>
+<text x="794" y="500" text-anchor="middle" font-size="10" fill="#553c9a" font-weight="bold">⑧ 區域健康</text>
+<text x="794" y="512" text-anchor="middle" font-size="9.5" fill="#553c9a">促進合作</text>
+
+<!-- 9. LocalGov → Patients: 社區資源整合 -->
+<path d="M800,650 C768,698 700,728 686,736"
+      stroke="#285e61" stroke-width="2" fill="none" marker-end="url(#ae-teal)"/>
+<rect x="720" y="668" width="138" height="30" rx="5" fill="#e6fffa" opacity=".97"/>
+<text x="789" y="681" text-anchor="middle" font-size="10" fill="#285e61" font-weight="bold">⑨ 社區資源整合</text>
+<text x="789" y="693" text-anchor="middle" font-size="9" fill="#285e61">學校・運動俱樂部</text>
+
+<!-- 10. Providers → Patients: 整合照護服務 -->
+<path d="M398,652 C418,698 450,724 468,736"
+      stroke="#285e61" stroke-width="2.2" fill="none" marker-end="url(#ae-teal)"/>
+<rect x="368" y="668" width="130" height="28" rx="5" fill="#e6fffa" opacity=".97"/>
+<text x="433" y="680" text-anchor="middle" font-size="10" fill="#285e61" font-weight="bold">⑩ 整合照護</text>
+<text x="433" y="692" text-anchor="middle" font-size="9.5" fill="#285e61">服務</text>
+
+<!-- 11. Patients → Providers: 選擇信任醫師 (reverse arc) -->
+<path d="M476,736 C454,700 430,668 420,652"
+      stroke="#9b2c2c" stroke-width="1.8" fill="none" stroke-dasharray="5,3"
+      marker-end="url(#ae-red)"/>
+<rect x="290" y="686" width="140" height="28" rx="5" fill="#fff5f5" opacity=".97"/>
+<text x="360" y="698" text-anchor="middle" font-size="10" fill="#9b2c2c" font-weight="bold">⑪ 選擇信任醫師</text>
+<text x="360" y="710" text-anchor="middle" font-size="9" fill="#c53030">SDM 共同決策</text>
+
+<!-- 12. EKIV → GK: 科學實證數據 (long diagonal) -->
+<path d="M912,130 C970,268 850,380 732,428"
+      stroke="#22543d" stroke-width="2.2" fill="none" marker-end="url(#ae-green)"/>
+<rect x="920" y="256" width="138" height="44" rx="5" fill="#c6f6d5" stroke="#22543d" stroke-width="1" opacity=".97"/>
+<text x="989" y="272" text-anchor="middle" font-size="10" fill="#22543d" font-weight="bold">⑬ 科學實證</text>
+<text x="989" y="286" text-anchor="middle" font-size="10" fill="#22543d">數據回饋 GK</text>
+<text x="989" y="298" text-anchor="middle" font-size="9" fill="#276749" font-style="italic">EKIV → GK</text>
+
+<!-- 13. EKIV → Gov: 外部效益評估報告 (lower horizontal y=110) -->
+<line x1="822" y1="110" x2="684" y2="110"
+      stroke="#22543d" stroke-width="2" stroke-dasharray="6,3"
+      marker-end="url(#ae-green)"/>
+<rect x="672" y="115" width="152" height="28" rx="5" fill="#c6f6d5" opacity=".97"/>
+<text x="748" y="127" text-anchor="middle" font-size="10" fill="#22543d" font-weight="bold">⑫ 外部效益評估報告</text>
+<text x="748" y="139" text-anchor="middle" font-size="9" fill="#276749">科學評估回報政府</text>
+
+<!-- ═══════════════ NODES ═══════════════ -->
+
+<!-- RSA │ Morbi-RSA 風險補償 -->
+<rect x="44" y="56" width="200" height="84" rx="11"
+      fill="#b7791f" stroke="#975a16" stroke-width="1.8" filter="url(#sh)"/>
+<text x="144" y="78" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Morbi-RSA</text>
+<text x="144" y="96" text-anchor="middle" fill="#fefcbf" font-size="10">風險補償制度</text>
+<text x="144" y="112" text-anchor="middle" fill="#faf089" font-size="9">財務分配機制</text>
+<text x="144" y="128" text-anchor="middle" fill="#f6e05e" font-size="8.5">依慢病人口調整保費收入</text>
+
+<!-- Gov │ 聯邦/邦政府 -->
+<rect x="384" y="54" width="300" height="84" rx="12"
+      fill="#c05621" stroke="#9c4221" stroke-width="2" filter="url(#glow-o)"/>
+<text x="534" y="76" text-anchor="middle" fill="white" font-size="12.5" font-weight="bold">聯邦 / 邦政府・監管機構</text>
+<text x="534" y="96" text-anchor="middle" fill="#feebc8" font-size="10.5">衛生部 (BMG)</text>
+<text x="534" y="114" text-anchor="middle" fill="#fed7ae" font-size="10">聯邦聯合委員會 G-BA</text>
+<text x="534" y="130" text-anchor="middle" fill="#fbd38d" font-size="9">立法・品質規範・創新基金</text>
+
+<!-- EKIV │ 獨立評估機構 -->
+<rect x="822" y="54" width="298" height="84" rx="11"
+      fill="#22543d" stroke="#1c4532" stroke-width="1.8" filter="url(#sh)"/>
+<text x="971" y="76" text-anchor="middle" fill="white" font-size="12" font-weight="bold">獨立評估機構</text>
+<text x="971" y="96" text-anchor="middle" fill="#c6f6d5" font-size="10.5">EKIV / 大學 / 研究機構</text>
+<text x="971" y="114" text-anchor="middle" fill="#9ae6b4" font-size="10">外部效益評估・科學研究</text>
+<text x="971" y="130" text-anchor="middle" fill="#68d391" font-size="9">死亡率・成本效率・ISO 認證</text>
+
+<!-- SHI │ 法定醫療保險 -->
+<rect x="238" y="240" width="284" height="84" rx="12"
+      fill="#1a365d" stroke="#0f2044" stroke-width="2" filter="url(#glow-b)"/>
+<text x="380" y="264" text-anchor="middle" fill="white" font-size="12.5" font-weight="bold">法定醫療保險公司</text>
+<text x="380" y="284" text-anchor="middle" fill="#bee3f8" font-size="11">SHI</text>
+<text x="380" y="302" text-anchor="middle" fill="#bee3f8" font-size="10">AOK &amp; SVLFG / LKK</text>
+<text x="380" y="318" text-anchor="middle" fill="#90cdf4" font-size="9">保費收入・資金調度・績效考核</text>
+
+<!-- GK │ 區域整合管理公司 (HUB) -->
+<rect x="302" y="398" width="508" height="88" rx="13"
+      fill="#702459" stroke="#521b41" stroke-width="2.5" filter="url(#glow-p)"/>
+<text x="556" y="422" text-anchor="middle" fill="white" font-size="13.5" font-weight="bold">區域整合管理公司 GK GmbH</text>
+<text x="556" y="444" text-anchor="middle" fill="#fbb6ce" font-size="11">Gesundes Kinzigtal ── 整合照護樞紐</text>
+<text x="556" y="462" text-anchor="middle" fill="#fed7e2" font-size="10">統籌合約管理・部署健康教練・HSC Cockpit 儀表板</text>
+<text x="556" y="478" text-anchor="middle" fill="#fecdd3" font-size="9.5">260+ 合約夥伴・患者委員會・區域健康促進</text>
+
+<!-- Providers │ 醫療服務提供者 -->
+<rect x="200" y="568" width="370" height="84" rx="12"
+      fill="#285e61" stroke="#1d4044" stroke-width="2" filter="url(#sh)"/>
+<text x="385" y="590" text-anchor="middle" fill="white" font-size="12" font-weight="bold">醫療服務提供者</text>
+<text x="385" y="610" text-anchor="middle" fill="#b2f5ea" font-size="10.5">MQNK 醫師網絡・醫院・藥局</text>
+<text x="385" y="628" text-anchor="middle" fill="#81e6d9" font-size="10">整合預防・治療・個案管理</text>
+<text x="385" y="644" text-anchor="middle" fill="#4fd1c5" font-size="9.5">FFS (80–90%) ＋ 附加獎金 (5–15%)</text>
+
+<!-- LocalGov │ 地方市政府/社區 -->
+<rect x="680" y="568" width="280" height="84" rx="11"
+      fill="#276749" stroke="#1c4532" stroke-width="1.8" filter="url(#sh)"/>
+<text x="820" y="590" text-anchor="middle" fill="white" font-size="12" font-weight="bold">地方市政府 / 社區</text>
+<text x="820" y="610" text-anchor="middle" fill="#c6f6d5" font-size="10.5">Local Government</text>
+<text x="820" y="628" text-anchor="middle" fill="#9ae6b4" font-size="10">學校・運動俱樂部</text>
+<text x="820" y="644" text-anchor="middle" fill="#68d391" font-size="9.5">社區健康促進資源整合</text>
+
+<!-- Patients │ 參保病患/居民 -->
+<rect x="420" y="736" width="360" height="84" rx="12"
+      fill="#9b2c2c" stroke="#742a2a" stroke-width="2" filter="url(#sh)"/>
+<text x="600" y="758" text-anchor="middle" fill="white" font-size="13" font-weight="bold">參保病患 / 居民</text>
+<text x="600" y="778" text-anchor="middle" fill="#fed7e2" font-size="11">Insured Patients &amp; Residents</text>
+<text x="600" y="796" text-anchor="middle" fill="#feb2b2" font-size="10">自願加入・選擇信任醫師・SDM 共同決策</text>
+<text x="600" y="812" text-anchor="middle" fill="#fc8181" font-size="9.5">社區服務受益者・患者委員會參與</text>
+
+<!-- ═══════════════ ANNOTATION BOX ═══════════════ -->
+<!-- Morbi-RSA 說明 -->
+<rect x="22" y="688" width="165" height="128" rx="11"
+      fill="#fffbeb" stroke="#b7791f" stroke-width="1.8" filter="url(#sh)"/>
+<text x="104" y="710" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">💡 Morbi-RSA</text>
+<text x="104" y="728" text-anchor="middle" font-size="9.5" fill="#78350f">依慢性病種類與</text>
+<text x="104" y="744" text-anchor="middle" font-size="9.5" fill="#78350f">嚴重度調整各家</text>
+<text x="104" y="760" text-anchor="middle" font-size="9.5" fill="#78350f">保險公司應得</text>
+<text x="104" y="776" text-anchor="middle" font-size="9.5" fill="#78350f">保費補貼，防止</text>
+<text x="104" y="792" text-anchor="middle" font-size="9.5" fill="#78350f">選擇健康保戶</text>
+<text x="104" y="808" text-anchor="middle" font-size="9" fill="#b7791f" font-style="italic">→ 鼓勵照護高風險群</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="lb" style="background:#c05621"></div>聯邦政府 / G-BA</div>
+  <div class="li"><div class="lb" style="background:#b7791f"></div>Morbi-RSA 風險補償</div>
+  <div class="li"><div class="lb" style="background:#1a365d"></div>法定醫療保險 SHI</div>
+  <div class="li"><div class="lb" style="background:#702459"></div>整合管理公司 GK（核心）</div>
+  <div class="li"><div class="lb" style="background:#22543d"></div>獨立評估 EKIV</div>
+  <div class="li"><div class="lb" style="background:#285e61"></div>醫療服務提供者</div>
+  <div class="li"><div class="lb" style="background:#276749"></div>地方政府 / 社區</div>
+  <div class="li"><div class="lb" style="background:#9b2c2c"></div>參保病患</div>
+  <div class="li" style="margin-left:10px; color:#718096; font-size:11px">
+    ─── 主要政策 / 資金流 &nbsp; - - - 監管 / 回饋流 &nbsp; 粗線＝捆綁多邊
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="info-intro">
+    🇩🇪 如果說「德國 Kinzigtal 整合照護模式」是山谷裡的一則成功故事，這一頁要講的，就是撐起這則故事的整條<strong>制度鏈</strong>——從聯邦立法、法定健康保險（SHI）與風險調整機制（Morbi-RSA），一路到地方的 GK GmbH。而故事最精彩的轉折，是這套制度後來遭遇了自己「太成功」所引發的財務悖論，並在 2024 年完成了一次關鍵轉型。
+  </div>
+
+  <h2 class="info-h2"><span class="bar"></span>制度說明：由上而下的政策骨架</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">📜 聯邦立法：2004 年 GKV 現代化法案</div>
+      德國國會立法規定，法定健康保險（SHI）基金必須撥出 <span class="k-num">1%</span> 總支出，專款用於跨部門整合照護計畫，目的是打破門診與住院之間長期存在的制度性壁壘、避免醫療資源過度醫療化地被消耗。這條法源，正是 Kinzigtal 等區域整合照護模式得以誕生的憲政基礎。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">⚖️ Morbi-RSA：風險調整的雙面刃</div>
+      德國中央健康基金採用<b>病態化風險結構補償機制（Morbi-RSA）</b>，依人群「實質罹病率」分配預算給各家健保基金（如 AOK）。這套機制原意是公平分配資源，卻在 GK 模式大獲成功後，意外演變成阻力最大的結構性矛盾——詳見下方「悖論根源」。
+    </div>
+  </div>
+
+  <h2 class="info-h2" style="margin-top:26px;"><span class="bar"></span>制度說明：2024 年 BVGK 新契約的轉型故事</h2>
+
+  <div class="info-card" style="margin-bottom:16px;">
+    <div class="info-block-title">🌀 悖論根源：預防越成功，預算就越少</div>
+    GK 模式在 2007–2018 年間績效斐然，但宏觀層面卻踩到了「<b>預防成功的逆向財務懲罰</b>」——中央健康基金依「實質罹病率」分配預算，當 GK 的預防計畫太有效、居民變得更健康、罹病嚴重度下降時，政府撥給該健保基金（AOK）的預算反而<b>大幅減少</b>。換句話說：<b>「預防越成功，保險基金預算就越少」</b>，這是一套獎勵生病、懲罰健康的財務邏輯，也是 Morbi-RSA 悖論最尖銳的一刀。
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-block-title">🧭 支柱一：健康導航員（Gesundheitslotsin）</div>
+      隨著 2021 年公平競爭法引入新區域因子，原有共同節餘模型宣告失效。2024 年轉型後的 <b>BVGK 新契約</b>，由健保專款資助「健康導航員」進駐診所端，擔任連結醫療與社區資源的橋樑，主動篩選、追蹤並引導高風險患者。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">💊 支柱二：預防方案專款資助</div>
+      像「健康體重計畫」這類高效益的生活型態干預方案，不再仰賴共同節餘的計算，而是改由保險基金<b>直接專款合約給付</b>，確保優質預防服務不因財務制度轉型而被迫中斷。
+    </div>
+    <div class="info-card">
+      <div class="info-block-title">📈 支柱三：品質績效連結給付（P4P）</div>
+      引進臨床品質指標比較機制，當糖化血色素（HbA1c）等關鍵指標達到基準時，給予醫療團隊品質獎勵金——正式把整個給付邏輯，從「省了多少錢」轉向「顧好了多少健康」的<b>價值導向</b>模式。
+    </div>
+  </div>
+
+  <div class="info-note">📖 想深入了解 GK GmbH 的組織架構、共同節餘機制與醫師激勵細節？完整內容在「德國 Kinzigtal 整合照護模式圖」頁面。</div>
+
+  <div class="info-stats">
+    <div class="stat-pill"><span class="num">2004</span><span class="lab">GKV 現代化法案立法年份</span></div>
+    <div class="stat-pill"><span class="num">1%</span><span class="lab">SHI 撥用於整合照護的支出比例</span></div>
+    <div class="stat-pill"><span class="num">2021</span><span class="lab">公平競爭法引入新區域因子</span></div>
+    <div class="stat-pill"><span class="num">2024</span><span class="lab">BVGK 新契約正式上路</span></div>
+  </div>
+</section>
+
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+</body>
+</html>

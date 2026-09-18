@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣在宅醫療：醫院到居家的中繼轉銜與沙盒</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --coral-50: #FAECE7; --coral-600: #993C1D; --coral-800: #712B13;
+    --amber-50: #FAEEDA; --amber-600: #854F0B; --amber-800: #633806;
+    --teal-50: #E1F5EE; --teal-600: #0F6E56; --teal-800: #085041;
+    --blue-50: #E6F1FB; --blue-600: #185FA5; --blue-800: #0C447C;
+    --gray-50: #F1EFE8; --gray-600: #5F5E5A; --gray-800: #444441;
+    --purple-50: #EEEDFE; --purple-600: #534AB7; --purple-800: #3C3489;
+    --red-50: #FCEBEB; --red-600: #A32D2D; --red-800: #791F1F;
+    --text: #1a1a18;
+    --text-muted: #6b6b66;
+    --bg: #f7f7f4;
+    --border: rgba(0,0,0,0.1);
+    --arrow-color: #8a8a84;
+  }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 48px 24px 72px;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .page-sub {
+    text-align: center;
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+  }
+
+  .diagram {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* ── 節點卡片 ── */
+  .node {
+    border-radius: 12px;
+    padding: 18px 22px;
+  }
+  .node-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .node-sub {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.55;
+    opacity: 0.85;
+  }
+
+  /* ── 色彩 ── */
+  .coral  { background: var(--coral-50);  border: 1.5px solid rgba(153,60,29,0.28); }
+  .coral  .node-title { color: var(--coral-800); }
+  .coral  .node-sub   { color: var(--coral-600); }
+
+  .amber  { background: var(--amber-50);  border: 1.5px solid rgba(133,79,11,0.28); }
+  .amber  .node-title { color: var(--amber-800); }
+  .amber  .node-sub   { color: var(--amber-600); }
+
+  .teal   { background: var(--teal-50);   border: 1.5px solid rgba(15,110,86,0.28); }
+  .teal   .node-title { color: var(--teal-800); }
+  .teal   .node-sub   { color: var(--teal-600); }
+
+  .blue   { background: var(--blue-50);   border: 1.5px solid rgba(24,95,165,0.28); }
+  .blue   .node-title { color: var(--blue-800); }
+  .blue   .node-sub   { color: var(--blue-600); }
+
+  .gray   { background: var(--gray-50);   border: 1.5px solid rgba(95,94,90,0.28); }
+  .gray   .node-title { color: var(--gray-800); }
+  .gray   .node-sub   { color: var(--gray-600); }
+
+  /* ── 橫向箭頭 ── */
+  .arrow-h {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    padding: 0 4px;
+  }
+  .arr-line { flex: 1; height: 2px; background: var(--arrow-color); }
+  .arr-head {
+    width: 0; height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 11px solid var(--arrow-color);
+    flex-shrink: 0;
+  }
+
+  /* ── 向下箭頭 ── */
+  .arrow-down-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+  }
+  .arrow-down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .arr-vline { width: 2px; background: var(--arrow-color); }
+  .arr-vhead {
+    width: 0; height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 11px solid var(--arrow-color);
+  }
+
+  /* ── 沙盒ブロック ── */
+  .sandbox-box {
+    background: var(--purple-50);
+    border: 2px dashed var(--purple-600);
+    border-radius: 14px;
+    padding: 20px 28px;
+  }
+  .sandbox-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--purple-600);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .sandbox-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--purple-800);
+    margin-bottom: 6px;
+  }
+  .sandbox-desc {
+    font-size: 13px;
+    color: var(--purple-600);
+    line-height: 1.6;
+  }
+
+  /* ── 法規缺口 ── */
+  .gap-box {
+    background: var(--red-50);
+    border: 2px dashed var(--red-600);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .gap-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red-600);
+    margin-bottom: 5px;
+  }
+  .gap-box .node-title { color: var(--red-800); font-size: 17px; }
+  .gap-box .node-sub   { color: var(--red-600); font-size: 13px; }
+
+  /* ── 段落標題 ── */
+  .section-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.06em;
+    margin: 4px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── 三欄格線 ── */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ── 欄標題 ── */
+  .col-header {
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .col-header.teal  { color: var(--teal-600); }
+  .col-header.blue  { color: var(--blue-600); }
+  .col-header.gray  { color: var(--gray-600); }
+
+  /* ── 子節點 ── */
+  .sub-col { display: flex; flex-direction: column; gap: 0; }
+  .sub-node {
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .sub-node .node-title { font-size: 15px; }
+  .sub-node .node-sub   { font-size: 12px; }
+
+  /* ── 欄內小箭頭 ── */
+  .col-arrow {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+  }
+
+  /* ── 問題欄 ── */
+  .problem-box {
+    background: var(--red-50);
+    border: 1.5px dashed var(--red-600);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .problem-box .node-title { color: var(--red-800); font-size: 16px; }
+  .problem-box .node-sub   { color: var(--red-600); font-size: 13px; line-height: 1.55; }
+
+  /* ── 圖例 ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 44px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .legend-dash {
+    width: 22px; height: 0;
+    border-top: 2.5px dashed;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 680px) {
+    .three-col { grid-template-columns: 1fr; }
+    .page-title { font-size: 19px; }
+    .node-title { font-size: 15px; }
+  }
+
+  /* ── 國際借鏡區塊 ── */
+  .lesson-intro {
+    background: linear-gradient(135deg, var(--blue-50), var(--teal-50) 60%, var(--amber-50));
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: var(--text);
+  }
+  .lesson-col-header {
+    font-size: 13.5px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+  .lesson-col-header.hdr-pay   { background: var(--amber-50); color: var(--amber-800); }
+  .lesson-col-header.hdr-data  { background: var(--blue-50);  color: var(--blue-800); }
+  .lesson-col-header.hdr-gov   { background: var(--teal-50);  color: var(--teal-800); }
+
+  .lesson-col { display: flex; flex-direction: column; gap: 10px; }
+  .lesson-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12.3px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  .lesson-card .flag-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .lesson-card b { color: var(--text); }
+  .lesson-card.pay  { border-left: 4px solid var(--amber-600); }
+  .lesson-card.data { border-left: 4px solid var(--blue-600); }
+  .lesson-card.gov  { border-left: 4px solid var(--teal-600); }
+
+  .sandbox-actions {
+    background: var(--purple-50);
+    border: 1.5px dashed var(--purple-600);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-top: 18px;
+  }
+  .sandbox-actions .node-title { color: var(--purple-800); font-size: 15px; margin-bottom: 8px; }
+  .sandbox-actions ol { margin: 0; padding-left: 20px; color: var(--purple-600); font-size: 12.8px; line-height: 1.85; }
+  .sandbox-actions li b { color: var(--purple-800); }
+</style>
+</head>
+<body>
+<!-- AHMCI-HEADER -->
+<div style="max-width:1150px;margin:0 auto;padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="logo.png" alt="健康樂活與智慧醫療照護聯盟" style="height:40px;width:auto;display:block;">
+  </a>
+  <a href="index.html" style="font-size:12.5px;font-weight:700;color:#7c7d94;text-decoration:none;border:1px solid #eee1f5;padding:6px 14px;border-radius:999px;">&larr; 返回總覽</a>
+</div>
+
+
+<div class="page-title">台灣在宅醫療：醫院到居家的中繼轉銜與沙盒</div>
+<div class="page-sub">從急性住院到穩定居家的照護路徑、法規缺口與沙盒試驗介入點</div>
+
+<div class="diagram">
+
+  <!-- ══ 第一排：主流程橫向 ══ -->
+  <div style="display:flex;align-items:center;gap:0;">
+
+    <!-- 急性住院 -->
+    <div class="node coral" style="flex:0 0 220px;">
+      <div class="node-title">急性住院</div>
+      <div class="node-sub">醫學中心 / 區域醫院<br>急性治療期</div>
+    </div>
+
+    <!-- → -->
+    <div class="arrow-h">
+      <div class="arr-line"></div>
+      <div class="arr-head"></div>
+    </div>
+
+    <!-- PAC -->
+    <div class="node amber" style="flex:1;">
+      <div class="node-title">急性後期照護（PAC）</div>
+      <div class="node-sub">住院復健 3–12 週｜腦中風、骨折、衰弱高齡、創傷性神經損傷<br>87.6% 功能進步，88% 成功返家，30日再住院率降至 15.2%</div>
+    </div>
+
+    <!-- → -->
+    <div class="arrow-h">
+      <div class="arr-line"></div>
+      <div class="arr-head"></div>
+    </div>
+
+    <!-- 法規缺口 -->
+    <div class="gap-box" style="flex:0 0 215px;">
+      <div class="gap-label">⚠ 法規缺口</div>
+      <div class="node-title">中繼照護（亞急性）</div>
+      <div class="node-sub">PAC 後、穩定居家前<br>給付機制尚未完整覆蓋</div>
+    </div>
+
+  </div>
+
+  <!-- ↓ 箭頭 -->
+  <div class="arrow-down-wrap">
+    <div class="arrow-down">
+      <div class="arr-vline" style="height:28px;"></div>
+      <div class="arr-vhead"></div>
+    </div>
+  </div>
+
+  <!-- ══ 沙盒介入層 ══ -->
+  <div class="sandbox-box">
+    <div class="sandbox-label">🔬 監理沙盒介入層（受控實驗空間）</div>
+    <div class="sandbox-title">《智慧醫療創新實驗條例》草案研議中</div>
+    <div class="sandbox-desc">在受控環境中試行——遠距 IoT 生理監測、跨域健保給付包裹式設計、AI 輔助照護判斷、跨機構照護協定彈性化、FHIR 資料互通標準導入</div>
+  </div>
+
+  <!-- ↓ 箭頭 -->
+  <div class="arrow-down-wrap">
+    <div class="arrow-down">
+      <div class="arr-vline" style="height:28px;"></div>
+      <div class="arr-vhead"></div>
+    </div>
+  </div>
+
+  <!-- ══ PAC 結案後三路分流標題 ══ -->
+  <div class="section-label">PAC 結案後的三條轉銜路徑</div>
+
+  <!-- 三路主節點 -->
+  <div class="three-col">
+    <div class="node teal" style="text-align:center;">
+      <div class="node-title">返家 + 居家醫療</div>
+      <div class="node-sub">健保居家醫療照護整合計畫<br>到宅醫師訪視 + 護理照護</div>
+    </div>
+    <div class="node blue" style="text-align:center;">
+      <div class="node-title">在宅急症照護（HaH）</div>
+      <div class="node-sub">113 年 7 月試辦<br>肺炎、尿路感染、軟組織感染</div>
+    </div>
+    <div class="node gray" style="text-align:center;">
+      <div class="node-title">長照機構安置</div>
+      <div class="node-sub">護理之家 / 日照中心<br>重度失能、需密集照護</div>
+    </div>
+  </div>
+
+  <!-- ↓ 三欄各自向下箭頭 -->
+  <div class="three-col" style="margin-top:0;">
+    <div class="arrow-down-wrap">
+      <div class="arrow-down">
+        <div class="arr-vline" style="height:22px;"></div>
+        <div class="arr-vhead"></div>
+      </div>
+    </div>
+    <div class="arrow-down-wrap">
+      <div class="arrow-down">
+        <div class="arr-vline" style="height:22px;"></div>
+        <div class="arr-vhead"></div>
+      </div>
+    </div>
+    <div class="arrow-down-wrap">
+      <div class="arrow-down">
+        <div class="arr-vline" style="height:22px;"></div>
+        <div class="arr-vhead"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三路細節 -->
+  <div class="three-col" style="align-items:start;">
+
+    <!-- 欄一：居家醫療三階段 -->
+    <div class="sub-col">
+      <div class="col-header teal">居家醫療三階段（健保給付）</div>
+      <div class="sub-node teal node">
+        <div class="node-title">一般居家照護</div>
+        <div class="node-sub">輕度需求、到宅訪視<br>醫師 + 護理 + 藥師到宅</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node teal node">
+        <div class="node-title">重度居家醫療</div>
+        <div class="node-sub">呼吸器依賴 / 重度失能<br>清醒時 50%+ 時間臥床</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node teal node">
+        <div class="node-title">居家安寧療護</div>
+        <div class="node-sub">末期病人、癌症末期<br>八大疾病末期、善終照護</div>
+      </div>
+    </div>
+
+    <!-- 欄二：HaH 核心機制 -->
+    <div class="sub-col">
+      <div class="col-header blue">HaH 核心機制</div>
+      <div class="sub-node blue node">
+        <div class="node-title">垂直轉銜合作</div>
+        <div class="node-sub">強化各級醫療體系協作<br>急症延伸到居家 / 機構</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node blue node">
+        <div class="node-title">包裹式給付 + IoT</div>
+        <div class="node-sub">遠距生理監測設備<br>避免不必要住院往返</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node blue node">
+        <div class="node-title">費用負擔</div>
+        <div class="node-sub">自負額 5%（居家照護規定）<br>重大傷病 / 偏鄉可減免</div>
+      </div>
+    </div>
+
+    <!-- 欄三：長照3.0 -->
+    <div class="sub-col">
+      <div class="col-header gray">長照 3.0（2025–2026）</div>
+      <div class="sub-node gray node">
+        <div class="node-title">大家醫計畫整合</div>
+        <div class="node-sub">在宅 + 遠距 + 安寧<br>統一資訊管理平台</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node gray node">
+        <div class="node-title">出院前啟動銜接</div>
+        <div class="node-sub">住院中即評估失能等級<br>出院前完成返家計畫</div>
+      </div>
+      <div class="col-arrow">
+        <div class="arrow-down">
+          <div class="arr-vline" style="height:14px;"></div>
+          <div class="arr-vhead"></div>
+        </div>
+      </div>
+      <div class="sub-node gray node">
+        <div class="node-title">復能不中斷</div>
+        <div class="node-sub">PAC 接長照確保連續性<br>個案管理師全程追蹤</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ↓ 箭頭 -->
+  <div class="arrow-down-wrap" style="margin-top:8px;">
+    <div class="arrow-down">
+      <div class="arr-vline" style="height:28px;"></div>
+      <div class="arr-vhead"></div>
+    </div>
+  </div>
+
+  <!-- ══ 三大轉銜斷層 ══ -->
+  <div class="section-label">三大轉銜斷層（沙盒最需解決的問題）</div>
+
+  <div class="three-col">
+    <div class="problem-box">
+      <div class="node-title">給付空白</div>
+      <div class="node-sub" style="margin-top:6px;">PAC 結案後到穩定居家醫療之間，健保給付銜接尚無明確機制。論日給付修訂中，可能改為包裹式給付模式。</div>
+    </div>
+    <div class="problem-box">
+      <div class="node-title">跨域資料斷點</div>
+      <div class="node-sub" style="margin-top:6px;">醫院、長照、社福三體系資訊尚未互通。FHIR 標準導入中，智慧雲端病歷平台仍在推進階段。</div>
+    </div>
+    <div class="problem-box">
+      <div class="node-title">責任歸屬不清</div>
+      <div class="node-sub" style="margin-top:6px;">衛福部醫事司、健保署、社家署各管一塊，跨機關協調成本高。沙盒機制是突破主管機關分立的關鍵工具。</div>
+    </div>
+  </div>
+
+  <!-- ↓ 箭頭 -->
+  <div class="arrow-down-wrap" style="margin-top:8px;">
+    <div class="arrow-down">
+      <div class="arr-vline" style="height:28px;"></div>
+      <div class="arr-vhead"></div>
+    </div>
+  </div>
+
+  <!-- ══ 國際借鏡 ══ -->
+  <div class="section-label">🌏 國際借鏡：他山之石，補台灣三大缺口</div>
+
+  <div class="lesson-intro">
+    日本、芬蘭、德國、韓國、英國五個模式，走的路各不相同，但幾乎都曾經歷過台灣現在卡住的三個關卡──<b>錢從哪裡來、資料怎麼通、誰該負責</b>。與其從零摸索，不如直接借鏡他們已經跑過的實驗結果，讓台灣的智慧醫療沙盒少走一點冤枉路。
+  </div>
+
+  <div class="three-col">
+
+    <!-- 對應：給付空白 -->
+    <div class="lesson-col">
+      <div class="lesson-col-header hdr-pay">💰 對應「給付空白」</div>
+
+      <div class="lesson-card pay">
+        <div class="flag-tag">🇩🇪 德國 GK 模式</div>
+        從「共同節餘（Shared Savings）」到 2024 年 <b>BVGK 新契約</b>的三支柱轉型，說明健保基金與照護團隊<b>對半平分節餘</b>的機制雖然有效，但長期恐引發「預防越成功、預算越少」的悖論——台灣設計 PAC 到居家的<b>包裹式給付</b>時，可預先納入品質績效連結（P4P）等配套，避免重蹈覆轍。
+      </div>
+      <div class="lesson-card pay">
+        <div class="flag-tag">🇬🇧 英國 NHS</div>
+        私人供應商的給付與患者<b>實際臨床成效（≥5% 減重）</b>直接掛鉤，並採<b>階段性撥付（Milestone Payments）</b>——依註冊、課程完成度等節點分批撥款。這正是台灣「中繼照護」給付空白最直接可抄的作業：與其等待一次性論日給付定案，不如先用成效與里程碑設計過渡期的給付包。
+      </div>
+      <div class="lesson-card pay">
+        <div class="flag-tag">🇰🇷 韓國 AX 計畫</div>
+        獨立於藥品收入的「<b>慢性病管理費</b>」，專門補償醫師花在個案管理與追蹤上的時間；再搭配患者自付額<b>從 30% 降至 20%</b> 的雙向誘因設計。台灣可思考：中繼照護的個案管理時間，是否也該有獨立於診療費之外的給付項目？
+      </div>
+      <div class="lesson-card pay">
+        <div class="flag-tag">🇯🇵 日本特定健診</div>
+        用「支援金加減算」把達成率直接綁進保險者的財務盈虧（最高 <b>10%</b> 獎懲）。台灣的三路轉銜（居家醫療／HaH／長照）若能建立類似的機構級成效指標與給付連動，或許能加速跨機構協作的誘因。
+      </div>
+    </div>
+
+    <!-- 對應：跨域資料斷點 -->
+    <div class="lesson-col">
+      <div class="lesson-col-header hdr-data">🔗 對應「跨域資料斷點」</div>
+
+      <div class="lesson-card data">
+        <div class="flag-tag">🇫🇮 芬蘭 MyKanta</div>
+        全國性資料生態系統，串連公私立醫療機構與藥局，實現<b>跨區域健康數據追蹤與共享</b>；搭配 <b>Omaolo</b> 自評平台即時風險回饋、自動轉介護理師。台灣正在推進的 FHIR 標準與智慧雲端病歷平台，可直接參考這套「全國一張網」的整合邏輯。
+      </div>
+      <div class="lesson-card data">
+        <div class="flag-tag">🇰🇷 韓國 My-Healthway</div>
+        整合個人健康紀錄（PHR），支援<b>跨機構健康資料共享</b>與精準醫療；再加上 NHID 資料庫即時回饋篩檢數據。這正對應台灣醫院、長照、社福三體系「各自為政」的痛點——關鍵不只是技術標準，還要有一個國家級平台把資料「收得回來」。
+      </div>
+      <div class="lesson-card data">
+        <div class="flag-tag">🇬🇧 英國 GP Connect</div>
+        私人數位工具須先通過 <b>DTAC 技術標準</b>（臨床安全、數據安全、互操作性審查），且數據必須能與 GP 電子病歷系統<b>雙向對接</b>。台灣導入遠距 IoT 生理監測與 AI 輔助照護判斷時，同樣需要先立好資安與互通的「門檻標準」，才能讓公私協力的資料安全回流。
+      </div>
+    </div>
+
+    <!-- 對應：責任歸屬不清 -->
+    <div class="lesson-col">
+      <div class="lesson-col-header hdr-gov">🏛️ 對應「責任歸屬不清」</div>
+
+      <div class="lesson-card gov">
+        <div class="flag-tag">🇩🇪 德國 GK GmbH</div>
+        由在地醫師網路與數據公司合資成立<b>單一區域整合管理公司</b>，統籌照護設計與大數據管理，權責清楚寫進股權結構（66.6% / 33.3%）。台灣「衛福部醫事司、健保署、社家署各管一塊」的困境，或許正需要沙盒授權一個<b>單一窗口的協調法人</b>來打破分立。
+      </div>
+      <div class="lesson-card gov">
+        <div class="flag-tag">🇬🇧 英國 ICS</div>
+        2022 年《健康與照護法案》直接<b>廢除舊有 CCGs</b>，成立 42 個法定整合照護系統，用法律位階打破基層醫療、社區服務、醫院與地方政府的組織藩籬。台灣的《智慧醫療創新實驗條例》草案，同樣可以思考是否需要法定層級的跨機關協調機制，而非僅靠行政協調。
+      </div>
+      <div class="lesson-card gov">
+        <div class="flag-tag">🇰🇷 韓國 Team-based Care</div>
+        醫師負責臨床決策與轉診，<b>個案管理師</b>（護理師／營養師）專責生活調查、衛教與居家監測數據彙整，分工白紙黑字寫清楚。台灣在「復能不中斷」的長照銜接中，個案管理師的角色與責任範圍若能比照明確化，可減少出院轉銜時的權責真空。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sandbox-actions">
+    <div class="node-title">🧪 沙盒可以怎麼借？三個可立即測試的組合動作</div>
+    <ol>
+      <li><b>包裹式給付 + 里程碑撥款</b>：把德國 P4P 品質指標與英國階段性撥付結合，設計中繼照護的過渡期給付包，先小規模試辦再逐步擴大。</li>
+      <li><b>單一窗口協調法人 + FHIR 資料平台</b>：仿德國 GK GmbH 與芬蘭 MyKanta 的精神，在沙盒範圍內指定一個跨機構協調窗口，同步導入資料互通標準，一次解決「誰負責」與「資料通不通」兩個問題。</li>
+      <li><b>個案管理師角色法制化</b>：參考韓國 Team-based Care 的分工模式，明確定義個管師在出院轉銜、居家醫療與長照銜接中的權責範圍與給付項目。</li>
+    </ol>
+  </div>
+
+  <!-- ── 圖例 ── -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--coral-50);border:1.5px solid rgba(153,60,29,0.3);"></div>急性醫療
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--amber-50);border:1.5px solid rgba(133,79,11,0.3);"></div>中繼復健（PAC）
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--teal-50);border:1.5px solid rgba(15,110,86,0.3);"></div>居家醫療
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--blue-50);border:1.5px solid rgba(24,95,165,0.3);"></div>在宅急症（HaH）
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--gray-50);border:1.5px solid rgba(95,94,90,0.3);"></div>長照體系
+    </div>
+    <div class="legend-item">
+      <div class="legend-dash" style="border-color:var(--purple-600);"></div>沙盒 / 實驗機制
+    </div>
+    <div class="legend-item">
+      <div class="legend-dash" style="border-color:var(--red-600);"></div>法規缺口
+    </div>
+  </div>
+
+</div>
+<!-- AHMCI-FOOTER -->
+<footer style="max-width:1150px;margin:32px auto 0;padding:20px 24px;text-align:center;border-top:1px solid #eee1f5;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;color:#9c9db0;font-size:12px;">
+  &copy; 2026 健康樂活與智慧醫療照護聯盟 All Rights Reserved.
+</footer>
+</body>
+</html>
