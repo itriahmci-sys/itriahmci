@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+<base target="_top">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>健康樂活與智慧醫療照護聯盟｜活動報名</title>
@@ -62,12 +63,12 @@
   .full{grid-column:1/-1}
   .field label{display:block;font-weight:500;font-size:15px;margin-bottom:6px}
   .req{color:var(--danger);margin-left:3px}
-  .field input,.field select{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  .field input:not([type=checkbox]),.field select{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
         border-radius:10px;padding:11px 13px;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
   .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235a6e6b' stroke-width='1.8'/%3E%3C/svg%3E");
         background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-  .field input:focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(12,107,102,.13)}
-  .field.invalid input,.field.invalid select{border-color:var(--danger)}
+  .field input:not([type=checkbox]):focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(12,107,102,.13)}
+  .field.invalid input:not([type=checkbox]),.field.invalid select{border-color:var(--danger)}
   .hint{font-size:13.5px;color:var(--muted);margin-top:6px}
   .err{display:none;font-size:13.5px;color:var(--danger);margin-top:6px}
   .field.invalid .err{display:block}
@@ -81,9 +82,18 @@
              border-radius:10px;cursor:pointer;font-weight:500;transition:border-color .15s,background .15s}
   .opt-check:hover{border-color:var(--teal)}
   .opt-check:has(input:checked){background:var(--mint);border-color:var(--teal)}
-  .opt-check input{width:20px;height:20px;margin:0;accent-color:var(--teal);flex:none;cursor:pointer}
+  .opt-check input{appearance:auto;-webkit-appearance:checkbox;width:20px;height:20px;margin:0;padding:0;accent-color:var(--teal);flex:none;cursor:pointer}
   .opt-tag{margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:400}
 
+  #regForm{position:relative}
+  .form-body{border:0;margin:0;padding:0;min-width:0;transition:opacity .2s,filter .2s}
+  .form-body[disabled]{opacity:.42;filter:grayscale(.35)}
+  .lock-note{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:11px 14px;border-radius:10px;
+             background:var(--amber-l);border:1px solid #efd7bb;color:#8a4c12;font-size:14.5px;font-weight:500}
+  .lock-note svg{width:18px;height:18px;flex:none}
+  .lock-overlay{position:absolute;inset:0;z-index:3;cursor:not-allowed;border-radius:var(--radius)}
+  .consent.flash{animation:flash .9s ease-out 2}
+  @keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(201,120,43,0)}40%{box-shadow:0 0 0 6px rgba(201,120,43,.35)}}
   .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
   .btn{font:inherit;font-weight:700;font-size:17px;letter-spacing:.06em;border:0;border-radius:12px;padding:14px 20px;cursor:pointer;
        background:var(--teal);color:#fff;box-shadow:0 6px 18px rgba(12,107,102,.25);transition:background .15s,transform .05s}
@@ -133,8 +143,9 @@
 </style>
 </head>
 <body>
+<script type="application/json" id="cfg"><?!= cfgJson ?></script>
 
-<div class="preview-bar" id="previewBar" hidden>預覽模式：尚未設定 API_URL，資料不會寫入試算表（測試用 Email：demo@example.com 會顯示已報名）</div>
+<div class="preview-bar" id="previewBar" hidden>預覽模式：此版本資料不會寫入試算表（測試用 Email：demo@example.com 會顯示已報名）</div>
 
 <header class="hero">
   <div class="wrap">
@@ -145,7 +156,7 @@
   </div>
 </header>
 
-<main class="wrap" id="mainArea">
+<main class="wrap">
   <section class="card closed" id="closedCard">
     <h3 style="justify-content:center">報名已截止</h3>
     <p id="closedMsg"></p>
@@ -171,6 +182,11 @@
 
     <form class="card" id="regForm" novalidate autocomplete="on">
       <h3><span class="num">2</span>報名資料</h3>
+      <div class="lock-note" id="lockNote" role="status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        請先閱讀並勾選上方「個資使用聲明」，即可開始填寫報名表
+      </div>
+      <fieldset class="form-body" id="formBody" disabled>
       <div class="grid">
         <div class="field full" id="f-email">
           <label for="email">電子郵件地址<span class="req">*</span></label>
@@ -236,6 +252,8 @@
         <button class="btn" type="submit" id="submitBtn">送出報名</button>
         <div class="form-note">送出後系統將自動配發報名序號</div>
       </div>
+      </fieldset>
+      <div class="lock-overlay" id="lockOverlay" title="請先勾選個資使用聲明"></div>
     </form>
   </div>
 </main>
@@ -267,53 +285,42 @@
     memberOptions:['健康樂活聯盟','醫材公會','INNOPAD TAIPEI','ICF暨輔助科技研究中心','銀髮產協','TBA台灣生技協會','電電公會','在宅醫療學會','診全聯'],
     interestLabel:'想進一步瞭解聯盟'
   };
-  /* ▼▼▼ 部署設定：Apps Script「網頁應用程式」的 /exec 網址 ▼▼▼ */
-  var API_URL = 'https://script.google.com/macros/s/AKfycbzSWXmR9mpc2cVuDO4PJdhFpR8gUe0EndKn9_b-x_ccBl6lobNmJXyWgn81VuRFZBCy/exec';
-  /* ▲▲▲ 活動名稱、日期、選項等都在 Apps Script 的 CONFIG 修改，這裡不用改 ▲▲▲ */
+  var CFG = DEFAULT_CFG;
+  try{
+    var raw = document.getElementById('cfg').textContent.trim();
+    if(raw.charAt(0)==='{'){ var c = JSON.parse(raw); for(var k in c){ CFG[k]=c[k]; } }
+  }catch(e){}
 
-  var CFG = {}; for(var k0 in DEFAULT_CFG){ CFG[k0]=DEFAULT_CFG[k0]; }
-  var LIVE = !!API_URL;
+  var HAS_GAS = typeof google!=='undefined' && google.script && google.script.run;
   var $ = function(id){ return document.getElementById(id); };
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
 
   /* ---------- 版面填入 ---------- */
+  $('alliance').textContent = CFG.alliance;
+  $('eventName').textContent = CFG.eventName;
+  document.title = CFG.alliance + '｜' + CFG.eventName;
   var ICON_CAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
   var ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>';
-  function render(){
-    $('alliance').textContent = CFG.alliance;
-    $('eventName').textContent = CFG.eventName;
-    document.title = CFG.alliance + '｜' + CFG.eventName;
-    var meta = '';
-    if(CFG.eventDate) meta += '<li>'+ICON_CAL+esc(CFG.eventDate)+'</li>';
-    if(CFG.eventPlace) meta += '<li>'+ICON_PIN+esc(CFG.eventPlace)+'</li>';
-    $('meta').innerHTML = meta;
-    $('contacts').innerHTML = (CFG.contacts||[]).map(function(m){
-      return '<a href="mailto:'+esc(m)+'">'+esc(m)+'</a>';
-    }).join('');
-    $('openArea').style.display = CFG.open ? '' : 'none';
-    $('closedCard').style.display = CFG.open ? 'none' : 'block';
+  var meta = '';
+  if(CFG.eventDate) meta += '<li>'+ICON_CAL+esc(CFG.eventDate)+'</li>';
+  if(CFG.eventPlace) meta += '<li>'+ICON_PIN+esc(CFG.eventPlace)+'</li>';
+  $('meta').innerHTML = meta;
+  $('contacts').innerHTML = (CFG.contacts||[]).map(function(m){
+    return '<a href="mailto:'+esc(m)+'">'+esc(m)+'</a>';
+  }).join('');
+  if(!CFG.open){
+    $('openArea').style.display='none';
+    $('closedCard').style.display='block';
     $('closedMsg').textContent = CFG.closedMessage;
-    $('memberLabel').textContent = CFG.memberLabel;
-    $('interestLabel').textContent = CFG.interestLabel;
-    var sel = $('member'), keep = sel.value;
-    while(sel.options.length > 1) sel.remove(1);
-    (CFG.memberOptions||[]).forEach(function(o){
-      var opt = document.createElement('option'); opt.value = o; opt.textContent = o; sel.appendChild(opt);
-    });
-    if(keep) sel.value = keep;
   }
-  render();
-  if(!LIVE) $('previewBar').hidden = false;
-
-  /* 從 Apps Script 載入最新活動設定（活動名稱、選項、是否開放） */
-  if(LIVE){
-    fetch(API_URL + '?action=config', {redirect:'follow'})
-      .then(function(r){ return r.json(); })
-      .then(function(c){ if(c && c.alliance){ for(var k in c){ CFG[k]=c[k]; } render(); } })
-      .catch(function(){ /* 讀取失敗則沿用預設設定 */ });
-  }
+  if(!HAS_GAS) $('previewBar').hidden = false;
+  $('memberLabel').textContent = CFG.memberLabel;
+  $('interestLabel').textContent = CFG.interestLabel;
+  (CFG.memberOptions||[]).forEach(function(o){
+    var opt = document.createElement('option'); opt.value = o; opt.textContent = o; $('member').appendChild(opt);
+  });
 
   /* ---------- 後端呼叫（正式：Apps Script；預覽：模擬） ---------- */
   var mockRows = [{email:'demo@example.com', serial:1}];
@@ -327,21 +334,9 @@
     }
   };
   function call(fn, arg){
-    if(!LIVE){
-      return new Promise(function(resolve, reject){
-        setTimeout(function(){ try{ resolve(mock[fn](arg)); }catch(e){ reject(e); } }, 450);
-      });
-    }
-    var body = fn==='checkEmail' ? {action:'check', email:arg} : {action:'register', data:arg};
-    // 以 text/plain 送出 JSON，屬於「簡單請求」，不會觸發 CORS 預檢
-    return fetch(API_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify(body),
-      redirect:'follow'
-    }).then(function(r){
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return r.json();
+    return new Promise(function(resolve, reject){
+      if(HAS_GAS){ google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn](arg); }
+      else{ setTimeout(function(){ try{ resolve(mock[fn](arg)); }catch(e){ reject(e); } }, 450); }
     });
   }
 
@@ -417,7 +412,24 @@
   ['name','phone','org','title','sourceOther'].forEach(function(id){
     $(id).addEventListener('input', function(){ (id==='sourceOther'?$('otherWrap'):$('f-'+id)).classList.remove('invalid'); });
   });
-  $('consent').addEventListener('change', function(){ $('consentBox').classList.remove('invalid'); });
+  /* ---------- 個資聲明未勾選前鎖住報名表 ---------- */
+  function syncLock(){
+    var ok = $('consent').checked;
+    $('formBody').disabled = !ok;
+    $('lockOverlay').hidden = ok;
+    $('lockNote').hidden = ok;
+  }
+  $('consent').addEventListener('change', function(){
+    $('consentBox').classList.remove('invalid');
+    syncLock();
+    if(this.checked) setTimeout(function(){ $('email').focus({preventScroll:true}); }, 50);
+  });
+  $('lockOverlay').addEventListener('click', function(){
+    var box = $('consentBox');
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+    box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash');
+  });
+  syncLock();
 
   /* ---------- 驗證與送出 ---------- */
   function validate(){
@@ -489,6 +501,7 @@
   function resetForm(){
     $('regForm').reset();
     $('consent').checked = false;
+    syncLock();
     $('otherWrap').style.display = 'none';
     setStatus('', ''); emailState = {value:'', exists:false};
     document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
