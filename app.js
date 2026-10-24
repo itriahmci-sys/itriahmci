@@ -89,6 +89,42 @@
           </div>`).join("")}
       </div>`,
 
+    // 會員動態：固定高度視窗內自動捲動（互動見 initNewsTicker）
+    news: (s) => {
+      const cls = { "獲獎": "award", "新服務與新產品": "product", "會員合作共創": "collab", "人事更動": "people", "其他動態": "other" };
+      const rows = (s.items || []).map((i) => `
+        <li class="mn-item">
+          <div class="mn-top">
+            <span class="mn-cat mn-cat--${cls[i.cat] || "other"}">${i.cat || ""}</span>
+            ${i.date ? `<span class="mn-date">${i.date}</span>` : ""}
+          </div>
+          <h4>${i.title}</h4>
+          <p>${i.text || ""}</p>
+          ${i.cheer ? `<p class="mn-cheer">🎉 ${i.cheer}</p>` : ""}
+          ${i.src && i.src.length ? `<p class="mn-src">來源：${i.src.map((x) => `<a ${attrs(x.href, true)}>${x.name}</a>`).join("、")}</p>` : ""}
+        </li>`).join("");
+      return `
+        <div class="section-head section-head--split reveal">
+          <div>
+            <span class="eyebrow">${s.eyebrow || ""}</span>
+            <h2>${s.title || ""}</h2>
+            ${s.desc ? `<p>${s.desc}</p>` : ""}
+          </div>
+          ${s.more ? `<a class="btn-ghost" ${attrs(s.more.href, true)}>${s.more.label}</a>` : ""}
+        </div>
+        <div class="mn-panel reveal" data-news>
+          <div class="mn-bar">
+            <span class="mn-period"><span class="mn-live"></span>本週 ${s.period || ""}</span>
+            <span class="mn-count">${(s.items || []).length} 則</span>
+            <button type="button" class="mn-toggle" aria-pressed="false">❚❚ 暫停</button>
+          </div>
+          <div class="mn-viewport" tabindex="0" aria-label="會員動態清單，可捲動">
+            <ul class="mn-list">${rows}</ul>
+            <ul class="mn-list mn-clone" aria-hidden="true">${rows}</ul>
+          </div>
+        </div>`;
+    },
+
     cases: (s) => `
       ${head(s)}
       <div class="filter-row reveal" role="group" aria-label="依類別篩選">
@@ -296,6 +332,40 @@
     });
   }
 
+  // 會員動態自動捲動：滑鼠移入／聚焦／觸控時暫停；系統設定減少動態時改為手動捲動
+  function initNewsTicker() {
+    const SPEED = 28; // 每秒捲動像素
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll("[data-news]").forEach((panel) => {
+      const vp = panel.querySelector(".mn-viewport");
+      const first = panel.querySelector(".mn-list");
+      const btn = panel.querySelector(".mn-toggle");
+      panel.querySelectorAll(".mn-clone a").forEach((a) => (a.tabIndex = -1));
+      if (reduce) { panel.classList.add("mn-static"); return; }
+
+      let paused = false, hover = false, last = 0, pos = 0;
+      btn.addEventListener("click", () => {
+        paused = !paused;
+        btn.setAttribute("aria-pressed", paused);
+        btn.textContent = paused ? "▶ 播放" : "❚❚ 暫停";
+      });
+      ["mouseenter", "focusin", "touchstart"].forEach((e) => vp.addEventListener(e, () => (hover = true), { passive: true }));
+      ["mouseleave", "focusout", "touchend"].forEach((e) => vp.addEventListener(e, () => { hover = false; pos = vp.scrollTop; }, { passive: true }));
+      vp.addEventListener("scroll", () => { if (hover || paused) pos = vp.scrollTop; }, { passive: true });
+
+      const tick = (t) => {
+        const dt = last ? Math.min(t - last, 100) / 1000 : 0;
+        last = t;
+        const loop = first.offsetHeight;
+        if (!paused && !hover && loop > vp.clientHeight) pos += SPEED * dt;
+        if (pos >= loop) pos -= loop;
+        if (!paused && !hover) vp.scrollTop = pos;
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
   function initReveal() {
     const els = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
@@ -338,6 +408,7 @@
   renderFooter();
   initNav();
   initCaseFilter();
+  initNewsTicker();
   initReveal();
 })();
 

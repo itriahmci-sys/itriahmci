@@ -2,7 +2,7 @@
  * config.js — 網站內容設定（只放「資料」，不放版面邏輯）
  * -------------------------------------------------------------------------
  * ● 新增首頁區塊：在 SITE.sections 陣列中加入一個物件，指定 type 即可。
- *   可用的 type：cards / timeline / services / cases / tech / pillars /
+ *   可用的 type：cards / timeline / services / news / cases / tech / pillars /
  *                network / org / links / roadmap / plans
  * ● 區塊若要出現在上方選單：設定 nav: "選單文字"
  * ● 新增論壇：只要在 SITE.forums 加一筆，論壇區塊會自動更新
@@ -98,6 +98,69 @@ window.SITE = {
         { title: "論壇及工作坊", text: "每年四次產業論壇，加上不定期專題工作坊。" },
         { title: "法規技術諮詢", text: "提供專業法規與技術諮詢服務，協助會員掌握產業相關法規。" },
         { title: "政策議題推動", text: "彙集會員意見反映產業需求，實質參與政策建議。" },
+      ],
+    },
+
+    /* 會員動態：每週更新 period 與 items。cat 可用：獲獎／新服務與新產品／會員合作共創／人事更動／其他動態
+     * 資料來源：Google Drive「會員企業動態週報」最新一期 */
+    {
+      id: "member-news", type: "news", nav: "會員動態",
+      eyebrow: "Member News",
+      title: "會員動態",
+      period: "2026/10/17 – 10/24",
+      desc: "彙整會員企業每週公開新聞，滑鼠移入可暫停捲動。",
+      more: { label: "看完整週報 →", href: "https://docs.google.com/document/d/1c_9oy2HzdbVha5-jBnXDJxtj-v7FdI6AwDzPlAWlaOA/edit" },
+      items: [
+        { cat: "獲獎", date: "10/20", title: "國泰人壽、國泰產險：金管會公平待客評核前 25%",
+          text: "國泰人壽為壽險業唯一連續八年獲績優，國泰產險連續三年績優，國泰期貨亦入榜前 50%。",
+          cheer: "恭賀國泰人壽連續八年、國泰產險連續三年獲公平待客績優肯定！",
+          src: [{ name: "經濟日報", href: "https://udn.com/news/story/7239/9826732" }, { name: "工商時報", href: "https://www.ctee.com.tw/news/20261021700173-439901" }] },
+        { cat: "獲獎", date: "10/22", title: "國泰集團：2026 財訊金融獎四大獎",
+          text: "國泰人壽、國泰世華銀行、國泰產險及國泰證券分別獲「消費者金融品牌獎」壽險、銀行、產險及券商客戶推薦獎項。",
+          cheer: "恭賀國泰集團榮獲 2026 財訊金融獎四項大獎！",
+          src: [{ name: "鉅亨網", href: "https://news.cnyes.com/news/id/6636008" }, { name: "工商時報", href: "https://www.ctee.com.tw/news/20261023700176-439901" }] },
+        { cat: "獲獎", title: "南山人壽：公平待客評核連續五年前 25%",
+          text: "南山人壽與南山產物連續五年躋身金管會公平待客評核前 25%。",
+          cheer: "恭賀南山人壽連續五年獲公平待客績優肯定！",
+          src: [{ name: "經濟日報", href: "https://money.udn.com/money/story/5613/9804118" }] },
+        { cat: "獲獎", title: "樂林食物銀行：亞太永續行動獎連續三年金級獎",
+          text: "以「跨域合作與地方永續行動」方案獲第 5 屆亞太永續行動獎 SDG 17 非營利組織類金級獎，理事長洪毓雯另獲「頂尖永續長獎」。",
+          cheer: "恭賀樂林食物銀行三連金，洪毓雯理事長榮獲頂尖永續長獎！",
+          src: [{ name: "自由時報", href: "https://news.ltn.com.tw/news/life/breakingnews/5568688" }] },
+        { cat: "新服務與新產品", date: "10/19", title: "國泰人壽：壽險業首創「抵押權塗銷登記」數位服務",
+          text: "國泰人壽成為壽險業首家開辦此項數位服務的業者，保戶辦理更便利。",
+          cheer: "恭賀國泰人壽推出壽險業首創數位服務！",
+          src: [{ name: "經濟日報", href: "https://money.udn.com/money/story/5613/9827261" }] },
+        { cat: "新服務與新產品", title: "南山人壽：「百歲人生」系列新保單",
+          text: "「安心溢百」主打重大傷病及特定疾病，保障最長延續到 100 歲；「長享平安」聚焦高齡骨折及意外風險，最高 80 歲仍可投保。",
+          cheer: "恭賀南山人壽「百歲人生」系列新保單上市！",
+          src: [{ name: "聯合新聞網", href: "https://udn.com/news/story/7239/9810311" }] },
+        { cat: "新服務與新產品", date: "10/22", title: "南山人壽：颱風保戶關懷措施",
+          text: "因應薔琵颱風來襲，南山人壽、南山產物啟動保戶服務關懷措施。",
+          src: [{ name: "南山人壽官網", href: "https://www.nanshanlife.com.tw/nanshanlife/news/" }] },
+        { cat: "會員合作共創", date: "2026/8/11", title: "國泰人壽 × 中化銀髮：實物給付型長照保險",
+          text: "結合保險與實質照護服務，獲日本專業媒體《シルバー産業新聞》專文報導。",
+          src: [{ name: "工商時報", href: "https://www.ctee.com.tw/news/20260811701461-430305" }] },
+        { cat: "會員合作共創", date: "2026/1", title: "優照護 × 浚鴻數據開發：幸福企業合作",
+          text: "優照護攜手佳世達旗下浚鴻，共創幸福企業新典範。",
+          src: [{ name: "優照護官網", href: "https://ucarer.tw/about" }] },
+        { cat: "其他動態", date: "10/22", title: "兆豐金控：前九月獲利創同期新高",
+          text: "前九月稅後淨利 328 億元創同期新高，獲利、EPS 及股價居公股之冠，10/22 股價創新高。",
+          cheer: "恭賀兆豐金控獲利創同期新高！",
+          src: [{ name: "經濟日報", href: "https://money.udn.com/money/story/5607/9831899" }] },
+        { cat: "其他動態", date: "10/16", title: "兆豐銀行：「打詐守門員」第三季表揚",
+          text: "今年截至九月底臨櫃阻詐 153 件，攔阻金額突破 1.64 億元，由董事長董瑞斌親自頒獎。",
+          src: [{ name: "鏡週刊", href: "https://www.mirrormedia.mg/external/setn_1925474" }] },
+        { cat: "其他動態", date: "10/24", title: "彰化基督教醫院：130 週年院慶國際聯合學術討論會",
+          text: "彰基總院 130 週年暨兒童醫院 12 週年院慶學術討論會於 10/24–25 在蘭醫師大樓舉行。",
+          cheer: "恭賀彰化基督教醫院創院 130 週年、兒童醫院 12 週年！",
+          src: [{ name: "彰基院慶議程", href: "https://taichung.tzuchi.com.tw/images/aaa48/2026/202608/0824D308204843-3_625ab.pdf" }] },
+        { cat: "其他動態", date: "10/17", title: "康健雜誌：大健康新未來雙軸論壇",
+          text: "於台中逢甲大學舉行，探討大腦科學、AI、機器人、建築與社區環境整合，逾 200 位產官學研醫代表參與。",
+          src: [{ name: "康健雜誌", href: "https://www.commonhealth.com.tw/article/94779" }] },
+        { cat: "其他動態", date: "10/17", title: "國泰人壽、國泰產險：與淡江大學深化產學合作",
+          text: "雙方攜手淡江大學深化產學合作與人才培育。",
+          src: [{ name: "中時新聞網", href: "https://www.chinatimes.com/realtimenews/20261020004086-260410" }] },
       ],
     },
 

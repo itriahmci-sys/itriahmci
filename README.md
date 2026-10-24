@@ -17,7 +17,7 @@ This is the second site of AHMCI
 **新增一場論壇**：在 `SITE.forums` 加一筆 `{ year, title, href }`，論壇卡片會自動更新。
 
 **新增首頁區塊**：在 `SITE.sections` 適當位置插入物件，`type` 選現有版型之一：
-`cards`、`timeline`、`services`、`cases`、`tech`、`pillars`、`network`、`org`、`links`、`roadmap`、`plans`。
+`cards`、`timeline`、`services`、`news`、`cases`、`tech`、`pillars`、`network`、`org`、`links`、`roadmap`、`plans`。
 加上 `nav: "選單名稱"` 就會出現在上方選單。
 
 **新增子分頁捷徑（Hero 下方小方塊）**：在 `SITE.hero.quickLinks` 加一筆。
