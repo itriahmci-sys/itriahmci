@@ -12,6 +12,12 @@
  *     <script src="../config.js" defer></script>
  *     <script src="../app.js" defer></script>
  *   data-base 會自動修正所有相對連結與錨點（#about → ../index.html#about）
+ *
+ * 會員動態自動更新：
+ *   news 區塊若設定 sheet: { id: "試算表ID", tab: "工作表名稱" }，
+ *   頁面載入後會從該 Google 試算表讀取最新資料取代 items / period；
+ *   讀取失敗時保留 config.js 內的 items 作為備援。
+ *   試算表需設為「知道連結的任何人皆可檢視」。
  * ========================================================================= */
 
 (function () {
@@ -89,7 +95,7 @@
           </div>`).join("")}
       </div>`,
 
-    // 會員動態：固定高度視窗內自動捲動（互動見 initNewsTicker）
+    // 會員動態：固定高度視窗內自動捲動（互動見 initNewsTicker；資料自動更新見 loadSheetNews）
     news: (s) => {
       const cls = { "獲獎": "award", "新服務與新產品": "product", "會員合作共創": "collab", "人事更動": "people", "其他動態": "other" };
       const rows = (s.items || []).map((i) => `
@@ -333,10 +339,12 @@
   }
 
   // 會員動態自動捲動：滑鼠移入／聚焦／觸控時暫停；系統設定減少動態時改為手動捲動
-  function initNewsTicker() {
+  function initNewsTicker(root) {
     const SPEED = 28; // 每秒捲動像素
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.querySelectorAll("[data-news]").forEach((panel) => {
+    (root || document).querySelectorAll("[data-news]").forEach((panel) => {
+      if (panel.dataset.ready) return;
+      panel.dataset.ready = "1";
       const vp = panel.querySelector(".mn-viewport");
       const first = panel.querySelector(".mn-list");
       const btn = panel.querySelector(".mn-toggle");
@@ -354,6 +362,7 @@
       vp.addEventListener("scroll", () => { if (hover || paused) pos = vp.scrollTop; }, { passive: true });
 
       const tick = (t) => {
+        if (!panel.isConnected) return; // 區塊被重新渲染後停止舊的動畫
         const dt = last ? Math.min(t - last, 100) / 1000 : 0;
         last = t;
         const loop = first.offsetHeight;
@@ -364,6 +373,64 @@
       };
       requestAnimationFrame(tick);
     });
+  }
+
+  /* ---------- 會員動態：從 Google 試算表自動更新 ----------
+   * 試算表欄位（第一列為標題）：
+   *   period, doc_url, cat, date, title, text, cheer,
+   *   src1_name, src1_url, src2_name, src2_url, src3_name, src3_url
+   * period 取第一筆資料列的值（doc_url 僅供紀錄，網站不顯示）。 */
+  function parseGviz(text) {
+    const start = text.indexOf("(");
+    const end = text.lastIndexOf(")");
+    if (start < 0 || end <= start) throw new Error("無法解析試算表回應");
+    const json = JSON.parse(text.slice(start + 1, end));
+    if (json.status === "error") throw new Error((json.errors || []).map((e) => e.detailed_message || e.message).join("; "));
+    const keys = json.table.cols.map((c) => (c.label || c.id || "").trim());
+    return json.table.rows.map((r) => {
+      const o = {};
+      keys.forEach((k, n) => {
+        const cell = r.c[n];
+        o[k] = cell && cell.v != null ? String(cell.f != null ? cell.f : cell.v).trim() : "";
+      });
+      return o;
+    });
+  }
+
+  function rowsToItems(rows) {
+    return rows
+      .filter((r) => r.title)
+      .map((r) => {
+        const src = [1, 2, 3]
+          .map((n) => ({ name: r[`src${n}_name`], href: r[`src${n}_url`] }))
+          .filter((x) => x.name && x.href);
+        return { cat: r.cat, date: r.date, title: r.title, text: r.text, cheer: r.cheer, src };
+      });
+  }
+
+  async function loadSheetNews() {
+    if (!IS_HOME || !window.fetch) return;
+    const targets = SITE.sections.filter((s) => s.type === "news" && s.sheet && s.sheet.id);
+    for (const s of targets) {
+      try {
+        const q = new URLSearchParams({ tqx: "out:json", headers: "1", sheet: s.sheet.tab || "news" });
+        const res = await fetch(`https://docs.google.com/spreadsheets/d/${s.sheet.id}/gviz/tq?${q}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const rows = parseGviz(await res.text());
+        const items = rowsToItems(rows);
+        if (!items.length) throw new Error("試算表沒有資料列");
+        s.items = items;
+        if (rows[0].period) s.period = rows[0].period;
+
+        const wrap = document.querySelector(`#${s.id} > .wrap`);
+        if (!wrap) continue;
+        wrap.innerHTML = R.news(s);
+        wrap.querySelectorAll(".reveal").forEach((e) => e.classList.add("in"));
+        initNewsTicker(wrap);
+      } catch (err) {
+        console.warn(`[app.js] 會員動態自動更新失敗，改用 config.js 內的資料（id=${s.id}）：`, err);
+      }
+    }
   }
 
   function initReveal() {
@@ -410,5 +477,5 @@
   initCaseFilter();
   initNewsTicker();
   initReveal();
+  loadSheetNews();
 })();
-
