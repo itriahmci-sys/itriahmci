@@ -1,533 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>健康樂活與智慧醫療照護聯盟｜活動報名</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#11302e; --muted:#5a6e6b; --line:#d5e2dd; --paper:#f5f9f7; --card:#ffffff;
-    --teal:#0c6b66; --teal-d:#084c49; --mint:#e4f1ec; --amber:#c9782b; --amber-l:#fbf1e5;
-    --danger:#b0392a; --danger-l:#fbecea; --ok:#1f7a4d; --ok-l:#e5f4ec;
-    --radius:14px; --shadow:0 1px 2px rgba(17,48,46,.06),0 8px 28px rgba(17,48,46,.07);
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-       color:var(--ink);background:var(--paper);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:780px;margin:0 auto;padding:0 18px}
-
-  /* Hero */
-  .hero{position:relative;overflow:hidden;color:#fff;
-        background:linear-gradient(135deg,#0a4f4b 0%,#0c6b66 55%,#12827a 100%);padding:46px 0 92px}
-  .hero::before{content:"";position:absolute;inset:0;opacity:.18;
-        background-image:radial-gradient(rgba(255,255,255,.9) 1px,transparent 1.4px);background-size:22px 22px;
-        mask-image:linear-gradient(115deg,transparent 35%,#000 100%);-webkit-mask-image:linear-gradient(115deg,transparent 35%,#000 100%)}
-  .hero::after{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;
-        border:42px solid rgba(255,255,255,.06)}
-  .hero .wrap{position:relative;z-index:1}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;font-size:13px;letter-spacing:.14em;
-           color:#cfe9e3;font-weight:500}
-  .eyebrow .pulse{width:8px;height:8px;border-radius:50%;background:#7fe0c4;box-shadow:0 0 0 4px rgba(127,224,196,.22)}
-  h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(26px,5.2vw,40px);line-height:1.3;margin:0;letter-spacing:.02em}
-  .event-name{font-family:"Noto Serif TC",serif;font-weight:600;font-size:clamp(19px,3.6vw,25px);line-height:1.45;
-              margin:14px 0 0;color:#fff;padding-left:14px;border-left:4px solid var(--amber)}
-  .meta{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px;color:#d9efea;font-size:15px}
-  .meta li{display:flex;align-items:center;gap:7px}
-  .meta svg{width:17px;height:17px;flex:none;opacity:.9}
-
-  main{margin-top:-58px;position:relative;z-index:2;padding-bottom:30px}
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);
-        padding:26px 26px 24px;margin-bottom:18px}
-  .card h3{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:18px;font-weight:700}
-  .card h3 .num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--mint);
-                color:var(--teal-d);font-size:14px;font-weight:700}
-
-  /* Privacy */
-  .privacy-body{max-height:240px;overflow:auto;padding:14px 16px;background:#fafcfb;border:1px solid var(--line);
-                border-radius:10px;font-size:14.5px;color:#2c4643}
-  .privacy-body p{margin:0 0 10px}
-  .privacy-body p:last-child{margin:0}
-  .privacy-body b{color:var(--teal-d)}
-  .consent{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:13px 14px;border-radius:10px;
-           background:var(--amber-l);border:1px solid #efd7bb;cursor:pointer;font-weight:500}
-  .consent input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--teal);flex:none;cursor:pointer}
-  .consent.invalid{background:var(--danger-l);border-color:#e9b8b0}
-
-  /* Form */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
-  .full{grid-column:1/-1}
-  .field label{display:block;font-weight:500;font-size:15px;margin-bottom:6px}
-  .req{color:var(--danger);margin-left:3px}
-  .field input:not([type=checkbox]),.field select{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
-        border-radius:10px;padding:11px 13px;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
-  .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235a6e6b' stroke-width='1.8'/%3E%3C/svg%3E");
-        background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-  .field input:not([type=checkbox]):focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(12,107,102,.13)}
-  .field.invalid input:not([type=checkbox]),.field.invalid select{border-color:var(--danger)}
-  .hint{font-size:13.5px;color:var(--muted);margin-top:6px}
-  .err{display:none;font-size:13.5px;color:var(--danger);margin-top:6px}
-  .field.invalid .err{display:block}
-  .email-status{display:none;margin-top:8px;font-size:14px;padding:9px 12px;border-radius:9px;line-height:1.55}
-  .email-status.show{display:block}
-  .email-status.ok{background:var(--ok-l);color:var(--ok)}
-  .email-status.dup{background:var(--amber-l);color:#8a4c12;border:1px solid #efd7bb}
-  .email-status.checking{background:#eef3f2;color:var(--muted)}
-  #otherWrap{display:none}
-  .opt-check{display:flex !important;align-items:center;gap:10px;margin:0 !important;padding:12px 14px;border:1.5px solid var(--line);
-             border-radius:10px;cursor:pointer;font-weight:500;transition:border-color .15s,background .15s}
-  .opt-check:hover{border-color:var(--teal)}
-  .opt-check:has(input:checked){background:var(--mint);border-color:var(--teal)}
-  .opt-check input{appearance:auto;-webkit-appearance:checkbox;width:20px;height:20px;margin:0;padding:0;accent-color:var(--teal);flex:none;cursor:pointer}
-  .opt-tag{margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:400}
-
-  #regForm{position:relative}
-  .form-body{border:0;margin:0;padding:0;min-width:0;transition:opacity .2s,filter .2s}
-  .form-body[disabled]{opacity:.42;filter:grayscale(.35)}
-  .lock-note{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:11px 14px;border-radius:10px;
-             background:var(--amber-l);border:1px solid #efd7bb;color:#8a4c12;font-size:14.5px;font-weight:500}
-  .lock-note svg{width:18px;height:18px;flex:none}
-  .lock-overlay{position:absolute;inset:0;z-index:3;cursor:not-allowed;border-radius:var(--radius)}
-  .consent.flash{animation:flash .9s ease-out 2}
-  @keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(201,120,43,0)}40%{box-shadow:0 0 0 6px rgba(201,120,43,.35)}}
-  .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
-  .btn{font:inherit;font-weight:700;font-size:17px;letter-spacing:.06em;border:0;border-radius:12px;padding:14px 20px;cursor:pointer;
-       background:var(--teal);color:#fff;box-shadow:0 6px 18px rgba(12,107,102,.25);transition:background .15s,transform .05s}
-  .btn:hover{background:var(--teal-d)}
-  .btn:active{transform:translateY(1px)}
-  .btn[disabled]{opacity:.65;cursor:progress}
-  .form-note{font-size:13.5px;color:var(--muted);text-align:center}
-
-  .closed{display:none;text-align:center;padding:34px 20px}
-  .closed p{margin:6px 0 0;color:var(--muted)}
-
-  footer{border-top:1px solid var(--line);background:#fff;padding:24px 0 30px;font-size:14.5px;color:var(--muted)}
-  footer .ttl{font-weight:700;color:var(--ink);margin-bottom:6px}
-  footer a{color:var(--teal-d);text-decoration:none;border-bottom:1px solid rgba(12,107,102,.3);word-break:break-all}
-  footer a:hover{border-color:var(--teal)}
-  .contacts{display:flex;flex-wrap:wrap;gap:6px 18px}
-
-  .preview-bar{background:#fff7d6;color:#6b5300;font-size:13.5px;text-align:center;padding:7px 12px;border-bottom:1px solid #f0dc8c}
-
-  /* Modal */
-  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;
-         background:rgba(10,32,30,.5);backdrop-filter:blur(3px)}
-  .modal.show{display:flex;animation:fade .18s ease-out}
-  .dialog{background:#fff;border-radius:18px;max-width:440px;width:100%;padding:30px 26px 22px;text-align:center;
-          box-shadow:0 20px 60px rgba(0,0,0,.25);animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
-  .icon{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px}
-  .icon svg{width:32px;height:32px}
-  .tone-success .icon{background:var(--ok-l);color:var(--ok)}
-  .tone-warn .icon{background:var(--amber-l);color:var(--amber)}
-  .tone-error .icon{background:var(--danger-l);color:var(--danger)}
-  .dialog h4{margin:0 0 8px;font-size:21px;font-family:"Noto Serif TC",serif}
-  .dialog .body{color:#36504d;font-size:15.5px}
-  .dialog .body p{margin:0 0 8px}
-  .serial{margin:14px auto 12px;padding:12px 16px;border-radius:12px;background:var(--mint);display:inline-block;min-width:200px}
-  .serial small{display:block;font-size:13px;color:var(--muted);letter-spacing:.1em}
-  .serial strong{font-size:34px;color:var(--teal-d);font-family:"Noto Serif TC",serif;letter-spacing:.04em}
-  .dialog .btn{width:100%;margin-top:16px;font-size:16px;padding:12px}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-
-  @media (max-width:600px){
-    .grid{grid-template-columns:1fr}
-    .card{padding:20px 16px 18px}
-    .hero{padding:34px 0 84px}
-    .wrap{padding:0 16px}
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="健康樂活與智慧醫療照護聯盟活動報名表">
+  <meta name="theme-color" content="#176b63">
+  <title>健康樂活與智慧醫療照護聯盟｜2026Q4 智慧輔具在宅醫療應用論壇 活動報名</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="preview-bar" id="previewBar" hidden>預覽模式：尚未設定 API_URL，資料不會寫入試算表（測試用 Email：demo@example.com 會顯示已報名）</div>
-
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow"><span class="pulse"></span>活動報名 ・ EVENT REGISTRATION</p>
-    <h1 id="alliance">健康樂活與智慧醫療照護聯盟</h1>
-    <h2 class="event-name" id="eventName">請在此輸入活動名稱</h2>
-    <ul class="meta" id="meta"></ul>
-  </div>
-</header>
-
-<main class="wrap" id="mainArea">
-  <section class="card closed" id="closedCard">
-    <h3 style="justify-content:center">報名已截止</h3>
-    <p id="closedMsg"></p>
-  </section>
-
-  <div id="openArea">
-    <section class="card">
-      <h3><span class="num">1</span>個資使用聲明</h3>
-      <div class="privacy-body" tabindex="0">
-        <p>感謝您報名參加 健康樂活與智慧醫療聯盟論壇活動。為遵循個人資料保護法，在您提供個人資料前，請務必詳閱以下聲明：</p>
-        <p><b>蒐集目的：</b>本單位 健康樂活與智慧醫療照護聯盟僅為本次研討會之報名、通知聯繫、報到查驗、會後問卷/資料寄送及活動成效分析等相關行政目的，蒐集、處理及利用您的個人資料。</p>
-        <p><b>蒐集類別：</b>姓名、服務單位、職稱、電子郵件、聯絡電話等。</p>
-        <p><b>利用期間：</b>自您同意日起至本次研討會結束。</p>
-        <p><b>利用地區與對象：</b>僅限於中華民國境內，由本次研討會主辦單位及協辦單位使用。您的資料將不會被用於其他用途或提供給無關之第三方。</p>
-        <p><b>您的權利：</b>您可隨時向主辦單位行使個資法規定之權利，包括查詢、閱覽、製給複製本、補充或更正、停止蒐集/處理/利用、或刪除您的個人資料。</p>
-        <p><b>不同意之影響：</b>若您不同意提供或提供之資料不完整，本單位將無法完成您的報名程序。</p>
+  <main class="page-shell">
+    <header class="hero">
+      <div class="brand-mark">
+        <img src="alliance-logo.png" alt="健康樂活智慧醫療照護聯盟 Logo">
       </div>
-      <label class="consent" id="consentBox">
-        <input type="checkbox" id="consent">
-        <span>我已詳閱上述「個人資訊使用聲明」，同意進行報名<span class="req">*</span></span>
-      </label>
-    </section>
+      <div>
+        <p class="eyebrow">健康樂活與智慧醫療照護聯盟</p>
+        <h1>活動報名</h1>
+        <p class="intro">請填寫以下資料完成活動報名。送出後，主辦單位將依您提供的電子郵件與您聯繫。</p>
+      </div>
+    </header>
 
-    <form class="card" id="regForm" novalidate autocomplete="on">
-      <h3><span class="num">2</span>報名資料</h3>
-      <div class="lock-note" id="lockNote" role="status">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        請先閱讀並勾選上方「個資使用聲明」，即可開始填寫報名表
+    <form id="registrationForm" novalidate>
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">網站</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <fieldset class="form-body" id="formBody" disabled>
-      <div class="grid">
-        <div class="field full" id="f-email">
-          <label for="email">電子郵件地址<span class="req">*</span></label>
-          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" required>
-          <div class="hint">每個 Email 限報名一次；如要替他人報名，請使用當事人的 Email。</div>
-          <div class="err">請輸入正確的電子郵件地址</div>
-          <div class="email-status" id="emailStatus" role="status" aria-live="polite"></div>
+      <section class="card privacy-card" aria-labelledby="privacyTitle">
+        <div class="section-heading">
+          <span class="step">01</span>
+          <div><h2 id="privacyTitle">個人資訊使用聲明與同意</h2><p>請先詳閱下列內容</p></div>
         </div>
-        <div class="field" id="f-name">
-          <label for="name">姓名<span class="req">*</span></label>
-          <input id="name" name="name" type="text" autocomplete="name" maxlength="50" required>
-          <div class="err">請填寫姓名</div>
+        <div class="privacy-copy">
+          <p>感謝您報名參加健康樂活與智慧醫療聯盟論壇活動。為遵循個人資料保護法，在您提供個人資料前，請務必詳閱以下聲明：</p>
+          <ol>
+            <li><strong>蒐集目的：</strong>本聯盟僅為本次研討會之報名、通知聯繫、報到查驗、會後問卷／資料寄送及活動成效分析等相關行政目的，蒐集、處理及利用您的個人資料。</li>
+            <li><strong>蒐集類別：</strong>姓名、服務單位、職稱、電子郵件、聯絡電話等。</li>
+            <li><strong>利用期間：</strong>自您同意日起至本次研討會結束。</li>
+            <li><strong>利用地區與對象：</strong>僅限於中華民國境內，由本次研討會主辦單位及協辦單位使用。您的資料不會用於其他用途或提供給無關第三方。</li>
+            <li><strong>您的權利：</strong>您可隨時向主辦單位行使個資法規定之權利，包括查詢、閱覽、製給複製本、補充或更正、停止蒐集／處理／利用，或刪除您的個人資料。</li>
+            <li><strong>不同意之影響：</strong>若您不同意提供或提供的資料不完整，本聯盟將無法完成您的報名程序。</li>
+            <li><strong>主辦單位的權利：</strong>主辦單位保留活動異動之權利。</li>
+          </ol>
         </div>
-        <div class="field" id="f-phone">
-          <label for="phone">聯絡電話／手機<span class="req">*</span></label>
-          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="例：0912-345-678" maxlength="25" required>
-          <div class="err">請填寫正確的聯絡電話</div>
+        <label class="consent-box">
+          <input id="consent" name="consent" type="checkbox" value="同意" required>
+          <span class="checkmark" aria-hidden="true"></span>
+          <span>我已詳閱並同意上述「個人資訊使用聲明」</span>
+        </label>
+        <p class="field-error" data-error-for="consent"></p>
+      </section>
+
+      <section class="card" aria-labelledby="detailsTitle">
+        <div class="section-heading">
+          <span class="step">02</span>
+          <div><h2 id="detailsTitle">報名資料填寫</h2><p><span class="required-dot">＊</span>為必填欄位</p></div>
         </div>
-        <div class="field" id="f-org">
-          <label for="org">服務單位名稱<span class="req">*</span></label>
-          <input id="org" name="org" type="text" autocomplete="organization" maxlength="100" required>
-          <div class="err">請填寫服務單位名稱</div>
+
+        <div class="form-grid">
+          <div class="field full">
+            <label for="email">電子郵件地址 <span class="required-dot">＊</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+            <p class="field-error" data-error-for="email"></p>
+          </div>
+          <div class="field">
+            <label for="name">姓名 <span class="required-dot">＊</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="50" placeholder="請輸入姓名" required>
+            <p class="field-error" data-error-for="name"></p>
+          </div>
+          <div class="field">
+            <label for="phone">聯絡電話／手機 <span class="required-dot">＊</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="例如：0912-345-678" required>
+            <p class="field-error" data-error-for="phone"></p>
+          </div>
+          <div class="field">
+            <label for="organization">服務單位名稱 <span class="required-dot">＊</span></label>
+            <input id="organization" name="organization" type="text" autocomplete="organization" maxlength="100" placeholder="請輸入服務單位" required>
+            <p class="field-error" data-error-for="organization"></p>
+          </div>
+          <div class="field">
+            <label for="jobTitle">職稱 <span class="required-dot">＊</span></label>
+            <input id="jobTitle" name="jobTitle" type="text" autocomplete="organization-title" maxlength="50" placeholder="請輸入職稱" required>
+            <p class="field-error" data-error-for="jobTitle"></p>
+          </div>
+          <fieldset class="field full source-field">
+            <legend>您從何處得知本次研討會？ <span class="required-dot">＊</span></legend>
+            <div class="radio-grid">
+              <label><input type="radio" name="source" value="服務單位是健康樂活與智慧醫療照護聯盟企業會員" required><span>服務單位是聯盟企業會員</span></label>
+              <label><input type="radio" name="source" value="我是在宅醫療學會會員"><span>我是在宅醫療學會會員</span></label>
+              <label><input type="radio" name="source" value="主辦單位電子郵件通知"><span>主辦單位電子郵件通知</span></label>
+              <label><input type="radio" name="source" value="社群媒體"><span>社群媒體</span></label>
+              <label><input type="radio" name="source" value="友人推薦"><span>友人推薦</span></label>
+              <label><input type="radio" name="source" value="公會或協會轉發通知"><span>公會或協會轉發通知</span></label>
+              <label><input type="radio" name="source" value="工研院活動訊息／產業學院活動訊息"><span>工研院／產業學院活動訊息</span></label>
+              <label class="other-option"><input type="radio" name="source" value="其他"><span>其他</span><input id="sourceOther" type="text" maxlength="80" placeholder="請說明" aria-label="其他得知管道"></label>
+            </div>
+            <p class="field-error" data-error-for="source"></p>
+          </fieldset>
         </div>
-        <div class="field" id="f-title">
-          <label for="title">職稱<span class="req">*</span></label>
-          <input id="title" name="title" type="text" autocomplete="organization-title" maxlength="60" required>
-          <div class="err">請填寫職稱</div>
-        </div>
-        <div class="field full" id="f-source">
-          <label for="source">您從何處得知本次研討會？<span class="req">*</span></label>
-          <select id="source" name="source" required>
-            <option value="">請選擇</option>
-            <option>主辦單位 Email 通知</option>
-            <option>聯盟 LINE 群組／社群</option>
-            <option>Facebook 粉絲專頁</option>
-            <option>聯盟週報／電子報</option>
-            <option>工研院網站</option>
-            <option>親友／同事推薦</option>
-            <option value="__other__">其他</option>
-          </select>
-          <div class="err">請選擇得知管道</div>
-        </div>
-        <div class="field full" id="otherWrap">
-          <label for="sourceOther">請說明其他管道<span class="req">*</span></label>
-          <input id="sourceOther" type="text" maxlength="80">
-          <div class="err">請說明其他管道</div>
-        </div>
-        <div class="field full" id="f-member">
-          <label for="member" id="memberLabel">我的公司是以下會員</label>
-          <select id="member" name="member">
-            <option value="">請選擇（非必填）</option>
-          </select>
-          <div class="hint">非必填，非上述單位會員可略過。</div>
-        </div>
-        <div class="field full">
-          <label class="opt-check" for="interest">
-            <input type="checkbox" id="interest" name="interest">
-            <span id="interestLabel">想進一步瞭解聯盟</span><span class="opt-tag">非必填</span>
-          </label>
-        </div>
+      </section>
+
+      <div class="submit-area">
+        <p>請確認資料正確後送出。</p>
+        <button id="submitButton" type="submit"><span class="button-text">提交報名</span><span class="spinner" aria-hidden="true"></span></button>
       </div>
-      <div class="actions">
-        <button class="btn" type="submit" id="submitBtn">送出報名</button>
-        <div class="form-note">送出後系統將自動配發報名序號</div>
-      </div>
-      </fieldset>
-      <div class="lock-overlay" id="lockOverlay" title="請先勾選個資使用聲明"></div>
+      <div id="formStatus" class="status" role="status" aria-live="polite"></div>
     </form>
-  </div>
-</main>
 
-<footer>
-  <div class="wrap">
-    <div class="ttl">主辦單位聯絡方式</div>
-    <div class="contacts" id="contacts"></div>
-  </div>
-</footer>
-
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-  <div class="dialog" id="dialog">
-    <div class="icon" id="mIcon"></div>
-    <h4 id="mTitle"></h4>
-    <div class="body" id="mBody"></div>
-    <button class="btn" type="button" id="mClose">我知道了</button>
-  </div>
-</div>
-
-<script>
-(function(){
-  /* ---------- 設定 ---------- */
-  var DEFAULT_CFG = {
-    alliance:'健康樂活與智慧醫療照護聯盟', eventName:'請在此輸入活動名稱', eventDate:'', eventPlace:'',
-    open:true, closedMessage:'本活動報名已截止，感謝您的支持。',
-    contacts:['itriahmci@gmail.com','SmartMedHealth@itri.org.tw'],
-    memberLabel:'我的公司是以下會員',
-    memberOptions:['健康樂活聯盟','醫材公會','INNOPAD TAIPEI','ICF暨輔助科技研究中心','銀髮產協','TBA台灣生技協會','電電公會','在宅醫療學會','診全聯'],
-    interestLabel:'想進一步瞭解聯盟'
-  };
-  /* ▼▼▼ 部署設定：Apps Script「網頁應用程式」的 /exec 網址 ▼▼▼ */
-  var API_URL = 'https://script.google.com/macros/s/AKfycbzSWXmR9mpc2cVuDO4PJdhFpR8gUe0EndKn9_b-x_ccBl6lobNmJXyWgn81VuRFZBCy/exec';
-  /* ▲▲▲ 活動名稱、日期、選項等都在 Apps Script 的 CONFIG 修改，這裡不用改 ▲▲▲ */
-
-  var CFG = {}; for(var k0 in DEFAULT_CFG){ CFG[k0]=DEFAULT_CFG[k0]; }
-  var LIVE = !!API_URL;
-  var $ = function(id){ return document.getElementById(id); };
-  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-
-  /* ---------- 版面填入 ---------- */
-  var ICON_CAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
-  var ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>';
-  function render(){
-    $('alliance').textContent = CFG.alliance;
-    $('eventName').textContent = CFG.eventName;
-    document.title = CFG.alliance + '｜' + CFG.eventName;
-    var meta = '';
-    if(CFG.eventDate) meta += '<li>'+ICON_CAL+esc(CFG.eventDate)+'</li>';
-    if(CFG.eventPlace) meta += '<li>'+ICON_PIN+esc(CFG.eventPlace)+'</li>';
-    $('meta').innerHTML = meta;
-    $('contacts').innerHTML = (CFG.contacts||[]).map(function(m){
-      return '<a href="mailto:'+esc(m)+'">'+esc(m)+'</a>';
-    }).join('');
-    $('openArea').style.display = CFG.open ? '' : 'none';
-    $('closedCard').style.display = CFG.open ? 'none' : 'block';
-    $('closedMsg').textContent = CFG.closedMessage;
-    $('memberLabel').textContent = CFG.memberLabel;
-    $('interestLabel').textContent = CFG.interestLabel;
-    var sel = $('member'), keep = sel.value;
-    while(sel.options.length > 1) sel.remove(1);
-    (CFG.memberOptions||[]).forEach(function(o){
-      var opt = document.createElement('option'); opt.value = o; opt.textContent = o; sel.appendChild(opt);
-    });
-    if(keep) sel.value = keep;
-  }
-  render();
-  if(!LIVE) $('previewBar').hidden = false;
-
-  /* 從 Apps Script 載入最新活動設定（活動名稱、選項、是否開放） */
-  if(LIVE){
-    fetch(API_URL + '?action=config', {redirect:'follow'})
-      .then(function(r){ return r.json(); })
-      .then(function(c){ if(c && c.alliance){ for(var k in c){ CFG[k]=c[k]; } render(); } })
-      .catch(function(){ /* 讀取失敗則沿用預設設定 */ });
-  }
-
-  /* ---------- 後端呼叫（正式：Apps Script；預覽：模擬） ---------- */
-  var mockRows = [{email:'demo@example.com', serial:1}];
-  var mock = {
-    checkEmail:function(e){ e=String(e).trim().toLowerCase(); return {valid:EMAIL_RE.test(e), exists:mockRows.some(function(r){return r.email===e;})}; },
-    register:function(d){
-      var e=String(d.email).trim().toLowerCase();
-      if(mockRows.some(function(r){return r.email===e;})) return {ok:false, code:'DUPLICATE'};
-      var s = Math.max.apply(null, mockRows.map(function(r){return r.serial;}).concat([0]))+1;
-      mockRows.push({email:e, serial:s}); return {ok:true, serial:s};
-    }
-  };
-  function call(fn, arg){
-    if(!LIVE){
-      return new Promise(function(resolve, reject){
-        setTimeout(function(){ try{ resolve(mock[fn](arg)); }catch(e){ reject(e); } }, 450);
-      });
-    }
-    var body = fn==='checkEmail' ? {action:'check', email:arg} : {action:'register', data:arg};
-    // 以 text/plain 送出 JSON，屬於「簡單請求」，不會觸發 CORS 預檢
-    return fetch(API_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify(body),
-      redirect:'follow'
-    }).then(function(r){
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return r.json();
-    });
-  }
-
-  /* ---------- Modal ---------- */
-  var ICONS = {
-    success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
-    warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 7v6M12 17h.01"/><circle cx="12" cy="12" r="9.5"/></svg>',
-    error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 8l8 8M16 8l-8 8"/></svg>'
-  };
-  var lastFocus = null, onCloseFn = null;
-  function showModal(tone, title, html, btnText, onClose){
-    lastFocus = document.activeElement; onCloseFn = onClose || null;
-    $('dialog').className = 'dialog tone-'+tone;
-    $('mIcon').innerHTML = ICONS[tone];
-    $('mTitle').textContent = title;
-    $('mBody').innerHTML = html;
-    $('mClose').textContent = btnText || '我知道了';
-    $('modal').classList.add('show');
-    setTimeout(function(){ $('mClose').focus(); }, 30);
-  }
-  function closeModal(){
-    $('modal').classList.remove('show');
-    var fn = onCloseFn; onCloseFn = null;
-    if(fn) fn(); else if(lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-  $('mClose').addEventListener('click', closeModal);
-  $('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && $('modal').classList.contains('show')) closeModal(); });
-
-  var contactHtml = (CFG.contacts||[]).map(function(m){ return '<a href="mailto:'+esc(m)+'" style="color:#084c49">'+esc(m)+'</a>'; }).join('<br>');
-  function dupMessage(){
-    return '<p>此 Email 已完成本活動報名，無須重複填寫。</p>'+
-           '<p>如要<b>替他人報名</b>，請改用<b>當事人本人的 Email</b>。</p>'+
-           '<p style="font-size:14px;color:#5a6e6b;margin-top:12px">若需更正報名資料，請來信：<br>'+contactHtml+'</p>';
-  }
-
-  /* ---------- Email 即時檢查 ---------- */
-  var emailState = {value:'', exists:false};
-  var checkSeq = 0;
-  function setStatus(cls, html){
-    var el = $('emailStatus');
-    el.className = 'email-status' + (cls ? ' show '+cls : '');
-    el.innerHTML = html || '';
-  }
-  function checkEmailNow(){
-    var v = $('email').value.trim().toLowerCase();
-    if(!EMAIL_RE.test(v)){ setStatus('', ''); emailState={value:'',exists:false}; return Promise.resolve(null); }
-    if(v===emailState.value) return Promise.resolve(emailState);
-    var my = ++checkSeq;
-    setStatus('checking','正在確認此 Email 是否已報名…');
-    return call('checkEmail', v).then(function(r){
-      if(my!==checkSeq) return null;
-      emailState = {value:v, exists:!!(r && r.exists)};
-      if(emailState.exists) setStatus('dup','⚠️ 此 Email 已完成報名。如要替他人報名，請使用當事人的 Email。');
-      else setStatus('ok','✓ 此 Email 可以報名');
-      return emailState;
-    }).catch(function(){ if(my===checkSeq) setStatus('', ''); return null; });
-  }
-  var t = null;
-  $('email').addEventListener('input', function(){
-    $('f-email').classList.remove('invalid');
-    clearTimeout(t); t = setTimeout(checkEmailNow, 600);
-  });
-  $('email').addEventListener('blur', function(){ clearTimeout(t); checkEmailNow(); });
-
-  /* ---------- 其他管道 ---------- */
-  $('source').addEventListener('change', function(){
-    var other = this.value==='__other__';
-    $('otherWrap').style.display = other ? 'block' : 'none';
-    $('f-source').classList.remove('invalid');
-    if(other) $('sourceOther').focus();
-  });
-  ['name','phone','org','title','sourceOther'].forEach(function(id){
-    $(id).addEventListener('input', function(){ (id==='sourceOther'?$('otherWrap'):$('f-'+id)).classList.remove('invalid'); });
-  });
-  /* ---------- 個資聲明未勾選前鎖住報名表 ---------- */
-  function syncLock(){
-    var ok = $('consent').checked;
-    $('formBody').disabled = !ok;
-    $('lockOverlay').hidden = ok;
-    $('lockNote').hidden = ok;
-  }
-  $('consent').addEventListener('change', function(){
-    $('consentBox').classList.remove('invalid');
-    syncLock();
-    if(this.checked) setTimeout(function(){ $('email').focus({preventScroll:true}); }, 50);
-  });
-  $('lockOverlay').addEventListener('click', function(){
-    var box = $('consentBox');
-    box.scrollIntoView({behavior:'smooth', block:'center'});
-    box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash');
-  });
-  syncLock();
-
-  /* ---------- 驗證與送出 ---------- */
-  function validate(){
-    var bad = [];
-    function mark(boxId, ok, focusId){ $(boxId).classList.toggle('invalid', !ok); if(!ok) bad.push(focusId||boxId); }
-    var consentOk = $('consent').checked;
-    $('consentBox').classList.toggle('invalid', !consentOk);
-    if(!consentOk) bad.push('consent');
-    mark('f-email', EMAIL_RE.test($('email').value.trim()), 'email');
-    mark('f-name', !!$('name').value.trim(), 'name');
-    mark('f-phone', /^[0-9+\-()#\s]{6,25}$/.test($('phone').value.trim()), 'phone');
-    mark('f-org', !!$('org').value.trim(), 'org');
-    mark('f-title', !!$('title').value.trim(), 'title');
-    mark('f-source', !!$('source').value, 'source');
-    if($('source').value==='__other__') mark('otherWrap', !!$('sourceOther').value.trim(), 'sourceOther');
-    return bad;
-  }
-
-  var busy = false;
-  $('regForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    if(busy) return;
-    var bad = validate();
-    if(bad.length){
-      var first = $(bad[0]);
-      first.scrollIntoView({behavior:'smooth', block:'center'});
-      setTimeout(function(){ first.focus({preventScroll:true}); }, 250);
-      return;
-    }
-    var src = $('source').value==='__other__' ? '其他：'+$('sourceOther').value.trim() : $('source').value;
-    var data = {
-      email:$('email').value.trim().toLowerCase(),
-      name:$('name').value.trim(),
-      phone:$('phone').value.trim(),
-      org:$('org').value.trim(),
-      title:$('title').value.trim(),
-      source:src,
-      member:$('member').value,
-      interest:$('interest').checked,
-      consent:true
-    };
-    busy = true;
-    var btn = $('submitBtn'); btn.disabled = true; btn.textContent = '送出中，請稍候…';
-
-    call('register', data).then(function(r){
-      if(r && r.ok){
-        showModal('success','報名完成！',
-          '<p><b>'+esc(data.name)+'</b> 您好，感謝您報名</p>'+
-          '<p style="font-weight:700;color:#11302e">'+esc(CFG.eventName)+'</p>'+
-          '<div class="serial"><small>您的報名序號</small><strong>No. '+esc(r.serial)+'</strong></div>'+
-          '<p style="font-size:14px;color:#5a6e6b">報名 Email：'+esc(data.email)+'<br>建議截圖保存此畫面，活動相關通知將寄至上述信箱。</p>',
-          '完成', function(){ resetForm(); window.scrollTo({top:0, behavior:'smooth'}); });
-      }else if(r && r.code==='DUPLICATE'){
-        emailState = {value:data.email, exists:true};
-        setStatus('dup','⚠️ 此 Email 已完成報名。如要替他人報名，請使用當事人的 Email。');
-        showModal('warn','此 Email 已報名', dupMessage(), '我知道了', function(){ $('email').focus(); $('email').select(); });
-      }else if(r && r.code==='CLOSED'){
-        showModal('warn','報名已截止', '<p>'+esc(r.message)+'</p>');
-      }else{
-        showModal('error','報名未完成', '<p>'+esc((r && r.message) || '資料送出時發生問題，請稍後再試。')+'</p>');
-      }
-    }).catch(function(){
-      showModal('error','連線發生問題','<p>資料未能送出，請檢查網路後再試一次。</p><p style="font-size:14px;color:#5a6e6b">若持續無法報名，請來信：<br>'+contactHtml+'</p>');
-    }).then(function(){
-      busy = false; btn.disabled = false; btn.textContent = '送出報名';
-    });
-  });
-
-  function resetForm(){
-    $('regForm').reset();
-    $('consent').checked = false;
-    syncLock();
-    $('otherWrap').style.display = 'none';
-    setStatus('', ''); emailState = {value:'', exists:false};
-    document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
-  }
-})();
-</script>
+    <footer>
+      <div class="organizer-notice">
+        <strong>主辦單位保留活動更動權利</strong>
+        <span>主辦單位聯絡方式</span>
+        <div class="contact-links">
+          <a href="mailto:itriahmci@gmail.com">itriahmci@gmail.com</a>
+          <a href="mailto:SmartMedHealth@itri.org.tw">SmartMedHealth@itri.org.tw</a>
+        </div>
+      </div>
+      <p>健康樂活與智慧醫療照護聯盟</p>
+    </footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
