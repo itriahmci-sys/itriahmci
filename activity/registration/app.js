@@ -47,11 +47,67 @@ document.querySelectorAll('input[name="source"]').forEach((radio) => {
 });
 otherInput.disabled = true;
 
+
+// ===== 報名序號彈窗 =====
+const modal = document.querySelector("#resultModal");
+function openModal({ type, title, message, serial }) {
+  modal.dataset.type = type;
+  modal.querySelector("#modalTitle").textContent = title;
+  modal.querySelector("#modalMessage").textContent = message;
+  const serialBox = modal.querySelector("#modalSerialBox");
+  serialBox.hidden = !serial;
+  modal.querySelector("#modalSerial").textContent = serial || "";
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  modal.querySelector("#modalClose").focus();
+}
+function closeModal() {
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+}
+modal.querySelector("#modalClose").addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
+// ===== 重複電郵即時檢查 =====
+const emailInput = document.querySelector("#email");
+let emailDuplicate = null; // null=未檢查, {serial} = 已報名, false = 可報名
+let lastChecked = "";
+async function checkEmail() {
+  const apiUrl = window.REGISTRATION_CONFIG?.API_URL || "";
+  const email = emailInput.value.trim().toLowerCase();
+  if (!email || !emailInput.validity.valid || !apiUrl.startsWith("https://script.google.com/")) return;
+  if (email === lastChecked) return;
+  lastChecked = email;
+  try {
+    const res = await fetch(`${apiUrl}?action=check&email=${encodeURIComponent(email)}`);
+    const result = await res.json();
+    if (emailInput.value.trim().toLowerCase() !== email) return; // 使用者已改字
+    if (result.ok && result.duplicate) {
+      emailDuplicate = { serial: result.serial };
+      showError("email", `此電子郵件已完成報名${result.serial ? `（報名序號：${result.serial}）` : ""}，無須重複報名。`);
+    } else {
+      emailDuplicate = false;
+      showError("email", "");
+    }
+  } catch (_) { /* 檢查失敗不阻擋，送出時後端仍會再檢查 */ }
+}
+emailInput.addEventListener("blur", checkEmail);
+emailInput.addEventListener("input", () => {
+  emailDuplicate = null; lastChecked = "";
+  showError("email", "");
+});
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   clearErrors();
   if (!validate()) {
     document.querySelector(".field-error:not(:empty)")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  if (emailDuplicate) {
+    openModal({ type: "warn", title: "您已經報名過了", serial: emailDuplicate.serial,
+      message: "這個電子郵件已完成報名，無須重複報名。如需修改資料，請聯絡主辦單位。" });
     return;
   }
 
@@ -85,12 +141,21 @@ form.addEventListener("submit", async (event) => {
       redirect: "follow"
     });
     const result = await response.json();
+    if (result.duplicate) {
+      emailDuplicate = { serial: result.serial };
+      showError("email", `此電子郵件已完成報名${result.serial ? `（報名序號：${result.serial}）` : ""}。`);
+      openModal({ type: "warn", title: "您已經報名過了", serial: result.serial,
+        message: "這個電子郵件已完成報名，無須重複報名。如需修改資料，請聯絡主辦單位。" });
+      return;
+    }
     if (!response.ok || !result.ok) throw new Error(result.message || "送出失敗");
     form.reset();
     otherInput.disabled = true;
+    emailDuplicate = null; lastChecked = "";
     statusBox.className = "status success";
-    statusBox.textContent = "報名成功！我們已收到您的資料。";
-    statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    statusBox.textContent = result.serial ? `報名成功！您的報名序號：${result.serial}` : "報名成功！我們已收到您的資料。";
+    openModal({ type: "success", title: "報名成功！", serial: result.serial,
+      message: "我們已收到您的報名資料，請記下您的報名序號，報到時可供查驗。" });
   } catch (error) {
     statusBox.className = "status error";
     statusBox.textContent = "目前無法送出報名資料，請稍後再試或聯絡主辦單位。";

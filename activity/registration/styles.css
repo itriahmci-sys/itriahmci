@@ -26,3 +26,25 @@ fieldset{border:0;padding:0;margin:0}.radio-grid{display:grid;grid-template-colu
 .status{display:none;margin:16px 12px;padding:16px 18px;border-radius:13px;font-weight:600}.status.success{display:block;background:#e7f6ed;border:1px solid #a9dabc;color:#17633a}.status.error{display:block;background:#fff0ee;border:1px solid #f0b7b0;color:#9d261c}footer{text-align:center;color:#738581;font-size:.86rem;padding:30px 0 8px}.organizer-notice{padding:22px 24px;border:2px solid #db7b2b;border-radius:16px;background:#fff7ed;color:#53321c;box-shadow:0 10px 30px rgba(168,83,20,.1)}.organizer-notice strong{display:block;color:#a84316;font-size:1.12rem;margin-bottom:7px}.organizer-notice>span{display:block;font-weight:600;margin-bottom:8px}.contact-links{display:flex;justify-content:center;gap:10px 24px;flex-wrap:wrap}.contact-links a{color:var(--teal-dark);font-size:1rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}.contact-links a:hover{color:#c45c18}footer>p{margin:20px 0 0}
 @media(max-width:640px){.page-shell{width:min(100% - 20px,860px);padding-top:30px}.hero{padding:0 5px;gap:15px}.brand-mark{width:82px;flex-basis:82px;padding:6px;border-radius:14px}.card{padding:22px 18px;border-radius:19px}.form-grid,.radio-grid{grid-template-columns:1fr}.other-option{grid-column:auto;flex-wrap:wrap}.other-option input[type=text]{width:100%;margin-left:28px}.submit-area{align-items:stretch;flex-direction:column}.submit-area button{width:100%}.privacy-copy{max-height:360px}.organizer-notice{padding:19px 14px}.contact-links{flex-direction:column;gap:7px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* ===== 報名結果彈窗 ===== */
+body.modal-open { overflow: hidden; }
+.modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(15, 40, 38, 0.55); animation: modalFade .2s ease; }
+.modal[hidden] { display: none; }
+.modal-card { width: min(420px, 100%); background: #fff; border-radius: 18px; padding: 32px 28px 26px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.25); animation: modalPop .25s ease; }
+.modal-icon { width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 700; color: #fff; background: #176b63; }
+.modal-icon::before { content: "✓"; }
+.modal[data-type="warn"] .modal-icon { background: #d98a1c; }
+.modal[data-type="warn"] .modal-icon::before { content: "!"; }
+.modal-card h2 { margin: 0 0 14px; font-size: 1.4rem; color: #17312e; }
+.modal-serial { margin: 0 auto 16px; padding: 14px 16px; border: 2px dashed #176b63; border-radius: 12px; background: #eef7f5; }
+.modal-serial[hidden] { display: none; }
+.modal-serial span { display: block; font-size: .85rem; color: #4d6662; margin-bottom: 4px; }
+.modal-serial strong { font-size: 1.9rem; letter-spacing: .06em; color: #176b63; }
+.modal[data-type="warn"] .modal-serial { border-color: #d98a1c; background: #fdf5e9; }
+.modal[data-type="warn"] .modal-serial strong { color: #b36d0c; }
+.modal-card p { margin: 0 0 22px; color: #4d6662; line-height: 1.7; }
+.modal-card button { min-width: 140px; padding: 12px 24px; border: 0; border-radius: 999px; background: #176b63; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+.modal-card button:hover { filter: brightness(1.08); }
+@keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalPop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
