@@ -12,7 +12,9 @@ const SERIAL_COL = 9;             // I 欄
 function getSheet_() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
   if (!sheet) throw new Error('找不到分頁：' + SHEET_NAME);
-  if (sheet.getRange(1, SERIAL_COL).getValue() === '') {
+  const header = String(sheet.getRange(1, SERIAL_COL).getValue()).trim();
+  // 空白或「第 1 欄」「Column 1」這類預設標題都改成「報名序號」
+  if (header === '' || /^第\s*\d+\s*欄$/.test(header) || /^column\s*\d+$/i.test(header)) {
     sheet.getRange(1, SERIAL_COL).setValue('報名序號');
   }
   return sheet;
