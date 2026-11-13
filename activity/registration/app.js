@@ -86,6 +86,8 @@ async function checkEmail() {
     if (result.ok && result.duplicate) {
       emailDuplicate = { serial: result.serial };
       showError("email", `此電子郵件已完成報名${result.serial ? `（報名序號：${result.serial}）` : ""}，無須重複報名。`);
+      openModal({ type: "warn", title: "您已經報名過了", serial: result.serial,
+        message: "這個電子郵件已完成報名，無須重複報名。如需修改資料，請聯絡主辦單位。" });
     } else {
       emailDuplicate = false;
       showError("email", "");
