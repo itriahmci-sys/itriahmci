@@ -38,7 +38,7 @@ window.SITE = {
     /* 子分頁捷徑：未來新增分頁，在這裡加一筆即可 */
     quickLinks: [
       { icon: "🎬", label: "微電影＆新聞影片", href: "media/index.html" },
-      { icon: "📢", label: "活動公告", href: "activity/announcement.html" },
+      { icon: "📢", label: "活動公告", href: "activity/" },
       { icon: "📰", label: "新知週報分享", href: "news_report/index.html" },
     ],
     image: { src: "images/interlock.png", alt: "健康樂活與智慧醫療照護聯盟" },
