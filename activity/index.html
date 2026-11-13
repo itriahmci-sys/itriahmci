@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智慧輔具×HIS×FHIR：串聯在宅醫療與長照的資料應用｜健康樂活與智慧醫療照護聯盟 2026 Q4 論壇</title>
+<meta name="description" content="健康樂活與智慧醫療照護聯盟 2026 年第四季論壇。2026/12/16（三）13:30–17:00 於臺北新創旗艦基地，探討智慧輔具、HIS 與 FHIR 如何串聯在宅醫療與長照的資料應用。">
+<meta property="og:title" content="智慧輔具×HIS×FHIR：串聯在宅醫療與長照的資料應用">
+<meta property="og:description" content="健康樂活與智慧醫療照護聯盟 2026 年第四季論壇｜2026/12/16 PM 1:30–5:00，臺北新創旗艦基地。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/map.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f2a3d; --ink-2:#3a5568; --teal:#0f8a8a; --teal-d:#0a6670; --mint:#e6f6f2; --mint-2:#cdeee6;
+  --navy:#1b4f8a; --sun:#ffd64d; --sun-soft:#fff3c4; --line:#d7e7e3; --card:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:#f6fbfa;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--navy)}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(246,251,250,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav .brand img{height:30px;width:auto}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{display:block;padding:6px 12px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-size:15px;font-weight:500}
+.nav ul a:hover{background:var(--mint-2);color:var(--ink)}
+.nav .cta{margin-left:8px}
+@media (max-width:820px){.nav ul{display:none}.nav .cta{margin-left:auto}}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:16px;transition:transform .15s,box-shadow .15s;border:2px solid transparent;cursor:pointer}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:0 6px 18px -6px rgba(15,138,138,.6)}
+.btn-primary:hover{background:var(--teal-d)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--teal)}
+.btn-sm{padding:8px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(900px 500px at 85% -10%,#bfeee2 0%,transparent 60%),
+  radial-gradient(700px 500px at -10% 110%,#c9e7f7 0%,transparent 60%),
+  linear-gradient(160deg,#eefaf6,#e3f4f2 60%,#dcefee)}
+.hero::after{content:"";position:absolute;inset:0;background-image:
+  radial-gradient(circle at 20% 30%,rgba(255,255,255,.7) 0 3px,transparent 4px),
+  radial-gradient(circle at 75% 70%,rgba(255,255,255,.6) 0 2px,transparent 3px);
+  background-size:120px 120px,90px 90px;opacity:.6;pointer-events:none}
+.hero .wrap{position:relative;z-index:1;padding:64px 20px 56px;text-align:center}
+.eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid var(--mint-2);color:var(--teal-d);font-weight:700;font-size:14px;letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6.2vw,60px);font-weight:900;line-height:1.2;margin:18px 0 10px;letter-spacing:.02em}
+.hero .sub{font-size:clamp(24px,4vw,38px);font-weight:900;color:#06424a;margin:4px 0 0;letter-spacing:.03em}
+.hero h1 .x{color:var(--teal);margin:0 .12em;font-weight:700}
+.hero .series{font-size:clamp(16px,2.2vw,20px);color:var(--ink-2);margin:6px 0 0}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:30px 0 26px}
+.fact{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 18px;text-align:left;box-shadow:0 4px 14px -10px rgba(15,42,61,.4)}
+.fact svg{flex:none;color:var(--teal)}
+.fact b{display:block;font-size:16px}
+.fact span{font-size:14px;color:var(--ink-2)}
+.hero .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.countdown{margin-top:22px;font-size:15px;color:var(--ink-2)}
+.countdown b{color:var(--teal-d);font-size:20px;font-variant-numeric:tabular-nums}
+.hosts{display:flex;justify-content:center;align-items:center;gap:36px;margin-top:34px;flex-wrap:wrap}
+.hosts img{height:46px;width:auto}
+.hosts img.ahmci{height:56px}
+
+/* sections */
+section{padding:72px 0}
+.sec-title{display:flex;align-items:baseline;gap:14px;margin:0 0 28px}
+.sec-title h2{font-size:clamp(26px,3.6vw,34px);font-weight:900;margin:0}
+.sec-title .en{font-size:13px;letter-spacing:.18em;color:var(--teal);font-weight:700;text-transform:uppercase}
+
+.intro{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
+.intro p{margin:0 0 1em;font-size:17px;text-align:justify}
+.theme{background:linear-gradient(135deg,var(--teal),var(--navy));color:#fff;border-radius:20px;padding:28px;position:sticky;top:84px}
+.theme small{opacity:.85;letter-spacing:.1em;font-weight:700}
+.theme h3{font-size:24px;line-height:1.45;margin:8px 0 14px}
+.theme p{margin:0;opacity:.92;font-size:15px;text-align:left}
+@media (max-width:860px){.intro{grid-template-columns:1fr}.theme{position:static}}
+
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.pillar{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+.pillar .n{width:40px;height:40px;border-radius:12px;background:var(--mint);color:var(--teal-d);display:grid;place-items:center;font-weight:900;font-size:18px;margin-bottom:12px}
+.pillar h4{margin:0 0 6px;font-size:19px}
+.pillar p{margin:0;font-size:15px;color:var(--ink-2);line-height:1.7}
+@media (max-width:900px){.pillars{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.pillars{grid-template-columns:1fr}}
+
+/* agenda */
+#agenda{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.agenda{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.agenda li{display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:20px;padding:16px 22px;border-radius:14px;background:var(--mint);border:1px solid transparent}
+.agenda li.break{background:var(--sun-soft)}
+.agenda li.talk:hover{border-color:var(--mint-2);background:#dff3ee}
+.agenda .time{font-weight:900;font-variant-numeric:tabular-nums;font-size:16px;color:var(--teal-d);white-space:nowrap}
+.agenda li.break .time{color:#8a6300}
+.agenda .topic{font-weight:700;font-size:17px;line-height:1.55}
+.agenda .who{font-weight:700;color:var(--navy);font-size:15px;white-space:nowrap;text-align:right}
+.agenda .who:empty{display:none}
+@media (max-width:680px){
+  .agenda li{grid-template-columns:1fr;gap:4px;padding:14px 18px}
+  .agenda .who{text-align:left}
+}
+
+/* speakers */
+.speakers{display:flex;flex-direction:column;gap:20px}
+.spk{display:grid;grid-template-columns:180px 1fr;gap:28px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;align-items:start}
+.spk img{width:180px;height:230px;object-fit:cover;object-position:center top;border-radius:14px;background:#e9eef0}
+.spk .role{display:inline-block;font-size:13px;font-weight:700;color:var(--teal-d);background:var(--mint);padding:3px 10px;border-radius:999px;margin-bottom:6px}
+.spk h3{margin:0 0 4px;font-size:26px;font-weight:900}
+.spk .talk{margin:0 0 14px;font-weight:700;color:var(--navy);font-size:16px}
+.spk dl{margin:0;display:grid;grid-template-columns:52px 1fr;gap:6px 10px;font-size:15.5px;line-height:1.7}
+.spk dt{font-weight:700;color:var(--teal-d)}
+.spk dd{margin:0}
+@media (max-width:640px){.spk{grid-template-columns:1fr;gap:16px;padding:20px}.spk img{width:140px;height:180px}}
+
+/* info */
+.info{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+.card h3{margin:0 0 14px;font-size:20px}
+dl.kv{margin:0;display:grid;grid-template-columns:72px 1fr;gap:12px 14px;font-size:16px}
+dl.kv dt{font-weight:700;color:var(--teal-d)}
+dl.kv dd{margin:0;word-break:break-all}
+.note{margin-top:18px;padding:12px 16px;border-radius:12px;background:var(--sun-soft);color:#6b4d00;font-weight:700;font-size:15px}
+.qrs{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.qr{text-align:center}
+.qr img{width:150px;height:150px;border-radius:12px;border:1px solid var(--line);padding:8px;background:#fff}
+.qr a{display:inline-block;margin-top:8px;font-weight:700;font-size:15px;text-decoration:none}
+@media (max-width:820px){.info{grid-template-columns:1fr}}
+
+/* traffic */
+#traffic{background:linear-gradient(180deg,#f6fbfa,#e6f5f1)}
+.map{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(15,42,61,.5)}
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.route{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:flex;gap:14px;align-items:center}
+.route .ic{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--mint);color:var(--teal-d)}
+.route b{display:block;font-size:17px}
+.route span{color:var(--ink-2);font-size:15px}
+@media (max-width:820px){.routes{grid-template-columns:1fr}}
+
+/* partners */
+.partners{display:flex;flex-direction:column;gap:20px}
+.pgroup{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 32px;display:grid;grid-template-columns:150px 1fr;align-items:center;gap:24px}
+.pgroup h4{margin:0;font-size:22px;font-weight:900;letter-spacing:.08em;color:var(--teal-d);border-left:5px solid var(--teal);padding-left:14px}
+.logos{display:flex;flex-wrap:wrap;align-items:center;gap:28px 64px}
+.logos img{height:96px;width:auto;max-width:100%;object-fit:contain}
+.logos img.sq{height:140px}
+.logos img.wide{height:84px}
+.logos .tba{display:flex;align-items:center;gap:16px;font-size:22px;font-weight:700;line-height:1.35;color:#1d6b35}
+.logos .tba small{display:block;font-size:15px;font-weight:500;color:var(--ink-2)}
+@media (max-width:760px){
+  .logos .tba{font-size:18px;flex-direction:column;text-align:center;gap:10px}
+  .pgroup{grid-template-columns:1fr;padding:22px;gap:18px}
+  .logos{gap:24px 40px;justify-content:center}
+  .logos img{height:72px}.logos img.sq{height:110px}.logos img.wide{height:64px}
+}
+footer{background:var(--ink);color:#c9dbe4;padding:40px 0;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{color:#fff}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="主選單">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/logo-ahmci.png" alt="">2026 Q4 論壇</a>
+    <ul>
+      <li><a href="#about">活動說明</a></li>
+      <li><a href="#agenda">議程</a></li>
+      <li><a href="#speakers">講師介紹</a></li>
+      <li><a href="#info">活動資訊</a></li>
+      <li><a href="#traffic">交通指引</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm cta" href="https://www.itriahmci.org.tw/activity/registration/" target="_blank" rel="noopener">立即報名</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow">健康樂活與智慧醫療照護聯盟　2026 年第四季論壇</span>
+    <h1>智慧輔具<span class="x">×</span>HIS<span class="x">×</span>FHIR</h1>
+    <p class="sub">串聯在宅醫療與長照的資料應用</p>
+
+    <div class="facts">
+      <div class="fact">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <div><b>2026 年 12 月 16 日（三）</b><span>PM 1:30 – 5:00（13:00 報到）</span></div>
+      </div>
+      <div class="fact">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div><b>臺北新創旗艦基地 INNOPAD</b><span>臺北市南港區忠孝東路七段 12 號 3 樓</span></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="https://www.itriahmci.org.tw/activity/registration/" target="_blank" rel="noopener">立即報名 →</a>
+      <a class="btn btn-ghost" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E6%99%BA%E6%85%A7%E8%BC%94%E5%85%B7%C3%97HIS%C3%97FHIR%EF%BC%9A%E4%B8%B2%E8%81%AF%E5%9C%A8%E5%AE%85%E9%86%AB%E7%99%82%E8%88%87%E9%95%B7%E7%85%A7%E7%9A%84%E8%B3%87%E6%96%99%E6%87%89%E7%94%A8&dates=20261216T050000Z/20261216T090000Z&location=%E8%87%BA%E5%8C%97%E6%96%B0%E5%89%B5%E6%97%97%E8%89%A6%E5%9F%BA%E5%9C%B0%EF%BC%88%E8%87%BA%E5%8C%97%E5%B8%82%E5%8D%97%E6%B8%AF%E5%8D%80%E5%BF%A0%E5%AD%9D%E6%9D%B1%E8%B7%AF%E4%B8%83%E6%AE%B512%E8%99%9F3%E6%A8%93%EF%BC%89&details=%E5%81%A5%E5%BA%B7%E6%A8%82%E6%B4%BB%E8%88%87%E6%99%BA%E6%85%A7%E9%86%AB%E7%99%82%E7%85%A7%E8%AD%B7%E8%81%AF%E7%9B%9F2026%E5%B9%B4%E7%AC%AC%E5%9B%9B%E5%AD%A3%E8%AB%96%E5%A3%87%0Ahttps%3A%2F%2Fwww.itriahmci.org.tw%2Factivity%2F" target="_blank" rel="noopener">加入 Google 行事曆</a>
+      <a class="btn btn-ghost" href="#agenda">查看議程</a>
+    </div>
+    <p class="countdown" id="countdown" aria-live="polite"></p>
+
+    <div class="hosts">
+      <img src="assets/logo-itri.png" alt="工業技術研究院 Industrial Technology Research Institute">
+      <img class="ahmci" src="assets/logo-ahmci.png" alt="健康樂活與智慧醫療照護聯盟">
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="about">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>活動說明</h2><span class="en">About</span></div>
+    <div class="intro">
+      <div class="reveal">
+        <p>「醫療照顧整合」是國家重要政策目標，政府正建構在宅責任醫療網絡，讓「疾病治療」與「日常生活支持」形成連續性照護。智慧輔具能在居家量測生理、行為與功能狀態，但能否普及，關鍵在「量測之後」，也就是數據能否接進醫療系統、警訊由誰回應、服務如何給付與核實。</p>
+        <p>本次論壇以「智慧輔具 × FHIR：串聯在宅醫療與長照的資料應用」為主軸。輔具提供的活動量、離床、移位與復能訓練紀錄，如何透過 FHIR 標準以可追溯的方式對接醫療資訊系統與照護平台，再與病歷、訪視評估整合，讓醫療團隊在到宅訪視之外也能掌握個案變化，作為追蹤復能、辨識需進一步評估個案及調整訪視頻率的參考。</p>
+        <p>活動邀集醫療與長照團隊、輔具及資訊業者、政策主管機關共同討論，形成優先應用情境與驗證方向，讓智慧輔具成為支援連續性照護的工具。</p>
+      </div>
+      <aside class="theme reveal">
+        <small>論壇主軸</small>
+        <h3>智慧輔具 × FHIR<br>串聯在宅醫療與長照的資料應用</h3>
+        <p>關鍵在「量測之後」：數據能否接進醫療系統、警訊由誰回應、服務如何給付與核實。</p>
+      </aside>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal"><div class="n">1</div><h4>政策制度</h4><p>輔具數據對接醫院資訊系統（HIS）的政策方向，以及輔具登錄、租賃給付與在宅醫療的銜接。</p></div>
+      <div class="pillar reveal"><div class="n">2</div><h4>居家實務</h4><p>確認醫療團隊需要哪些數據、由誰判讀與回應。</p></div>
+      <div class="pillar reveal"><div class="n">3</div><h4>科技串接</h4><p>說明設備資料轉換、FHIR 與 HIS 對接及驗證路徑。</p></div>
+      <div class="pillar reveal"><div class="n">4</div><h4>數據應用</h4><p>討論資料品質、AI 輔助判讀、成效評估及給付核實機制。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="agenda">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>議程</h2><span class="en">Agenda · 2026.12.16</span></div>
+    <ol class="agenda reveal">
+      <li class="break"><span class="time">13:00–13:30</span><span class="topic">報到</span><span class="who"></span></li>
+      <li class="talk"><span class="time">13:30–13:40</span><span class="topic">司儀開場與貴賓致詞</span><span class="who">主辦單位</span></li>
+      <li class="talk"><span class="time">13:40–14:20</span><span class="topic">以 FHIR 串聯智慧輔具與 HIS，開創在宅醫療數據應用</span><span class="who">李建璋處長</span></li>
+      <li class="talk"><span class="time">14:20–14:50</span><span class="topic">智慧輔具數據對接 HIS、FHIR 的資安落地與實務</span><span class="who">劉致宏副總經理</span></li>
+      <li class="break"><span class="time">14:50–15:00</span><span class="topic">茶敘與設備交流</span><span class="who"></span></li>
+      <li class="talk"><span class="time">15:00–15:30</span><span class="topic">智慧輔具居家導入與在宅醫療第一線需求</span><span class="who">劉旻宜執行長</span></li>
+      <li class="talk"><span class="time">15:30–16:00</span><span class="topic">資料品質、AI 應用與照護成效</span><span class="who">產業界專家</span></li>
+      <li class="talk"><span class="time">16:00–16:30</span><span class="topic">綜合座談：資料共享、責任分工與共同驗證</span><span class="who">胡紀平副秘書長</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="speakers">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>講師介紹</h2><span class="en">Speakers</span></div>
+    <div class="speakers">
+      <article class="spk reveal">
+        <img src="assets/speaker-lee-chienchang.jpg" alt="李建璋處長照片" loading="lazy" width="281" height="380">
+        <div>
+          <span class="role">13:40–14:20</span>
+          <h3>李建璋</h3>
+          <p class="talk">以 FHIR 串聯智慧輔具與 HIS，開創在宅醫療數據應用</p>
+          <dl>
+            <dt>現職</dt><dd>衛生福利部資訊處處長</dd>
+            <dt>學歷</dt><dd>美國哈佛大學公衛學院流行病學博士</dd>
+            <dt>專長</dt><dd>急診醫學、智慧醫療、醫學資訊、大數據、資訊安全、流行病學</dd>
+            <dt>經歷</dt><dd>現任藥品查驗登記中心董事、臺灣大學生醫電資研究所兼任教授<br>臺大智慧醫療中心副主任</dd>
+          </dl>
+        </div>
+      </article>
+      <article class="spk reveal">
+        <img src="assets/speaker-liu-chihhung.jpg" alt="劉致宏副總經理照片" loading="lazy" width="295" height="399">
+        <div>
+          <span class="role">14:20–14:50</span>
+          <h3>劉致宏</h3>
+          <p class="talk">智慧輔具數據對接 HIS、FHIR 的資安落地與實務</p>
+          <dl>
+            <dt>現職</dt><dd>台灣微軟公共業務事業群副總經理、台灣電子健康學會理事</dd>
+            <dt>學歷</dt><dd>國立臺灣大學商學研究所碩士</dd>
+            <dt>專長</dt><dd>智慧醫療與數位轉型、雲端與生成式 AI 應用</dd>
+            <dt>經歷</dt><dd>台灣微軟健康與醫療產業總監／首席醫療產業顧問、微軟亞太區總部、資深業務經理</dd>
+          </dl>
+        </div>
+      </article>
+      <article class="spk reveal">
+        <img src="assets/speaker-liu-minyi.jpg" alt="劉旻宜執行長照片" loading="lazy" width="295" height="378">
+        <div>
+          <span class="role">15:00–15:30</span>
+          <h3>劉旻宜</h3>
+          <p class="talk">智慧輔具居家導入與在宅醫療第一線需求</p>
+          <dl>
+            <dt>現職</dt><dd>輔具家 ATHome 家是福雲端科技創辦人暨營運長<br>台灣長期照顧物理治療學會副祕書長</dd>
+            <dt>學歷</dt><dd>國立陽明交通大學物理治療暨輔助科技學系碩士</dd>
+            <dt>專長</dt><dd>長期照顧政策與智慧輔具應用、居家復能自立支援、輔具產業數位轉型</dd>
+            <dt>經歷</dt><dd>地方輔具中心輔具評估人員</dd>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="info">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>活動資訊</h2><span class="en">Information</span></div>
+    <div class="info">
+      <div class="card reveal">
+        <h3>時間與地點</h3>
+        <dl class="kv">
+          <dt>時間</dt><dd>2026 年 12 月 16 日（三）PM 1:30 – 5:00</dd>
+          <dt>地點</dt><dd>臺北新創旗艦基地（臺北市南港區忠孝東路七段 12 號 3 樓）</dd>
+          <dt>官網</dt><dd><a href="https://www.itriahmci.org.tw/activity/" target="_blank" rel="noopener">www.itriahmci.org.tw/activity/</a></dd>
+          <dt>報名</dt><dd><a href="https://www.itriahmci.org.tw/activity/registration/" target="_blank" rel="noopener">www.itriahmci.org.tw/activity/registration/</a></dd>
+          <dt>主辦</dt><dd>財團法人工業技術研究院　健康樂活與智慧醫療照護聯盟</dd>
+        </dl>
+        <div class="note">入場以健康樂活聯盟會員優先，主辦單位保留活動更動權利</div>
+      </div>
+      <div class="card reveal">
+        <h3>掃描 QR Code</h3>
+        <div class="qrs">
+          <div class="qr"><img src="assets/qr-register.png" alt="活動報名網址 QR Code"><a href="https://www.itriahmci.org.tw/activity/registration/" target="_blank" rel="noopener">活動報名網址</a></div>
+          <div class="qr"><img src="assets/qr-ahmci.png" alt="健康樂活與智慧醫療照護聯盟首頁 QR Code"><a href="https://www.itriahmci.org.tw/" target="_blank" rel="noopener">聯盟首頁</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="traffic">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>INNOPAD TAIPEI 交通指引</h2><span class="en">Getting There</span></div>
+    <figure class="map reveal" style="margin:0">
+      <img src="assets/map.jpg" alt="INNOPAD TAIPEI 周邊交通示意圖：位於忠孝東路七段，鄰近捷運昆陽站、高鐵南港站、臺北流行音樂中心與衛福部" loading="lazy" width="1024" height="636">
+    </figure>
+    <div class="routes">
+      <div class="route reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <div><b>臺北新創旗艦基地</b><span>南港區忠孝東路七段 12 號 3 樓</span><br><a href="https://www.google.com/maps/search/?api=1&query=%E8%87%BA%E5%8C%97%E5%B8%82%E5%8D%97%E6%B8%AF%E5%8D%80%E5%BF%A0%E5%AD%9D%E6%9D%B1%E8%B7%AF%E4%B8%83%E6%AE%B512%E8%99%9F" target="_blank" rel="noopener">在 Google 地圖開啟 →</a></div>
+      </div>
+      <div class="route reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2-4M15 21l2-4"/><circle cx="9" cy="14" r=".5"/><circle cx="15" cy="14" r=".5"/></svg></div>
+        <div><b>捷運昆陽站</b><span>步行約 7 分鐘</span></div>
+      </div>
+      <div class="route reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15V8a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v7a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M4 11h16M8 21l1.5-3M16 21l-1.5-3"/></svg></div>
+        <div><b>南港車站</b><span>步行約 15 分鐘</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="partners">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>合作單位</h2><span class="en">Partners</span></div>
+    <div class="partners">
+      <div class="pgroup reveal">
+        <h4>指導單位</h4>
+        <div class="logos"><img class="wide" src="assets/logo-doit.png" alt="經濟部產業技術司 Department of Industrial Technology, MOEA"></div>
+      </div>
+      <div class="pgroup reveal">
+        <h4>協辦單位</h4>
+        <div class="logos">
+          <img src="assets/logo-innopad.png" alt="INNOPAD TAIPEI 臺北新創旗艦基地">
+          <span class="tba"><img class="sq" src="assets/logo-tba.png" alt=""><span>台灣生技產業促進協會<small>Taiwan Biotech Association</small></span></span>
+        </div>
+      </div>
+      <div class="pgroup reveal">
+        <h4>聯盟<br>金讚會員</h4>
+        <div class="logos">
+          <img class="wide" src="assets/logo-nanshan.png" alt="南山人壽 Nan Shan Life">
+          <img class="wide" src="assets/logo-cathay.png" alt="國泰人壽 Cathay Life Insurance">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>主辦：財團法人工業技術研究院　健康樂活與智慧醫療照護聯盟</div>
+    <div><a href="https://www.itriahmci.org.tw/" target="_blank" rel="noopener">www.itriahmci.org.tw</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // countdown to 2026-12-16 13:30 (UTC+8)
+  var el=document.getElementById('countdown');
+  var start=Date.UTC(2026,11,16,5,30), end=Date.UTC(2026,11,16,9,0);
+  function tick(){
+    var now=Date.now();
+    if(now>=end){el.textContent='本場論壇已圓滿結束，感謝參與！';return;}
+    if(now>=start){el.innerHTML='<b>論壇進行中</b>';return;}
+    var d=Math.floor((start-now)/864e5), h=Math.floor((start-now)%864e5/36e5);
+    el.innerHTML='距離論壇開始還有 <b>'+d+'</b> 天 <b>'+h+'</b> 小時';
+  }
+  tick(); setInterval(tick,6e4);
+
+  // reveal on scroll
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
