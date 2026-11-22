@@ -239,7 +239,8 @@ window.SITE = {
         { badge: "🇦🇺", title: "澳洲失智行動地圖（ADNet）", href: "Case_Studies/Australian_ADNet.html", linkText: "前往內容 →" },
         { badge: "💰", title: "失智症的經濟代價", href: "Case_Studies/Dematia_EcoLoss.html", linkText: "前往內容 →" },
         { badge: "💼", title: "健康、就業與勞動收入", href: "Case_Studies/Income&Health.html", linkText: "前往內容 →" },
-         { badge: "🛡️", title: "全球戰備藥物儲備與藥物韌性", href: "Case_Studies/Drug_Resilience.html", linkText: "前往內容 →" },
+        { badge: "🛡️", title: "全球戰備藥物儲備與藥物韌性", href: "Case_Studies/Drug_Resilience.html", linkText: "前往內容 →" },
+        { badge: "🤖", title: "多代理人辯論技術於醫療及照護的應用", href: "Case_Studies/Multiple_Agent_Debate", linkText: "前往內容 →" },
       ],
     },
 
