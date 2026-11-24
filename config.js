@@ -241,10 +241,11 @@ window.SITE = {
         { badge: "💼", title: "健康、就業與勞動收入", href: "Case_Studies/Income&Health.html", linkText: "前往內容 →" },
         { badge: "🛡️", title: "全球戰備藥物儲備與藥物韌性", href: "Case_Studies/Drug_Resilience.html", linkText: "前往內容 →" },
         { badge: "🤖", title: "多代理人辯論技術於醫療及照護的應用", href: "Case_Studies/Multiple_Agent_Debate", linkText: "前往內容 →" },
-        { badge: "🏡", title: "法國的在宅醫療制度", href: "Case_Studies/French_HaH", linkText: "前往內容 →" },
+        { badge: "🦽", title: "法國的在宅醫療制度", href: "Case_Studies/French_HaH", linkText: "前往內容 →" },
         { badge: "🦽", title: "日本的在宅醫療，介護及資料串聯", href: "Case_Studies/Japan_HaH", linkText: "前往內容 →" },
         { badge: "🦽", title: "瑞典在宅醫療照護：三條軌道，各司其責", href: "Case_Studies/Sweden_HaH", linkText: "前往內容 →" },
         { badge: "🦽", title: "英國英格蘭的虛擬病房", href: "Case_Studies/GB_HaH", linkText: "前往內容 →" },
+        { badge: "🦽", title: "丹麥三層分工如何撐起在宅醫療", href: "Case_Studies/Denmark_HaH", linkText: "前往內容 →" },
       ],
     },
 
