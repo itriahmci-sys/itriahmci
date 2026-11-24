@@ -246,6 +246,7 @@ window.SITE = {
         { badge: "🦽", title: "瑞典在宅醫療照護：三條軌道，各司其責", href: "Case_Studies/Sweden_HaH", linkText: "前往內容 →" },
         { badge: "🦽", title: "英國英格蘭的虛擬病房", href: "Case_Studies/GB_HaH", linkText: "前往內容 →" },
         { badge: "🦽", title: "丹麥三層分工如何撐起在宅醫療", href: "Case_Studies/Denmark_HaH", linkText: "前往內容 →" },
+        { badge: "🦽", title: "澳洲在宅醫療的責任界定", href: "Case_Studies/Australia_HaH", linkText: "前往內容 →" },
       ],
     },
 
