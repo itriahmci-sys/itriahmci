@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JHAH 居家醫院案例研究</title>
+<meta name="description" content="沙烏地阿拉伯 Johns Hopkins Aramco Healthcare 居家醫院（Hospital at Home）分層負責制度與多智能體分診框架案例研究">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 臨床報告，冷靜、準確，每個數字都標出處與證據等級
+   IDEA: 醫院交班板＋病房動線圖：把病房拆開、一層層搬回家
+   PICTURE: 首屏一張「家—指揮中心—院區—急救」動線圖
+   COLOUR and TYPE: 白底、深墨字、醫院藍為主、沙色為輔、珊瑚紅只標警訊；Noto Sans TC
+   LAYOUT: 結論先行，再依「制度→分層負責→流程→技術→成效→啟示→出處」展開 */
+:root{color-scheme:light;--bg:#ffffff;--ink:#14202b;--mute:#566573;--line:#d9e2ea;--blue:#1f5fa8;--blue2:#e8f0f9;--sand:#f6efe2;--sand2:#c9a465;--red:#d9472b;--red2:#fdece8;--ok:#2d7d5a}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.75 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;overflow-x:clip}
+a{color:var(--blue)}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(30px,4.6vw,50px);font-weight:900;letter-spacing:-.01em}
+h2{font-size:clamp(25px,3vw,34px);font-weight:900}
+h3{font-size:19px;font-weight:700;margin-top:1.4em}
+p{margin:.4em 0 .9em;max-width:72ch}
+.band{padding:clamp(32px,4.5vw,68px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+.alt{background:#f5f8fb}
+.sandbg{background:var(--sand)}
+.lede{font-size:18px;color:#2a3a48;max-width:68ch}
+.small{font-size:13.5px;color:var(--mute)}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border-radius:99px;vertical-align:2px;white-space:nowrap}
+.t-org{background:var(--blue2);color:var(--blue)}.t-pr{background:#efe6d3;color:#7a5a1e}.t-pre{background:var(--red2);color:var(--red)}.t-rec{background:#e6f2ec;color:var(--ok)}
+sup a{text-decoration:none;font-size:12px;font-weight:700}
+/* nav */
+nav.toc{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.toc .scroll{display:flex;gap:4px;overflow-x:auto;padding:8px max(5vw,16px);scrollbar-width:thin}
+nav.toc a{flex:none;text-decoration:none;color:var(--ink);font-size:14.5px;padding:8px 12px;border-radius:8px;min-height:40px;display:flex;align-items:center}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--blue2);color:var(--blue);outline:none}
+@media(max-width:900px){nav.toc{position:static}}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero .kick{color:var(--blue);font-weight:700;font-size:15px;margin-bottom:10px}
+.heroart{background:linear-gradient(180deg,#eef4fb,#fff);border:1px solid var(--line);border-radius:18px;padding:10px}
+.heroart svg{width:100%;height:auto;display:block}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.kpi{border-top:3px solid var(--blue);padding-top:8px}
+.kpi b{display:block;font-size:clamp(24px,3vw,32px);font-weight:900;line-height:1.1;white-space:nowrap}
+.kpi span{font-size:13.5px;color:var(--mute)}
+@media(max-width:860px){.hero{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* cards & grids */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.card h3{margin-top:0}
+.note{border-left:4px solid var(--sand2);background:#fffaf0;padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;max-width:80ch}
+.warn{border-left-color:var(--red);background:var(--red2)}
+/* tables */
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0 6px}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:#f0f4f8;font-weight:700;font-size:14px}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.raci td,.raci th{text-align:center;font-size:14px;padding:8px 6px}
+.raci td:first-child,.raci th:first-child{text-align:left;min-width:11em}
+.raci .R{color:#fff;background:var(--blue);border-radius:6px;padding:1px 7px;font-weight:700}
+.raci .C{color:var(--blue);border:1.5px solid var(--blue);border-radius:6px;padding:0 6px;font-weight:700}
+.raci .I{color:var(--mute)}
+@media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7em;margin-inline-start:-7.5em;white-space:normal;font-weight:700;color:var(--mute)}.stack td:empty{display:none}}
+/* acuity ladder */
+.ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:end;margin:18px 0 6px}
+.rung{border-radius:12px 12px 4px 4px;padding:12px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end}
+.rung b{font-size:15.5px;line-height:1.3}.rung span{font-size:13px;opacity:.92;line-height:1.45}
+@media(max-width:700px){.ladder{grid-template-columns:1fr}.rung{min-height:auto!important;border-radius:10px}}
+/* tier pyramid */
+.pyr{display:flex;flex-direction:column;align-items:center;gap:6px;margin:22px 0}
+.tier{width:var(--w);display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:12px;align-items:center;padding:12px 16px;border-radius:10px;background:var(--c);color:var(--tc,#fff)}
+.tier .lv{font-weight:900;font-size:14px;opacity:.9}
+.tier b{font-size:16px}.tier div span{display:block;font-size:13.5px;opacity:.95;line-height:1.5}
+@media(max-width:700px){.tier{width:100%!important}}
+/* escalation */
+.esc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:18px 0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.step{padding:16px;position:relative;background:var(--c)}
+.step h4{margin:0 0 6px;font-size:16px}
+.step p{font-size:14px;margin:0 0 6px}
+.step .who{font-size:13px;font-weight:700;color:var(--mute)}
+@media(max-width:820px){.esc{grid-template-columns:1fr}}
+/* gates */
+.gates{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:16px 0}
+.gate{flex:1 1 120px;background:#fff;border:1.5px solid var(--blue);border-radius:12px;padding:10px 12px;position:relative}
+.gate i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:13.5px;margin-bottom:4px}
+.gate b{display:block;font-size:14.5px;line-height:1.35}
+.gate.last{background:var(--blue);color:#fff}.gate.last i{background:#fff;color:var(--blue)}
+.fail{display:flex;gap:10px;align-items:center;background:var(--red2);border:1px dashed var(--red);border-radius:12px;padding:10px 14px;font-size:14.5px}
+/* agents */
+.flow{display:grid;gap:10px;justify-items:center;margin:16px 0}
+.box{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;text-align:center;width:min(100%,560px)}
+.box b{display:block}.box span{font-size:13.5px;color:var(--mute)}
+.box.in{background:var(--sand);border-color:var(--sand2)}
+.box.co{background:var(--blue);color:#fff;border-color:var(--blue)}.box.co span{color:#dbe7f6}
+.box.hu{background:#e6f2ec;border-color:var(--ok)}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:900px}
+.trio .box{width:auto;border-color:var(--blue)}
+.arrow{width:2px;height:20px;background:var(--mute);position:relative}
+.arrow::after{content:"";position:absolute;left:-5px;bottom:-2px;border:6px solid transparent;border-top-color:var(--mute)}
+@media(max-width:640px){.trio{grid-template-columns:1fr}}
+/* bars */
+.bars{display:grid;gap:10px;margin:10px 0}
+.bar{display:grid;grid-template-columns:9.5em minmax(0,1fr) 4.2em;gap:10px;align-items:center;font-size:14.5px}
+.track{height:22px;background:#eef2f6;border-radius:6px;position:relative;overflow:hidden}
+.fill{height:100%;width:0;border-radius:6px;background:var(--c,var(--blue));transition:width 1s ease}
+.track .ref{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #8a99a8}
+.bar .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:520px){.bar{grid-template-columns:6.5em minmax(0,1fr) 3.6em;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.fill{transition:none}html{scroll-behavior:auto}}
+ol.refs{padding-left:1.6em;font-size:14.5px}ol.refs li{margin-bottom:8px;overflow-wrap:anywhere}
+footer{font-size:13.5px;color:var(--mute);border-top:1px solid var(--line)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="章節導覽"><div class="scroll">
+<a href="#summary">一頁看懂</a><a href="#position">制度定位</a><a href="#tiers">分層負責</a><a href="#transfer">轉銜七關</a><a href="#escalate">異常應變</a><a href="#tech">監測與資料</a><a href="#agents">多智能體分診</a><a href="#outcomes">成效與證據</a><a href="#money">財源</a><a href="#lessons">給台灣的啟示</a><a href="#refs">參考資料</a>
+</div></nav>
+
+<header class="band">
+<div class="wrap hero">
+<div>
+<div class="kick">沙烏地阿拉伯東部省・Johns Hopkins Aramco Healthcare（JHAH）案例研究</div>
+<h1>把病房搬回家：JHAH 居家醫院的分層負責與 AI 分診</h1>
+<p class="lede">急性病人不一定要躺在醫院病床上才能接受「醫院等級」的照護。JHAH 從 2024 年 4 月起，把血壓計、血氧機、靜脈輸液和醫師團隊送進病人家中，用一座 24 小時運作的指揮中心串起家與院區；院內研究團隊再嘗試用多個 AI 智能體，協助醫師每天決定「今天先看誰」。</p>
+<div class="kpis">
+<div class="kpi"><b>292 人</b><span>試辦前七個月轉入居家醫院 <span class="tag t-org">院方</span></span></div>
+<div class="kpi"><b>11.6 天</b><span>平均居家住院日（原估 3–4 天）</span></div>
+<div class="kpi"><b>3,200</b><span>估算釋出的院內床日</span></div>
+<div class="kpi"><b>93%</b><span>病人整體滿意度</span></div>
+</div>
+<p class="small" style="margin-top:12px">數據來源：JHAH 臨床服務計畫案例 12 與官網報導<sup><a href="#r1">[1]</a><a href="#r2">[2]</a></sup>。屬院方自述的營運數據，沒有同期對照組。</p>
+</div>
+<figure class="heroart" style="margin:0" aria-label="居家醫院照護動線示意圖">
+<svg viewBox="0 0 640 420" role="img" aria-labelledby="ht">
+<title id="ht">病人家、24 小時指揮中心、Dhahran 院區與急救服務之間的照護動線</title>
+<defs>
+<linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e4ecf5"/></linearGradient>
+<linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6efe2"/><stop offset="1" stop-color="#ead9b8"/></linearGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1f5fa8"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d9472b"/></marker>
+</defs>
+<rect x="0" y="330" width="640" height="90" fill="url(#gs)"/>
+<!-- house -->
+<g>
+<ellipse cx="130" cy="334" rx="96" ry="9" fill="#c9a465" opacity=".35"/>
+<rect x="56" y="232" width="148" height="100" rx="4" fill="#fff" stroke="#14202b" stroke-width="2"/>
+<path d="M44 238 L130 172 L216 238 Z" fill="#1f5fa8"/>
+<path d="M130 172 L216 238 L200 238 L130 186 Z" fill="#174a85"/>
+<rect x="74" y="254" width="44" height="36" rx="3" fill="#e8f0f9" stroke="#14202b" stroke-width="1.5"/>
+<rect x="146" y="270" width="36" height="62" rx="3" fill="#f6efe2" stroke="#14202b" stroke-width="1.5"/>
+<!-- BP cuff and pulse ox icons -->
+<circle cx="96" cy="272" r="10" fill="#fff" stroke="#1f5fa8" stroke-width="2"/><path d="M96 272 L102 266" stroke="#d9472b" stroke-width="2"/>
+</g>
+<text x="130" y="362" text-anchor="middle" font-size="17" font-weight="700" fill="#14202b">病人家中</text>
+<text x="130" y="383" text-anchor="middle" font-size="13" fill="#566573">血壓・血氧・體溫套件＋專線</text>
+<!-- command centre -->
+<g>
+<rect x="246" y="40" width="150" height="96" rx="12" fill="url(#gw)" stroke="#1f5fa8" stroke-width="2"/>
+<rect x="262" y="54" width="54" height="34" rx="4" fill="#14202b"/><rect x="324" y="54" width="54" height="34" rx="4" fill="#14202b"/>
+<path d="M266 76 l10 0 l5 -12 l7 20 l5 -8 l22 0" fill="none" stroke="#5fd0a0" stroke-width="2"/>
+<path d="M328 80 l12 -8 l10 6 l12 -12 l12 4" fill="none" stroke="#8fc1ff" stroke-width="2"/>
+<rect x="262" y="96" width="116" height="8" rx="4" fill="#c7d6e8"/><rect x="262" y="110" width="80" height="8" rx="4" fill="#c7d6e8"/>
+</g>
+<text x="321" y="26" text-anchor="middle" font-size="16" font-weight="700" fill="#14202b">24 小時醫師指揮中心</text>
+<!-- hospital -->
+<g>
+<ellipse cx="540" cy="334" rx="86" ry="9" fill="#c9a465" opacity=".35"/>
+<rect x="468" y="178" width="144" height="154" rx="4" fill="#fff" stroke="#14202b" stroke-width="2"/>
+<rect x="590" y="178" width="22" height="154" fill="#e4ecf5"/>
+<rect x="520" y="150" width="40" height="40" rx="6" fill="#d9472b"/>
+<path d="M540 158 v24 M528 170 h24" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+<g fill="#e8f0f9" stroke="#14202b" stroke-width="1.2"><rect x="482" y="204" width="24" height="20"/><rect x="516" y="204" width="24" height="20"/><rect x="550" y="204" width="24" height="20"/><rect x="482" y="238" width="24" height="20"/><rect x="516" y="238" width="24" height="20"/><rect x="550" y="238" width="24" height="20"/></g>
+<rect x="520" y="280" width="40" height="52" fill="#1f5fa8"/>
+</g>
+<text x="540" y="362" text-anchor="middle" font-size="17" font-weight="700" fill="#14202b">Dhahran 院區</text>
+<text x="540" y="383" text-anchor="middle" font-size="13" fill="#566573">住院醫學・個案管理・急診</text>
+<!-- flows -->
+<path d="M150 168 C170 120 200 96 240 90" fill="none" stroke="#1f5fa8" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+<text x="120" y="118" font-size="13" fill="#1f5fa8" font-weight="700">讀值・來電</text>
+<path d="M402 96 C450 104 490 124 512 146" fill="none" stroke="#1f5fa8" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+<text x="446" y="94" font-size="13" fill="#1f5fa8" font-weight="700">交班・會診</text>
+<path d="M466 300 C380 300 300 300 210 300" fill="none" stroke="#1f5fa8" stroke-width="3" marker-end="url(#ar)"/>
+<rect x="268" y="262" width="150" height="26" rx="13" fill="#fff" stroke="#1f5fa8"/>
+<text x="343" y="280" text-anchor="middle" font-size="13" fill="#1f5fa8" font-weight="700">醫師到宅　設計 ≤30 分鐘</text>
+<path d="M200 322 C320 344 400 344 470 322" fill="none" stroke="#d9472b" stroke-width="2.5" stroke-dasharray="3 5" marker-end="url(#arr)"/>
+<text x="335" y="406" text-anchor="middle" font-size="13" fill="#d9472b" font-weight="700">危及生命：直接撥 911 → EMS 後送</text>
+</svg>
+</figure>
+</div>
+</header>
+
+<section class="band alt" id="summary"><div class="wrap">
+<h2>一頁看懂：這個案例告訴我們什麼</h2>
+<div class="g3">
+<div class="card"><h3>它是什麼</h3><p>JHAH 是 Saudi Aramco 與 Johns Hopkins Medicine 的合資醫療體系。居家醫院（Hospital at Home, HaH）是 JHAH 五年期「臨床服務計畫」中的轉型專案，<strong>不是沙烏地阿拉伯全國制度</strong>；全國層級的虛擬醫院是衛生部主導的 Seha Virtual Hospital<sup><a href="#r4">[4]</a><a href="#r17">[17]</a></sup>。</p></div>
+<div class="card"><h3>它怎麼運作</h3><p>醫院負責收案判斷與醫療責任，合作夥伴 TruDoc 經營醫師主導的 24 小時指揮中心，到宅團隊執行輸液、抽血與復健，家屬則負責日常量測與通報。每一層都有明確的「交給下一層」時機<sup><a href="#r2">[2]</a><a href="#r6">[6]</a></sup>。</p></div>
+<div class="card"><h3>AI 在哪裡</h3><p>院內團隊把每日名冊審查當成「人力有限的排序問題」，用五個智能體讀交班自由文字、排出優先審查名單。結果仍是<strong>未經同儕審查的預印本</strong>、單一機構回溯資料，系統定位是支援而非取代臨床判斷<sup><a href="#r8">[8]</a></sup>。</p></div>
+</div>
+<div class="note"><strong>閱讀提示：</strong>本報告以四種標籤區分證據強度——<span class="tag t-org">院方</span> 官網或院方案例報告自述；<span class="tag t-pr">新聞稿</span> 合作宣示或目標；<span class="tag t-pre">預印本</span> 尚未完成同儕審查的研究；<span class="tag t-rec">建議</span> 本報告根據資料提出的推論，非院方規範。</div>
+</div></section>
+
+<section class="band" id="position"><div class="wrap">
+<h2>制度定位：同一個體系裡的五級照護強度</h2>
+<p>JHAH 沒有把所有「在家看病」混為一談，而是依病人需要的醫療強度分層。居家醫院位在常規居家醫療與實體住院之間：病人的急性程度需要住院，卻不一定需要醫院的床。</p>
+<div class="ladder" aria-label="照護強度階梯">
+<div class="rung" style="background:#7fa7d4;min-height:120px"><b>遠距初級照護</b><span>MyChart 視訊、電話門診；預約 24 小時可辦<sup><a href="#r11" style="color:#fff">[11]</a></sup></span></div>
+<div class="rung" style="background:#5a8cc4;min-height:150px"><b>常規居家醫療 HHC</b><span>日常生活功能受限、反覆住院者；技術性護理、傷口照護<sup><a href="#r5" style="color:#fff">[5]</a></sup></span></div>
+<div class="rung" style="background:#1f5fa8;min-height:190px"><b>居家醫院 HaH</b><span>需住院等級照護但病況穩定；24 小時監測、居家輸液<sup><a href="#r1" style="color:#fff">[1]</a></sup></span></div>
+<div class="rung" style="background:#174a85;min-height:220px"><b>實體住院</b><span>Dhahran 院區病房</span></div>
+<div class="rung" style="background:#d9472b;min-height:250px"><b>急診／EMS</b><span>五個 24 小時急診據點<sup><a href="#r10" style="color:#fff">[10]</a></sup></span></div>
+</div>
+<p class="small">由左至右，醫療強度遞增。</p>
+
+<div class="scroll"><table class="stack">
+<thead><tr><th>項目</th><th>內容</th><th>出處</th></tr></thead>
+<tbody>
+<tr><td>營運機構</td><td>Johns Hopkins Aramco Healthcare，總部位於東部省達蘭（Dhahran）</td><td><a href="#r1">[1]</a></td></tr>
+<tr><td>推動層級</td><td>機構層級：JHAH 五年期臨床服務計畫（Clinical Services Plan, CSP）的出版案例 12；CSP 由醫療長 Dr JJ de Gorter 領導，設 5 大目標、16 項子目標</td><td><a href="#r2">[2]</a><a href="#r4">[4]</a></td></tr>
+<tr><td>時程</td><td>2023 年擴大遠距初級照護 → 2024 年 4 月啟動 HaH 試辦 → 2024 年 9 月 26 日宣布與 TruDoc Healthcare 合作擴大</td><td><a href="#r1">[1]</a><a href="#r6">[6]</a></td></tr>
+<tr><td>收案路徑</td><td>① 提早出院：Dhahran 院區住院病人病況可提前回家 ② 直接收案：需要住院、但可安全在院外治療者（含專科醫師轉介） ③ 急診收案：經急診評估符合條件者</td><td><a href="#r1">[1]</a><a href="#r6">[6]</a></td></tr>
+<tr><td>收案條件</td><td>年滿 14 歲、居住於東部省並符合臨床與地點條件；尊重病人意願，偏好留院者維持住院</td><td><a href="#r1">[1]</a></td></tr>
+<tr><td>地理範圍</td><td>HaH 以 Dhahran 為起點，硬性服務半徑未公開。另行運作的 HHC 涵蓋 Dhahran、Al-Hasa、Ras Tanura、Abqaiq 四處設施周邊 50 公里</td><td><a href="#r2">[2]</a><a href="#r5">[5]</a></td></tr>
+<tr><td>國家政策脈絡</td><td>對接《2030 願景》健康部門轉型計畫；JHAH HaH 專屬的法規授權條文未查得</td><td><a href="#r16">[16]</a></td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band sandbg" id="tiers"><div class="wrap">
+<h2>分層負責制度：誰決定、誰執行、誰接手</h2>
+<p class="lede">居家醫院最大的風險，是病人離開了醫院，責任卻沒有跟著走。JHAH 的做法可以拆成七層：上層管方向與品質，中層管醫療決策與 24 小時監看，下層在家中執行與通報，最外層是急救後送。下面的金字塔由上而下排列。</p>
+
+<div class="pyr" aria-label="分層負責金字塔">
+<div class="tier" style="--w:46%;--c:#14202b"><div class="lv">第 1 層</div><div><b>策略治理：臨床服務計畫</b><span>醫療長領導五年期 CSP，把 HaH 列為轉型專案，訂定「釋出床位量能、加速安全出院」目標<sup><a href="#r2" style="color:#fff">[2]</a><a href="#r4" style="color:#fff">[4]</a></sup></span></div></div>
+<div class="tier" style="--w:56%;--c:#174a85"><div class="lv">第 2 層</div><div><b>計畫治理小組</b><span>試辦初期每日開會檢視，之後改為每週兩次；這是治理會議頻率，病人照護仍依個別計畫進行<sup><a href="#r2" style="color:#fff">[2]</a></sup></span></div></div>
+<div class="tier" style="--w:66%;--c:#1f5fa8"><div class="lv">第 3 層</div><div><b>主責醫師（住院醫學部）</b><span>判斷資格與病況穩定度、承擔醫療決策；接觸病人前須完成資格審查與臨床權限授予（credentialing／privileging）<sup><a href="#r2" style="color:#fff">[2]</a></sup></span></div></div>
+<div class="tier" style="--w:74%;--c:#3c78bd"><div class="lv">第 4 層</div><div><b>個案管理與轉銜團隊</b><span>與住院團隊在 Dhahran 院內共同工作，逐關確認轉銜七關，未通過者留院並記錄原因<sup><a href="#r2" style="color:#fff">[2]</a></sup></span></div></div>
+<div class="tier" style="--w:82%;--c:#6b9bd1"><div class="lv">第 5 層</div><div><b>24 小時醫師指揮中心（TruDoc）</b><span>即時監看讀值、接聽專線、啟動快速應變；醫師主導<sup><a href="#r2" style="color:#fff">[2]</a><a href="#r6" style="color:#fff">[6]</a></sup></span></div></div>
+<div class="tier" style="--w:90%;--c:#c9a465;--tc:#14202b"><div class="lv">第 6 層</div><div><b>到宅臨床團隊</b><span>醫師、護理師、物理治療師到宅：抽血、輸液與注射、調藥、復健指導；實體與視訊訪視並行<sup><a href="#r1">[1]</a></sup></span></div></div>
+<div class="tier" style="--w:98%;--c:#efe2c6;--tc:#14202b"><div class="lv">第 7 層</div><div><b>病人與家屬</b><span>同意入住、日常量測血壓／血氧／體溫、提供低階照護、可選擇學習自行注射、異常時撥專線<sup><a href="#r1">[1]</a></sup></span></div></div>
+</div>
+<div class="note warn"><strong>緊急層獨立於金字塔之外：</strong>危及生命時，病人或家屬可直接撥 911（Aramco 園區內手機撥 013-872-0911），由 JHAH 急診醫療服務後送，<strong>不必先經過任何一層的同意</strong><sup><a href="#r10">[10]</a></sup>。</div>
+
+<h3>責任矩陣：每件事由誰主責</h3>
+<p>下表依公開文件整理各角色在關鍵任務中的位置 <span class="tag t-rec">建議</span>。院方沒有公布正式的責任分配矩陣，表中「主責／協同」是根據文件描述的推論，用來說明分層邏輯，適合當作其他機構設計制度時的檢核起點。</p>
+<div class="scroll"><table class="raci">
+<thead><tr><th>任務</th><th>治理小組</th><th>主責醫師</th><th>個案管理</th><th>指揮中心</th><th>到宅團隊</th><th>病人家屬</th><th>EMS</th></tr></thead>
+<tbody>
+<tr><td>收案資格與病況穩定度判斷</td><td class="I">知會</td><td><span class="R">主責</span></td><td><span class="C">協同</span></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>病人同意（可拒絕、可留院）</td><td></td><td><span class="C">協同</span></td><td><span class="C">協同</span></td><td></td><td></td><td><span class="R">主責</span></td><td></td></tr>
+<tr><td>轉銜準備與交接</td><td></td><td><span class="C">協同</span></td><td><span class="R">主責</span></td><td><span class="C">協同</span></td><td><span class="C">協同</span></td><td class="I">知會</td><td></td></tr>
+<tr><td>24 小時讀值監看與第一線回應</td><td></td><td><span class="C">協同</span></td><td></td><td><span class="R">主責</span></td><td class="I">知會</td><td class="I">知會</td><td></td></tr>
+<tr><td>到宅處置（輸液、抽血、復健）</td><td></td><td><span class="C">協同</span></td><td></td><td></td><td><span class="R">主責</span></td><td><span class="C">協同</span></td><td></td></tr>
+<tr><td>日常量測與通報異常</td><td></td><td></td><td></td><td><span class="C">協同</span></td><td></td><td><span class="R">主責</span></td><td></td></tr>
+<tr><td>危及生命的後送</td><td></td><td class="I">知會</td><td></td><td><span class="C">協同</span></td><td></td><td><span class="C">協同</span></td><td><span class="R">主責</span></td></tr>
+<tr><td>AI 優先名單審核與最終決策</td><td></td><td><span class="R">主責</span></td><td><span class="C">協同</span></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>計畫成效與安全檢討</td><td><span class="R">主責</span></td><td><span class="C">協同</span></td><td><span class="C">協同</span></td><td><span class="C">協同</span></td><td class="I">知會</td><td></td><td></td></tr>
+</tbody></table></div>
+
+<h3>跨機構的責任邊界</h3>
+<div class="g2">
+<div class="card"><h3>已公開的分工</h3><p>合作新聞稿描述 JHAH 提供醫療專業與病人照護方針，TruDoc 提供遠距醫療、遠距病人監測與居家照護專長，並經營指揮中心；病人經專科醫師轉介進入服務<sup><a href="#r6">[6]</a></sup>。</p></div>
+<div class="card"><h3>尚未公開的部分</h3><p>醫療過失如何歸屬、監測設備故障由誰負責、沙國《個人資料保護法》下跨系統的資料治理，以及兩機構之間的正式契約條款，公開資料都未查得。新聞稿也沒有寫明誰處理轉介。</p></div>
+</div>
+</div></section>
+
+<section class="band" id="transfer"><div class="wrap">
+<h2>轉銜七關：從病房到「虛擬病房」</h2>
+<p>案例 12 圖七把住院轉居家拆成七個關卡，像機場安檢一樣逐關放行<sup><a href="#r2">[2]</a></sup>。任何一關沒過，病人就留在醫院，團隊記錄原因，之後再評估是否重審。這是病房轉出的流程；急診直接收案的逐步交接文件尚未公開。</p>
+<div class="gates">
+<div class="gate"><i>1</i><b>檢視住院名單</b></div>
+<div class="gate"><i>2</i><b>確認收案資格</b></div>
+<div class="gate"><i>3</i><b>評估病況穩定度</b></div>
+<div class="gate"><i>4</i><b>病人同意</b></div>
+<div class="gate"><i>5</i><b>服務提供者同意</b></div>
+<div class="gate"><i>6</i><b>轉銜準備完成</b></div>
+<div class="gate last"><i>7</i><b>轉入虛擬病房</b></div>
+</div>
+<div class="fail"><strong style="color:var(--red)">任一關未通過</strong><span>→ 繼續住院 → 記錄原因 → 評估後續重審</span></div>
+<p style="margin-top:16px">試辦初期的病人包括病況穩定、但仍需持續治療的感染、心肺及其他個案，例如需要繼續抗生素療程的泌尿道感染<sup><a href="#r2">[2]</a></sup>。第 4、5 關的「雙向同意」很關鍵：病人可以拒絕回家，服務端也可以判斷家中條件不適合。</p>
+<div class="card" style="margin-top:14px"><h3>一位 97 歲病人的經歷 <span class="tag t-org">院方</span></h3>
+<p>Ibrahim Abdelaziz Saad 先生因腎臟、心臟與肺部問題多次住院。他與女兒選擇以舒適為優先，不再追求延長生命的積極治療，轉入居家醫院。臨床人員到宅抽血後開立腎臟病藥物；物理治療師指導復健後，他從無法挺直站立，進步到能挺直背部使用助行器行走。女兒提到，父親有一次血壓偏低，24 小時專線讓她能立即聯絡醫療團隊，心裡踏實許多<sup><a href="#r1">[1]</a></sup>。</p></div>
+</div></section>
+
+<section class="band alt" id="escalate"><div class="wrap">
+<h2>異常應變：四級升級階梯</h2>
+<p>分層負責的另一面是「升級」：狀況越嚴重，處理權越往上、往外移交。前兩級和「醫師 30 分鐘到宅」有院方文件支持；各級之間的生理數值閾值與分鐘級回應時限，公開資料未查得。</p>
+<div class="esc">
+<div class="step" style="--c:#eef5ec"><div class="who">病人與家屬</div><h4>日常監測</h4><p>依照護計畫量血壓、血氧、體溫；按排程接受實體或視訊訪視<sup><a href="#r1">[1]</a></sup>。</p></div>
+<div class="step" style="--c:#e8f0f9"><div class="who">指揮中心</div><h4>讀值異常／來電</h4><p>指揮中心全天運作，讀值異常有快速應變程序；可遠距指導調整用藥<sup><a href="#r2">[2]</a></sup>。</p></div>
+<div class="step" style="--c:#fff4dd"><div class="who">到宅醫療團隊</div><h4>需要到宅處置</h4><p>設計上醫師可在最長 30 分鐘內到宅；護理師可到宅抽血、輸液<sup><a href="#r2">[2]</a></sup>。</p></div>
+<div class="step" style="--c:#fde3dc"><div class="who">EMS 急救</div><h4>危及生命</h4><p>撥 911 啟動後送，至 JHAH 急診檢傷；必要時轉回實體住院<sup><a href="#r10">[10]</a></sup>。</p></div>
+</div>
+<div class="g2">
+<div class="card"><h3>急救網絡</h3><p>Dhahran、Abqaiq、Al-Hasa、Ras Tanura、'Udhailiyah 五處設有 24 小時急診醫療服務；24 小時急診藥局列於 Dhahran 健康中心。求救電話：Aramco 園區內固網 911、手機 013-872-0911；園區外固網與手機皆撥 911<sup><a href="#r10">[10]</a></sup>。</p></div>
+<div class="card"><h3>遠距醫療的時段</h3><p>MyChart 或電話預約全天可辦；免預約的「直撥」專線為週日至週四中午 12 點到隔日上午 7 點，週末與假日晚上 7 點到隔日上午 7 點，成人與兒科皆可使用<sup><a href="#r11">[11]</a></sup>。這是全院遠距門診的時段，HaH 病人另有直通團隊的 24 小時專線<sup><a href="#r1">[1]</a></sup>。</p></div>
+</div>
+<p class="small">尚待補齊：HaH 病人急性惡化時是否有免經急診的直接入院通道、救護車到院的交接協議。</p>
+</div></section>
+
+<section class="band" id="tech"><div class="wrap">
+<h2>監測設備與資料底座</h2>
+<div class="scroll"><table class="stack">
+<thead><tr><th>類別</th><th>已核實內容</th><th>尚未公開</th></tr></thead>
+<tbody>
+<tr><td>生理監測</td><td>居家套件含血壓計、體溫計、血氧機，搭配 24 小時遠距監測與直通醫療團隊的電話專線<sup><a href="#r1">[1]</a></sup>；新聞稿稱導入「先進遠距監測」但未指名設備<sup><a href="#r6">[6]</a></sup></td><td>品牌型號、自動上傳或人工回報、量測頻率、校正與消毒回收流程</td></tr>
+<tr><td>居家處置</td><td>居家靜脈輸液；多數處置由臨床人員執行，病人也可選擇學習自行注射；物理治療轉介與助行器復健<sup><a href="#r1">[1]</a></sup></td><td>輸液幫浦防呆、冷鏈配藥、醫療廢棄物回收</td></tr>
+<tr><td>數位入口</td><td>MyChart 入口與視訊門診；遠距醫療整體滿意度 90%<sup><a href="#r11">[11]</a><a href="#r12">[12]</a></sup>。院方案例 15 載明 2024 年 552,000 次初級照護就診中 33.8% 以虛擬方式完成<sup><a href="#r3">[3]</a></sup></td><td>HaH 專屬視訊巡房頻率、指揮中心平台介面</td></tr>
+<tr><td>電子病歷</td><td>JHAH 於 2018 年導入 Epic，為沙國首家<sup><a href="#r7">[7]</a></sup></td><td>監測設備、TruDoc 平台與 Epic 之間是否採 HL7 FHIR 或其他介接方式</td></tr>
+<tr><td>穿戴與環境感測</td><td>公開資料未提及連續心電貼片、跌倒偵測或環境感測器</td><td>心臟科、老年照護擴展時是否導入</td></tr>
+</tbody></table></div>
+<div class="note"><strong>關鍵發現：</strong>JHAH 研究團隊指出，HaH 日常營運主要依靠<strong>人工維護的每日名冊</strong>與<strong>自由文字交班紀錄</strong>，不像加護病房那樣有高頻、結構化的生命徵象與診斷編碼<sup><a href="#r8">[8]</a></sup>。這正是下一節 AI 框架要解決的現實：資料不完美，但人力每天都得做選擇。</div>
+</div></section>
+
+<section class="band alt" id="agents"><div class="wrap">
+<h2>多智能體分診：讓 AI 幫忙排「今天先看誰」</h2>
+<p>想像一位值班醫師每天早上面對幾十位居家病人的交班紀錄，時間只夠深入審查約 30 位。研究團隊把這件事定義為「縱向、容量受限的分診問題」：在固定的審查人力下，從零散的文字中找出最需要介入的病人與漏掉的安全決策<sup><a href="#r8">[8]</a></sup>。<span class="tag t-pre">預印本</span></p>
+<p class="small">研究：Ayad S、Noufal MKM、Maida MA（JHAH 住院醫學部主任<sup><a href="#r1">[1]</a></sup>）等 6 人，2026 年 11 月 11 日提交 <em>JMIR Formative Research</em>，公開審查期至 2027 年 1 月 6 日。</p>
+
+<div class="flow" aria-label="多智能體架構圖">
+<div class="box in"><b>輸入：每日名冊＋跨日自由文字紀錄</b><span>23 個月、1,627 個照護事件、20,290 病人日</span></div>
+<div class="arrow"></div>
+<div class="box"><b>接收智能體 Intake</b><span>重建完整照護事件，把自由文字診斷對應到「人類疾病本體」（Human Disease Ontology）</span></div>
+<div class="arrow"></div>
+<div class="trio">
+<div class="box"><b>住院天數智能體 Stay</b><span>預測延長住院</span></div>
+<div class="box"><b>惡化風險智能體 Risk</b><span>每日重估惡化風險</span></div>
+<div class="box"><b>安全稽核智能體 Safety</b><span>偵測文件與決策缺口，採「規則－裁判」架構</span></div>
+</div>
+<div class="arrow"></div>
+<div class="box co"><b>協調智能體 Coordinator</b><span>在每日審查容量內排序，輸出可稽核的優先名單</span></div>
+<div class="arrow"></div>
+<div class="box hu"><b>臨床人員審核並做最終決策</b><span>作者聲明：系統用於支援、而非取代臨床判斷</span></div>
+</div>
+<p class="small">兩個預測智能體（Stay、Risk）都結合監督式學習、大型語言模型閱讀文字與明確臨床規則<sup><a href="#r8">[8]</a></sup>。</p>
+
+<div class="g2" style="margin-top:20px">
+<div class="card"><h3>獨立測試集辨識力（AUC）</h3>
+<div class="bars" data-max="1">
+<div class="bar"><span>Stay 延長住院</span><div class="track"><div class="fill" data-v="0.849"></div><div class="ref" style="left:50%"></div></div><span class="v">0.849</span></div>
+<div class="bar"><span>Risk 惡化風險</span><div class="track"><div class="fill" data-v="0.632" style="--c:#6b9bd1"></div><div class="ref" style="left:50%"></div></div><span class="v">0.632</span></div>
+</div><p class="small">虛線為 0.5（隨機猜測）。惡化預測只有 0.632，說明從自由文字預測急性惡化仍然困難。</p></div>
+<div class="card"><h3>每日重估 vs. 入院當天評分</h3>
+<div class="bars">
+<div class="bar"><span>入院當天靜態</span><div class="track"><div class="fill" data-v="0.514" style="--c:#a7b4c2"></div><div class="ref" style="left:50%"></div></div><span class="v">0.514</span></div>
+<div class="bar"><span>每日動態重估</span><div class="track"><div class="fill" data-v="0.721"></div><div class="ref" style="left:50%"></div></div><span class="v">0.721</span></div>
+</div><p class="small">在 1,705 個決策點上，AUC 提升 0.207。入院當天的分數幾乎等於隨機，病情是會變的。</p></div>
+<div class="card"><h3>安全警示：只靠 LLM vs. 規則－裁判</h3>
+<div class="bars">
+<div class="bar"><span>LLM 單獨精確率</span><div class="track"><div class="fill" data-v="0.11" style="--c:#d9472b"></div></div><span class="v">0.11</span></div>
+<div class="bar"><span>規則－裁判精確率</span><div class="track"><div class="fill" data-v="1.00" style="--c:#2d7d5a"></div></div><span class="v">1.00</span></div>
+</div><p class="small">警示量由每日 0.6 則降為 0.2 則，作者報告假陽性減少 89%。先用臨床規則劃定邊界，再讓語言模型判讀語意。</p></div>
+<div class="card"><h3>每天只審 30 人時，抓到多少文件缺口</h3>
+<div class="bars">
+<div class="bar"><span>單一整合模型</span><div class="track"><div class="fill" data-v="0.053" style="--c:#a7b4c2"></div></div><span class="v">5.3%</span></div>
+<div class="bar"><span>多智能體協調</span><div class="track"><div class="fill" data-v="0.789"></div></div><span class="v">78.9%</span></div>
+</div><p class="small">約 15 倍（差 73.6 個百分點）。被標記的 30 個事件全部含至少一項已確認的不良事件。</p></div>
+</div>
+<div class="note"><strong>拿掉「跨日軌跡」會怎樣？</strong>五折交叉驗證中，移除跨日照護軌跡特徵後，Stay 的 AUC 下降 0.070、Risk 下降 0.064<sup><a href="#r8">[8]</a></sup>。只看單日切面，抓不到居家病程的變化。</div>
+<div class="note warn"><strong>解讀限制：</strong>1,627 個事件中 223 個（約 13.7%）結局未知，若集中在轉院或紀錄不全的個案，可能產生選擇偏差。1,705 個決策點可能包含同一病人多日的評分，跨日相依性需要在信賴區間中處理。所有指標都來自單一機構回溯性離線分析，尚未做前瞻性臨床試驗。程式碼公開於 <a href="https://github.com/SarahayadAOU/HomeCare_JHA">GitHub</a><sup><a href="#r9">[9]</a></sup>，本報告未重跑分析。</div>
+</div></section>
+
+<section class="band" id="outcomes"><div class="wrap">
+<h2>成效與證據：數字背後各自衡量什麼</h2>
+<h3>試辦前七個月的院方評估 <span class="tag t-org">院方</span></h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>指標</th><th class="n">院方公布值</th><th>怎麼解讀</th></tr></thead>
+<tbody>
+<tr><td>轉入居家醫院</td><td class="n">292 人</td><td>同期最高同時在案 26 人；累計人數與單日容量用途不同</td></tr>
+<tr><td>平均居家住院日</td><td class="n">11.6 天</td><td>團隊原估 3–4 天。規劃訪視人力與設備週轉，應以實際照護期間為準</td></tr>
+<tr><td>釋出院內床日</td><td class="n">3,200 床日</td><td>院方估算的容量效益，與合作目標「每年 8,000 床日」是不同期間、不同指標</td></tr>
+<tr><td>再住院率／通報不良事件</td><td class="n">10.1%／0 件</td><td>未說明觀察窗、是否計畫性、事件如何偵測；不能據此宣稱零風險或換算 30 天再住院率</td></tr>
+<tr><td>病人滿意度</td><td class="n">92.7%</td><td>與官網後續報導的 93% 一致；回覆人數與未回覆者特徵未公開</td></tr>
+<tr><td>年化淨財務效益</td><td class="n">340 萬美元</td><td>依院內與居家照護成本差估算的年化值，不是七個月的現金節餘，也不是保險給付價格</td></tr>
+</tbody></table></div>
+<p class="small">出處：JHAH 臨床服務計畫案例 12，第 6 頁圖五及第 7–8 頁<sup><a href="#r2">[2]</a></sup>。這些指標沒有同期對照組，也不能歸因於後來才研究的 AI 排序工具。</p>
+
+<h3>不同來源的證據強度</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>面向</th><th>公開證據</th><th>限制</th></tr></thead>
+<tbody>
+<tr><td>病人體驗</td><td>HaH 滿意度 93%<sup><a href="#r1">[1]</a></sup>；遠距醫療滿意度 90%<sup><a href="#r11">[11]</a></sup> <span class="tag t-org">院方</span></td><td>未公開樣本數、回收率與量表信效度</td></tr>
+<tr><td>規模目標</td><td>合作初期目標每年 8,000 床日、服務數千名病人，擴展至感染症、心臟科、老年醫學與長期照護<sup><a href="#r6">[6]</a></sup> <span class="tag t-pr">新聞稿</span></td><td>屬目標值，尚未見年度實際達成報告</td></tr>
+<tr><td>臨床結局</td><td>七個月營運數據（見上表）</td><td>缺與傳統住院的配對或隨機對照比較；死亡率、院內感染率未公開</td></tr>
+<tr><td>AI 分診效能</td><td>見上一節 <span class="tag t-pre">預印本</span></td><td>單一機構回溯、離線驗證，同儕審查進行中</td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band alt" id="money"><div class="wrap">
+<h2>財源與支付</h2>
+<div class="g3">
+<div class="card"><h3>主要服務對象</h3><p>Saudi Aramco 合格員工與眷屬透過 JHAH 獲得公司提供的醫療福利<sup><a href="#r14">[14]</a></sup>。指定設施網絡（MDF）的受益人可透過 NetworkPlus 平台管理服務核准<sup><a href="#r15">[15]</a></sup>。</p></div>
+<div class="card"><h3>其他支付方式</h3><p>JHAH 支援商業醫療保險與自費就醫<sup><a href="#r13">[13]</a></sup>。JHAH 不是一般開放式的公立醫院，這點影響其模式能否直接移植。</p></div>
+<div class="card"><h3>未公開的財務細節</h3><p>HaH 的床日計費標準或保險給付代碼、病人是否需部分負擔、監測套件與輸液設備是免費借用、押金制還是另計費用，皆未公開。</p></div>
+</div>
+</div></section>
+
+<section class="band" id="lessons"><div class="wrap">
+<h2>給台灣「在宅急症照護」的啟示</h2>
+<p>台灣正推動在宅急症照護，許多醫院的資訊系統也還在結構化的路上。JHAH 案例最有參考價值的地方，不是設備多先進，而是在資料不完美時，如何把責任與人力分層安排清楚。<span class="tag t-rec">建議</span></p>
+<div class="g3">
+<div class="card"><h3>1. 責任要跟著病人走</h3><p>先寫好跨機構責任矩陣：主責醫師歸屬、急診轉介通道、到院交接確認、不良事件聯合根因分析。醫院與外包營運商合作時尤其重要。</p></div>
+<div class="card"><h3>2. 用規則約束語言模型</h3><p>只讓 LLM 審病歷，精確率僅 0.11；先用臨床規則劃定範圍、再讓模型判讀，才能避免警示疲勞。這是臨床 AI 落地的安全模式。</p></div>
+<div class="card"><h3>3. 以真實人力為設計約束</h3><p>系統不該只追求整體 AUC，而要在「每天能審幾人」的上限內，把最該看的病人排到前面，直接對齊臨床工作流。</p></div>
+</div>
+<h3>導入前要防的三種風險</h3>
+<div class="g3">
+<div class="card"><h3>外部效度</h3><p>單一機構回溯資料，換一家醫院、換一種病歷書寫習慣，效能可能下降。惡化預測 0.632 仍需設定閾值並檢視混淆矩陣。</p></div>
+<div class="card"><h3>自動化偏見</h3><p>醫師可能過度依賴前 30 名名單，忽略排在後面卻正在惡化的病人。需要定期抽樣稽核未入榜個案與人工覆寫機制。</p></div>
+<div class="card"><h3>法規與資安</h3><p>醫院加第三方營運商的模式，上線前要釐清個資法與資通安全管理法、醫療器材軟體（SaMD）邊界，以及緊急轉送的法律責任。</p></div>
+</div>
+<h3>試辦時的查證清單</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>環節</th><th>建議查核方式</th></tr></thead>
+<tbody>
+<tr><td>設備到病歷</td><td>挑一筆居家血壓，追蹤設備、病人、量測時間、單位與收縮壓／舒張壓能否正確配對；FHIR R4 Vital Signs 規格可作為 Observation 建模依據<sup><a href="#r18">[18]</a></sup></td></tr>
+<tr><td>資料來源路徑</td><td>家屬口述再由護理師輸入的數值，系統應能辨識來源；設備離線後補傳的資料，要區分「量測時間」與「收到時間」</td></tr>
+<tr><td>警訊閉環</td><td>同一警訊是否有指定收件人、接手時間、醫師評估與結案紀錄</td></tr>
+<tr><td>漏接檢查</td><td>抽查未進入優先名單卻發生轉院的個案；夜班、週末、斷線補傳情境分開檢視</td></tr>
+<tr><td>到宅時限</td><td>JHAH 的 30 分鐘到宅設計可作比較基準，但需依台灣實際車程、值班人力與後送可近性驗證</td></tr>
+<tr><td>人力效益</td><td>前瞻量測每班實際審查分鐘數、重複警示、需補查案件與未入榜個案結局，才能判斷是否真的節省人力</td></tr>
+<tr><td>治理指標</td><td>警示覆核率、觸發到介入的中位時間、誤報率、漏報率（未預警的非計畫急診或住院）、臨床人員覆寫 AI 排序的原因</td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band alt" id="refs"><div class="wrap">
+<h2>參考資料</h2>
+<p class="small">網路資料核對日期：2026 年 11 月 26 日。</p>
+<ol class="refs">
+<li id="r1">Johns Hopkins Aramco Healthcare. Thanks to Hospital at Home, we are able to live in peace. 2025-03-20. <a href="https://www.jhah.com/en/news-events/news-articles/hospital-at-home-jhah-saudi-arabia/">jhah.com/…/hospital-at-home-jhah-saudi-arabia</a></li>
+<li id="r2">Johns Hopkins Aramco Healthcare. Clinical Services Plan — Case Study 12: Hospital at Home. 2024-12. <a href="https://www.jhah.com/media/5988/csp-case-study-12-122024-hospital-at-home.pdf">jhah.com/media/5988/…hospital-at-home.pdf</a></li>
+<li id="r3">Johns Hopkins Aramco Healthcare. Clinical Services Plan — Case Study 15: Telehealth. 2025-02. <a href="https://www.jhah.com/media/6184/csp-case-study-15-02_2025-telehealth.pdf">jhah.com/media/6184/…telehealth.pdf</a></li>
+<li id="r4">Johns Hopkins Aramco Healthcare. Clinical Services Plan（總覽頁）. <a href="https://www.jhah.com/en/clinical-services-plan/">jhah.com/en/clinical-services-plan</a></li>
+<li id="r5">Johns Hopkins Aramco Healthcare. Home Healthcare Program at JHAH. <a href="https://www.jhah.com/en/news-events/news-articles/home-healthcare-program/">jhah.com/…/home-healthcare-program</a></li>
+<li id="r6">PR Newswire. Johns Hopkins Aramco Healthcare (JHAH) Partners with TruDoc Healthcare to Transform Patient Experience through Innovative 'Hospital at Home' Services. 2024-09-26. <a href="https://www.prnewswire.com/news-releases/johns-hopkins-aramco-healthcare-jhah-partners-with-trudoc-healthcare-to-transform-patient-experience-through-innovative-hospital-at-home-services-302258754.html">prnewswire.com/…302258754.html</a></li>
+<li id="r7">Johns Hopkins Aramco Healthcare. First in Saudi — JHAH launches Epic. 2018. <a href="https://www.jhah.com/en/news-events/news-articles/jhah-launches-epic/">jhah.com/…/jhah-launches-epic</a></li>
+<li id="r8">Ayad S, Noufal MKM, Maida MA, Jameel AJ, Huriz HYA, Almnaizel A. An Ontology-Guided Multi-Agent Framework for Hospital-at-Home Decision Support: Development and Formative Evaluation Study. JMIR Preprints #116696, 2026-11-11. doi:10.2196/preprints.116696. <a href="https://preprints.jmir.org/preprint/116696">preprints.jmir.org/preprint/116696</a></li>
+<li id="r9">Ayad S. HomeCare_JHA（程式碼與結果儲存庫）. <a href="https://github.com/SarahayadAOU/HomeCare_JHA">github.com/SarahayadAOU/HomeCare_JHA</a></li>
+<li id="r10">Johns Hopkins Aramco Healthcare. Emergency Medical Services. <a href="https://www.jhah.com/en/care-services/emergency-care/">jhah.com/en/care-services/emergency-care</a></li>
+<li id="r11">Johns Hopkins Aramco Healthcare. Telehealth. <a href="https://www.jhah.com/en/care-services/telehealth/">jhah.com/en/care-services/telehealth</a></li>
+<li id="r12">Johns Hopkins Aramco Healthcare. MyChart Video Visit. <a href="https://www.jhah.com/en/about-mychart/mychart-video-visit/">jhah.com/en/about-mychart/mychart-video-visit</a></li>
+<li id="r13">Johns Hopkins Aramco Healthcare. Payment &amp; Insurance. <a href="https://www.jhah.com/en/patient-information/payment-insurance/">jhah.com/en/patient-information/payment-insurance</a></li>
+<li id="r14">Saudi Aramco. Your benefits — Medical care. <a href="https://www.aramco.com/en/careers/for-international-applicants/your-benefits">aramco.com/…/your-benefits</a></li>
+<li id="r15">Johns Hopkins Aramco Healthcare. NetworkPlus（MDF 病人服務）. <a href="https://www.jhah.com/en/patient-information/mdf-patient-services/networkplus/">jhah.com/…/networkplus</a></li>
+<li id="r16">Saudi Vision 2030. Health Sector Transformation Program. <a href="https://www.vision2030.gov.sa/en/explore/programs/health-sector-transformation-program">vision2030.gov.sa/…/health-sector-transformation-program</a></li>
+<li id="r17">Shujaat S, Almutairi H, Alhuraibi SH, Ma H. Policy Considerations for National Virtual Hospitals: Global Evidence and the Seha Virtual Hospital Model. J Med Internet Res. 2026;28:e89276. <a href="https://www.jmir.org/2026/1/e89276/PDF">jmir.org/2026/1/e89276</a></li>
+<li id="r18">HL7 International. FHIR R4 Vital Signs, v4.0.1. <a href="https://hl7.org/fhir/R4/vitalsigns.html">hl7.org/fhir/R4/vitalsigns.html</a></li>
+</ol>
+</div></section>
+
+<footer class="band"><div class="wrap">本報告整理公開資料供研究與政策討論使用，不構成臨床、法律或財務建議。院方數據為機構自述；AI 研究結果尚未完成同儕審查。</div></footer>
+
+<script>
+{
+  const fills=document.querySelectorAll('.fill');
+  const show=el=>{el.style.width=(parseFloat(el.dataset.v)*100)+'%'};
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){show(e.target);io.unobserve(e.target)}}},{threshold:.3});
+    fills.forEach(f=>io.observe(f));
+  }else fills.forEach(show);
+  const mo=new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}});
+  mo.observe(document,{childList:true,subtree:true});
+  for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>在宅醫療-在家住院與虛擬病房的多智能體系統：架構、認知編排與分層負責</title>
+<meta name="description" content="從警報疲勞到分層負責：解析在宅醫療-在家住院與虛擬病房中多智能體 AI 的架構、演算法分診、偽陽性抑制、互通性與風險治理。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf8f3; --paper:#ffffff; --ink:#1f2933; --ink2:#52606d; --line:#e4e0d6;
+  --teal:#0f766e; --teal-l:#d7efec; --amber:#b45309; --amber-l:#fdeccf;
+  --coral:#c2410c; --coral-l:#fde2d6; --indigo:#3f3d9e; --indigo-l:#e3e2f7;
+  --green:#3f7d20; --green-l:#e2f0d6; --gray-l:#eeebe4; --red:#b91c1c;
+  --radius:14px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(60,50,20,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.85;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+h1,h2,h3{font-family:"Noto Serif TC","Noto Sans TC",serif;line-height:1.35;color:#16202a}
+h2{font-size:1.75rem;margin:0 0 .4rem}
+h3{font-size:1.22rem;margin:2rem 0 .6rem}
+p{margin:.7rem 0}
+sup.ref a{font-size:.72em;text-decoration:none;padding:0 1px;color:var(--teal);font-weight:700}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* hero */
+header.hero{background:linear-gradient(160deg,#f3efe4 0%,#eaf4f1 60%,#f7f3ea 100%);border-bottom:1px solid var(--line);padding:64px 0 48px}
+.kicker{display:inline-block;font-size:.85rem;letter-spacing:.12em;color:var(--teal);font-weight:700;background:#fff;border:1px solid var(--teal-l);padding:4px 12px;border-radius:99px}
+.hero h1{font-size:clamp(1.9rem,4vw,2.9rem);margin:18px 0 12px;max-width:920px}
+.hero .lead{font-size:1.12rem;color:var(--ink2);max-width:860px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:1.9rem;font-family:"Noto Serif TC",serif;color:var(--teal);line-height:1.2}
+.stat span{font-size:.88rem;color:var(--ink2);line-height:1.5;display:block;margin-top:4px}
+.stat:nth-child(2) b{color:var(--amber)} .stat:nth-child(3) b{color:var(--indigo)} .stat:nth-child(4) b{color:var(--coral)}
+
+/* layout */
+.layout{display:grid;grid-template-columns:240px 1fr;gap:42px;padding:44px 0 60px}
+nav.toc{position:sticky;top:20px;align-self:start;font-size:.9rem;max-height:calc(100vh - 40px);overflow:auto}
+nav.toc b{display:block;font-size:.78rem;letter-spacing:.14em;color:var(--ink2);margin-bottom:8px}
+nav.toc a{display:block;color:var(--ink2);text-decoration:none;padding:5px 10px;border-left:2px solid var(--line);line-height:1.5}
+nav.toc a:hover{color:var(--teal);border-left-color:var(--teal);background:#fff}
+nav.toc a.hl{color:var(--amber);font-weight:700}
+main section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:38px 42px;margin-bottom:28px;box-shadow:var(--shadow)}
+.secno{font-size:.82rem;font-weight:700;letter-spacing:.14em;color:var(--teal)}
+.sub{color:var(--ink2);margin-top:0}
+
+/* components */
+.callout{border-radius:12px;padding:16px 20px;margin:18px 0;border:1px solid}
+.callout.teal{background:#f1f9f7;border-color:var(--teal-l)}
+.callout.amber{background:#fff8ec;border-color:#f6dcae}
+.callout.indigo{background:#f5f4fc;border-color:var(--indigo-l)}
+.callout.coral{background:#fff4ef;border-color:#f8cdb9}
+.callout h4{margin:0 0 6px;font-size:1rem}
+.callout p{margin:.3rem 0}
+figure{margin:26px 0;padding:22px;background:#fcfbf8;border:1px solid var(--line);border-radius:14px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.88rem;color:var(--ink2);margin-top:12px;line-height:1.6}
+figcaption b{color:var(--ink)}
+.tbl{width:100%;overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;line-height:1.6}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+thead th{background:#f4f1ea;font-weight:700;color:#24313d;border-bottom:2px solid #d9d3c5;white-space:nowrap}
+tbody tr:hover{background:#fbfaf6}
+.badge{display:inline-block;font-size:.74rem;font-weight:700;padding:1px 9px;border-radius:99px;white-space:nowrap;line-height:1.7}
+.b-sim{background:var(--indigo-l);color:var(--indigo)}
+.b-ret{background:var(--amber-l);color:var(--amber)}
+.b-real{background:var(--green-l);color:var(--green)}
+.b-proto{background:var(--gray-l);color:#5b5446}
+.b-bench{background:var(--teal-l);color:var(--teal)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.card h4{margin:0 0 6px;font-size:1.02rem}
+.card p{margin:.2rem 0;font-size:.94rem;color:#33414e}
+.card .tag{font-size:.75rem;font-weight:700;letter-spacing:.08em}
+ul.tight{margin:.4rem 0;padding-left:1.3rem} ul.tight li{margin:.25rem 0}
+.raci td.c{text-align:center;font-weight:700;white-space:nowrap}
+.r{color:#fff;background:var(--teal);border-radius:6px;padding:1px 8px}
+.a{color:#fff;background:var(--coral);border-radius:6px;padding:1px 8px}
+.cc{color:var(--indigo);background:var(--indigo-l);border-radius:6px;padding:1px 8px}
+.i{color:#6b6252;background:var(--gray-l);border-radius:6px;padding:1px 8px}
+.mews td,.mews th{text-align:center;white-space:nowrap}
+.m0{background:#e4f2e1}.m1{background:#fbf1cf}.m2{background:#fbdcb8}.m3{background:#f7c0a4}.m4{background:#eea09a}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.84rem;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.phase{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:22px 0;position:relative}
+.ph{padding:20px 20px 18px;border:1px solid var(--line);background:#fff;position:relative}
+.ph:first-child{border-radius:12px 0 0 12px}.ph:last-child{border-radius:0 12px 12px 0}
+.ph .n{font-family:"Noto Serif TC",serif;font-size:2rem;color:var(--teal-l);font-weight:700;line-height:1;position:absolute;right:16px;top:14px}
+.ph h4{margin:0 0 8px;font-size:1.05rem;color:var(--teal)}
+.ph .gate{margin-top:12px;font-size:.84rem;background:#fff8ec;border:1px dashed #e8c78e;border-radius:8px;padding:8px 10px;color:#7a4a0c}
+.refs ol{padding-left:1.6rem;font-size:.9rem;line-height:1.7}
+.refs li{margin:.55rem 0;scroll-margin-top:20px}
+.refs li:target{background:#fff6dd;border-radius:6px}
+.refs .grp{font-weight:700;color:var(--ink2);font-size:.82rem;letter-spacing:.1em;margin:22px 0 4px}
+footer{text-align:center;color:var(--ink2);font-size:.85rem;padding:24px 0 48px}
+/* interactive */
+.lab{border:1px solid var(--line);border-radius:14px;background:#fcfbf8;padding:22px;margin:24px 0}
+.lab-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.lab-head h4{margin:0;font-size:1.05rem}
+.lab-head p{margin:4px 0 0;font-size:.88rem;color:var(--ink2)}
+.lab-tag{font-size:.74rem;font-weight:700;color:var(--amber);background:var(--amber-l);border-radius:99px;padding:2px 10px;white-space:nowrap}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:inherit;font-size:.88rem;font-weight:500;min-height:40px;padding:6px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .15s}
+.btn:hover{border-color:var(--teal);color:var(--teal)}
+.btn[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.explorer{display:grid;grid-template-columns:1fr 1.1fr;gap:18px}
+.modgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modbtn{font:inherit;text-align:left;cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;line-height:1.4;transition:all .15s}
+.modbtn small{display:block;color:var(--ink2);font-size:.75rem;letter-spacing:.06em}
+.modbtn b{font-size:.98rem}
+.modbtn:hover{background:#f4f1ea}
+.modbtn[aria-pressed="true"]{border-color:var(--teal);box-shadow:inset 4px 0 0 var(--teal);background:#f1f9f7}
+.detail{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.detail h5{margin:0 0 8px;font-size:1.05rem;color:var(--teal)}
+.detail dl{margin:0}.detail dt{font-size:.78rem;font-weight:700;color:var(--ink2);letter-spacing:.06em;margin-top:10px}
+.detail dd{margin:2px 0 0;font-size:.93rem;line-height:1.65}
+.triad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:10px;padding:12px 14px;font-size:.9rem;line-height:1.65;transition:all .2s}
+.tcard small{display:block;font-size:.72rem;letter-spacing:.08em;color:var(--ink2);font-weight:700}
+.tcard b.t{display:block;font-size:.98rem;margin:2px 0 6px}
+.tcard.alert{border-left-color:var(--coral);background:#fff8f4}.tcard.warn{border-left-color:var(--amber);background:#fffaf0}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.pipe .modbtn{font-size:.88rem}
+.pdesc{background:#f1f9f7;border-left:4px solid var(--teal);border-radius:10px;padding:12px 16px;font-size:.93rem}
+.pdesc b{display:block;color:var(--teal);margin-bottom:2px}
+.sim{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
+.vital{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+.vtop{display:flex;justify-content:space-between;gap:10px;font-size:.88rem}
+.vtop label{font-weight:700}
+.vtop span{font-variant-numeric:tabular-nums;white-space:nowrap}
+.vtop .sc{display:inline-block;min-width:62px;text-align:center;border-radius:6px;padding:0 6px;font-weight:700;font-size:.8rem}
+.meter{position:relative;height:8px;background:#eeebe4;border-radius:99px;margin:8px 0 2px}
+.meter .band{position:absolute;top:0;bottom:0;background:#a6d6cf;border-radius:99px}
+.meter .mk{position:absolute;top:-3px;width:6px;height:14px;background:var(--teal);border-radius:2px;transform:translateX(-50%)}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+select.sel{font:inherit;font-size:.9rem;min-height:40px;padding:6px 10px;border-radius:8px;border:1px solid #c9c2b2;background:#fff;width:100%}
+.res{background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.res small{font-size:.76rem;font-weight:700;color:var(--ink2);letter-spacing:.06em}
+.res .big{font-family:"Noto Serif TC",serif;font-size:1.6rem;font-weight:700;line-height:1.3;margin:2px 0}
+.res p{margin:0;font-size:.87rem;color:var(--ink2);line-height:1.6}
+.res.warn{border-left-color:var(--amber)}.res.alert{border-left-color:var(--coral)}
+.vcase{background:#fff8ec;border:1px solid #f6dcae;border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:.92rem}
+.vcase b{display:block}
+.lstack{display:grid;gap:8px}
+.lrow{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:10px;padding:10px 14px;font-size:.9rem}
+.lrow .lb{font-size:.75rem;font-weight:700;color:var(--teal);background:var(--teal-l);border-radius:6px;text-align:center;padding:3px 0}
+.lrow b{display:block;font-size:.93rem}
+.lrow.sup{border-left-color:var(--green);background:#f6fbf2}.lrow.esc{border-left-color:var(--coral);background:#fff4ef}
+.spg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.sp{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:.78rem;line-height:1.4;background:#faf8f3;color:var(--ink2)}
+.sp b{font-size:.8rem;color:var(--ink)}
+.sp.on{background:var(--green-l);border-color:var(--green)}.sp.cf{background:var(--coral-l);border-color:var(--coral)}
+.hbars{display:grid;gap:10px;margin-top:6px}
+.hb{display:grid;grid-template-columns:230px 1fr 64px;gap:10px;align-items:center;font-size:.88rem}
+.hb .lbl{text-align:right;line-height:1.35}
+.hb .track{background:#eeebe4;border-radius:6px;height:22px;overflow:hidden}
+.hb .fill{height:100%;border-radius:6px;transition:width .5s ease}
+.hb .v{font-weight:700;font-variant-numeric:tabular-nums}
+.ph{cursor:pointer;transition:box-shadow .2s}
+.ph.on{box-shadow:0 0 0 2px var(--teal) inset;background:#f6fbfa}
+@media (max-width:980px){
+  .explorer,.sim,.triad{grid-template-columns:1fr}
+  .pipe{grid-template-columns:1fr 1fr}
+  .spg{grid-template-columns:1fr 1fr}
+  .hb{grid-template-columns:1fr 54px}.hb .lbl{grid-column:1/-1;text-align:left}
+}
+.svg-t{font-family:"Noto Sans TC",sans-serif}
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  main section{padding:26px 22px}
+  .grid2,.grid3,.phase{grid-template-columns:1fr}
+  .ph,.ph:first-child,.ph:last-child{border-radius:12px;margin-bottom:10px}
+}
+@media print{
+  nav.toc{display:none}.layout{grid-template-columns:1fr}
+  main section{box-shadow:none;break-inside:avoid-page}
+  header.hero{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">數位醫療 · 代理人 AI · 臨床治理</span>
+    <h1>當病房搬進家裡：在宅醫療-在家住院與虛擬病房中的多智能體系統</h1>
+    <p class="lead">從「警報響個不停」到「每一個決定都有人負責」——本報告拆解多智能體 AI 如何感知、推理、分診與升級，並完整說明人機之間的分層負責制度，讓科技在家中守護病人，同時把責任留在看得見的地方。</p>
+    <div class="stats">
+      <div class="stat"><b>72–99%</b><span>院內生理監測警報中屬偽警報或無需處置的比例（文獻區間）<sup class="ref"><a href="#ref-1">1</a></sup></span></div>
+      <div class="stat"><b>83.7%</b><span>Veritas-RPM 在 98 個合成偽陽性情境中的真抑制率<sup class="ref"><a href="#ref-2">2</a></sup></span></div>
+      <div class="stat"><b>88.9%</b><span>MIRA 智能體於 574 例回溯急診病例模擬中的診斷正確率<sup class="ref"><a href="#ref-8">8</a></sup></span></div>
+      <div class="stat"><b>89.9%</b><span>台灣在宅急症照護試辦前九個月 2,158 人中順利完成治療比例<sup class="ref"><a href="#ref-20">20</a></sup></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+<nav class="toc" aria-label="目錄">
+  <b>目錄</b>
+  <a href="#s0">導讀：為什麼是現在</a>
+  <a href="#s1">1　警報疲勞：訊號淹沒在雜訊裡</a>
+  <a href="#s2">2　智能體是什麼：六模組認知閉環</a>
+  <a href="#s3" class="hl">3　分層負責制度</a>
+  <a href="#s4">4　多智能體的分工與協作</a>
+  <a href="#s5">5　演算法分診：強化學習與 MEWS</a>
+  <a href="#s6">6　偽陽性抑制：Veritas-RPM</a>
+  <a href="#s7">7　互通性與雲—邊架構</a>
+  <a href="#s8">8　實證對照與證據等級</a>
+  <a href="#s9">9　挑戰：成本、偏誤與責任</a>
+  <a href="#s10">10　部署藍圖</a>
+  <a href="#refs">參考資料</a>
+</nav>
+
+<main>
+
+<!-- 0 -->
+<section id="s0">
+  <div class="secno">導讀</div>
+  <h2>為什麼是現在：病房的牆正在消失</h2>
+  <p>「在宅醫療-在家住院」（Hospital-at-Home, HaH）與「虛擬病房」（Virtual Ward）的核心理念很直白：<strong>本來需要住院的急性病人，在合適條件下改在家中接受同等級的照護</strong>。醫護到府訪視、穿戴式設備連續量測生命徵象、遠端團隊隨時待命。英國把虛擬病房列為 NHS 長期計畫的重要支柱<sup class="ref"><a href="#ref-2">2</a></sup>；台灣健保署自 2024 年 7 月起推動「在宅急症照護試辦計畫」，讓肺炎、尿路感染與軟組織感染的病人可以選擇在家或照護機構接受抗生素治療，由醫師、護理師、藥師與呼吸治療師組成照護小組，並搭配遠距醫療與遠端生命徵象監測<sup class="ref"><a href="#ref-19">19</a></sup>。</p>
+  <p>但病房搬進家裡之後，一個老問題被放大了：<strong>誰在看那些數據？</strong>在醫院，護理站離病床只有幾步路；在家裡，一位護理師可能同時面對數十位病人的即時數據流。若每一次血氧短暫下滑、每一次手錶鬆脫都觸發警報，團隊很快就會被淹沒。這正是多智能體系統（Multi-Agent Systems, MAS）登場的理由——它不是要取代醫護，而是要當一支<strong>勤奮、分工清楚、凡事留紀錄的「數位值班團隊」</strong>，先把雜訊濾掉、把脈絡補上，再把真正重要的事交給人。</p>
+  <div class="callout teal">
+    <h4>📖 一個比喻貫穿全文</h4>
+    <p>把多智能體系統想像成機場塔台：雷達（感測器）不停掃描，各席位管制員（專門智能體）各管一段空域，值班主任（編排智能體）整合判斷——但<strong>放行或迫降的最終指令，永遠由有執照的人簽發</strong>。本報告第 3 章的「分層負責制度」，就是在說明這座塔台裡誰能做什麼、誰該為什麼負責。</p>
+  </div>
+  <div class="legend" style="margin-top:14px">
+    <span><span class="badge b-real">真實世界</span> 臨床實際收案資料</span>
+    <span><span class="badge b-ret">回溯模擬</span> 以真實病歷在沙盒中重演</span>
+    <span><span class="badge b-sim">合成資料</span> 依規則生成的模擬病例</span>
+    <span><span class="badge b-bench">公開資料集</span> 研究用標準資料集</span>
+    <span><span class="badge b-proto">研究設計</span> 尚無結果之計畫書</span>
+  </div>
+  <p style="font-size:.9rem;color:var(--ink2)">本報告以上述標籤註記每項數據的證據來源，提醒讀者：模擬中的亮眼數字，不等於病人家中的實際表現。</p>
+</section>
+
+<!-- 1 -->
+<section id="s1">
+  <div class="secno">第 1 章</div>
+  <h2>警報疲勞：訊號淹沒在雜訊裡</h2>
+  <p class="sub">傳統監測靠「單一參數、固定門檻」：心率超過 120 就響、血氧低於 90 就響。規則簡單，卻不懂脈絡。</p>
+  <p>重症照護文獻長期觀察到，臨床生理監測警報中有 <strong>72% 至 99%</strong> 屬於偽警報或不需臨床處置<sup class="ref"><a href="#ref-1">1</a></sup>。原因五花八門：探頭滑脫、病人翻身造成的動作偽影、睡眠時良性的心跳變慢、慢性阻塞性肺病（COPD）病人本來就偏低的血氧基準。當絕大多數警報都是「狼來了」，醫護就會逐漸麻木，真正的惡化反而可能被延誤——這就是<strong>警報疲勞（Alarm Fatigue）</strong>。</p>
+  <p>這個數據區間主要來自院內加護與監測病房的研究；居家遠端監測的環境更不受控（訊號受日常活動干擾、設備由病人自行配戴），雜訊問題只會更棘手，而不會更輕鬆。</p>
+
+  <figure>
+    <svg viewBox="0 0 760 260" role="img" aria-label="一百則警報中偽警報比例示意圖" class="svg-t">
+      <g id="waffle"></g>
+      <g transform="translate(400,30)" font-size="15" fill="#1f2933">
+        <rect x="0" y="6" width="16" height="16" rx="3" fill="#b9b2a3"/><text x="26" y="20">至少約 72 則：偽警報或無需處置</text>
+        <rect x="0" y="46" width="16" height="16" rx="3" fill="#e8e2d4"/><text x="26" y="60">約 27 則：依情境可能也是雜訊</text>
+        <rect x="0" y="86" width="16" height="16" rx="3" fill="#c2410c"/><text x="26" y="100">最少可能只有 1 則需要行動</text>
+        <text x="0" y="150" font-size="13.5" fill="#52606d">每 100 則警報裡，真正需要</text>
+        <text x="0" y="172" font-size="13.5" fill="#52606d">介入的可能只有 1 至 28 則。</text>
+        <text x="0" y="200" font-size="13.5" fill="#52606d">多智能體系統的任務，是在不漏掉</text>
+        <text x="0" y="222" font-size="13.5" fill="#52606d">紅色方塊的前提下，濾掉灰色方塊。</text>
+      </g>
+    </svg>
+    <figcaption><b>圖 1　百則警報的訊雜比示意。</b>依文獻報告的 72–99% 偽警報／無需處置區間繪製<sup class="ref"><a href="#ref-1">1</a></sup>；實際比例依病房類型、設備與門檻設定而異。</figcaption>
+  </figure>
+
+  <div class="callout amber">
+    <h4>⚖️ 兩種錯誤，代價不同</h4>
+    <p><strong>偽陽性</strong>（沒事卻響）消耗人力、製造麻木；<strong>偽陰性</strong>（有事卻沒響）可能直接傷害病人。任何警報抑制技術都必須回答同一個問題：<em>濾掉雜訊時，如何保證不把真正的惡化一起濾掉？</em>第 3 章的「不確定就升級」原則，正是這個問題的制度性答案。</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <div class="secno">第 2 章</div>
+  <h2>智能體是什麼：六模組認知閉環</h2>
+  <p class="sub">聊天機器人回答問題；智能體則會「看、想、計畫、動手、檢討」，而且一直循環。</p>
+  <p>臨床 AI 智能體可以理解為：在<strong>限定的臨床權限範圍內</strong>運作的軟體系統，能持續感知病人狀態、運用經驗證的醫學知識推理、擬定多步驟計畫、呼叫外部工具（例如寫入病歷、排程訪視），並根據結果回饋調整行為。為了讓每一步都可審計，常見的設計會把它拆成六個模組，首尾相連成一個閉環。這是一個整合多篇文獻後的分析框架，各系統實作的切分方式不盡相同<sup class="ref"><a href="#ref-12">12</a>,<a href="#ref-13">13</a></sup>。</p>
+
+  <figure>
+    <svg viewBox="0 0 760 430" role="img" aria-label="六模組認知閉環圖" class="svg-t">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#9aa5b1"/></marker></defs>
+      <circle cx="380" cy="215" r="150" fill="none" stroke="#d9d3c5" stroke-width="2" stroke-dasharray="6 6"/>
+      <g font-size="14" text-anchor="middle">
+        <circle cx="380" cy="215" r="62" fill="#fff" stroke="#c2410c" stroke-width="2"/>
+        <text x="380" y="205" font-weight="700" fill="#c2410c">安全約束</text>
+        <text x="380" y="226" fill="#52606d" font-size="12.5">權限邊界</text>
+        <text x="380" y="244" fill="#52606d" font-size="12.5">人工授權關卡</text>
+      </g>
+      <!-- nodes at angles -90,-30,30,90,150,210 r=150 -->
+      <g font-size="14" text-anchor="middle">
+        <g transform="translate(380,65)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#d7efec" stroke="#0f766e"/><text y="-6" font-weight="700" fill="#0f766e">① 感測層</text><text y="15" font-size="12" fill="#33414e">穿戴遙測・病歷・病人自評</text></g>
+        <g transform="translate(610,140)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#e3e2f7" stroke="#3f3d9e"/><text y="-6" font-weight="700" fill="#3f3d9e">② 知識層</text><text y="15" font-size="12" fill="#33414e">指引・院內協定・知識圖譜</text></g>
+        <g transform="translate(610,290)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#e3e2f7" stroke="#3f3d9e"/><text y="-6" font-weight="700" fill="#3f3d9e">③ 推理層</text><text y="15" font-size="12" fill="#33414e">鑑別假說・風險分層</text></g>
+        <g transform="translate(380,365)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#fdeccf" stroke="#b45309"/><text y="-6" font-weight="700" fill="#b45309">④ 計畫層</text><text y="15" font-size="12" fill="#33414e">任務拆解・退出條件</text></g>
+        <g transform="translate(150,290)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#fdeccf" stroke="#b45309"/><text y="-6" font-weight="700" fill="#b45309">⑤ 行動層</text><text y="15" font-size="12" fill="#33414e">FHIR 寫入・排程・草稿</text></g>
+        <g transform="translate(150,140)"><rect x="-92" y="-30" width="184" height="60" rx="12" fill="#d7efec" stroke="#0f766e"/><text y="-6" font-weight="700" fill="#0f766e">⑥ 回饋層</text><text y="15" font-size="12" fill="#33414e">再評估・醫師覆寫・漂移監控</text></g>
+      </g>
+      <g stroke="#9aa5b1" stroke-width="2" fill="none" marker-end="url(#ar)">
+        <path d="M472,78 Q560,90 590,108"/>
+        <path d="M640,172 L640,258"/>
+        <path d="M590,322 Q540,355 474,362"/>
+        <path d="M286,362 Q220,355 172,322"/>
+        <path d="M120,258 L120,172"/>
+        <path d="M172,108 Q200,85 288,78"/>
+      </g>
+    </svg>
+    <figcaption><b>圖 2　六模組認知閉環。</b>原始數據經感測、知識、推理、計畫、行動，再由回饋層檢查結果並觸發重新計畫；中心的安全約束限制每一層「能做到哪裡」。</figcaption>
+  </figure>
+
+  <div class="lab">
+    <div class="lab-head"><div><h4>互動探索：點選各模組，看它吃進什麼、吐出什麼</h4><p>每一筆遠端觀測資料，都要經過這六個模組才會變成可稽核的臨床行動。</p></div></div>
+    <div class="explorer">
+      <div class="modgrid" role="group" aria-label="六模組選擇器" id="modgrid"></div>
+      <div class="detail" aria-live="polite">
+        <h5 id="md-title"></h5>
+        <dl>
+          <dt>白話說明</dt><dd id="md-plain"></dd>
+          <dt>主要輸入</dt><dd id="md-in"></dd>
+          <dt>內部機制</dt><dd id="md-mech"></dd>
+          <dt>輸出與下游介面</dt><dd id="md-out"></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <p>值得一提的是，2026 年一篇回顧 49 項醫療 LLM 智能體研究的分類學分析指出：「整合外部知識」已相當普遍（約 76% 完整實作），但「事件觸發啟動」（約 92% 未實作）與「模型漂移偵測與緩解」（約 98% 未實作）幾乎付之闕如<sup class="ref"><a href="#ref-12">12</a></sup>。換言之，<strong>圖 2 中的回饋層，正是目前研究最薄弱的一環</strong>——而它恰恰是居家連續監測最需要的。</p>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <div class="secno">第 3 章　核心</div>
+  <h2>分層負責制度：誰能決定、誰來執行、誰要負責</h2>
+  <p class="sub">AI 可以分擔工作，但不能承擔責任。分層負責制度的目的，是讓每一個動作都對應到一位可問責的人或機構。</p>
+
+  <p>「分層負責」在這裡有三個互相嵌套的維度：<strong>（一）AI 自主權分級</strong>——AI 被允許做到哪一步；<strong>（二）照護組織分層</strong>——從居家現場到機構治理，各層人員的職責；<strong>（三）事件升級階梯</strong>——一則警報從產生到處置，沿著什麼路徑往上傳。三者交織，構成完整的責任網。</p>
+
+  <h3>3.1　維度一：AI 自主權四級</h3>
+  <p>參照自動駕駛分級的思路，臨床智能體的自主權可依「決策與行動的耦合程度」分為四級。等級越高，AI 從「建議」走向「動手」，人類的角色從「執行者」退為「監督者」——風險也同步上升<sup class="ref"><a href="#ref-13">13</a></sup>。</p>
+
+  <figure>
+    <svg viewBox="0 0 760 330" role="img" aria-label="AI自主權四級階梯圖" class="svg-t">
+      <g font-size="14">
+        <rect x="30" y="230" width="170" height="70" rx="8" fill="#d7efec" stroke="#0f766e"/>
+        <rect x="205" y="175" width="170" height="125" rx="8" fill="#d7efec" stroke="#0f766e"/>
+        <rect x="380" y="120" width="170" height="180" rx="8" fill="#fdeccf" stroke="#b45309"/>
+        <rect x="555" y="65" width="170" height="235" rx="8" fill="#fde2d6" stroke="#c2410c" stroke-dasharray="6 4"/>
+        <g text-anchor="middle">
+          <text x="115" y="256" font-weight="700" fill="#0f766e">A1 被動支援</text><text x="115" y="278" font-size="12" fill="#33414e">彙整・背景審查</text>
+          <text x="290" y="201" font-weight="700" fill="#0f766e">A2 半自主分診</text><text x="290" y="223" font-size="12" fill="#33414e">排序・過濾已知雜訊</text><text x="290" y="241" font-size="12" fill="#33414e">調整採樣頻率</text>
+          <text x="465" y="146" font-weight="700" fill="#b45309">A3 協定化執行</text><text x="465" y="168" font-size="12" fill="#33414e">在醫師簽署的協定內</text><text x="465" y="186" font-size="12" fill="#33414e">執行預先核准的措施</text>
+          <text x="640" y="91" font-weight="700" fill="#c2410c">A4 完全閉環</text><text x="640" y="113" font-size="12" fill="#33414e">自行診斷、選擇治療</text><text x="640" y="131" font-size="12" fill="#33414e">並執行</text>
+          <text x="640" y="200" font-size="12.5" fill="#c2410c" font-weight="700">目前不應用於</text><text x="640" y="218" font-size="12.5" fill="#c2410c" font-weight="700">真實病人</text><text x="640" y="240" font-size="12" fill="#52606d">僅限沙盒模擬</text>
+        </g>
+        <text x="30" y="30" font-size="13" fill="#52606d">AI 自主程度 →</text>
+        <line x1="130" y1="25" x2="720" y2="25" stroke="#9aa5b1" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="30" y="322" font-size="12.5" fill="#52606d">人類角色：　執行者　──────　即時審核者　──────　協定制定與抽查者　──────　（不可缺席）</text>
+      </g>
+    </svg>
+    <figcaption><b>圖 3　AI 自主權四級。</b>A1、A2 適合作為居家監測的起點；A3 必須以醫師事先簽署的書面協定為前提；A4 在現行法規與責任架構下不宜進入真實照護。2026 年的範圍回顧亦指出，目前多數系統仍由人主導，決策—行動緊密耦合的具身 AI 大多停留在原型與試點階段<sup class="ref"><a href="#ref-13">13</a></sup>。</figcaption>
+  </figure>
+
+  <div class="tbl"><table>
+    <thead><tr><th>等級</th><th>AI 可以做</th><th>AI 不可以做</th><th>人的角色</th><th>居家情境範例</th></tr></thead>
+    <tbody>
+      <tr><td><b>A1</b></td><td>彙整數據、產生摘要、標記品質</td><td>過濾或延遲任何警報</td><td>所有判斷與處置</td><td>每日晨間生命徵象趨勢摘要</td></tr>
+      <tr><td><b>A2</b></td><td>依風險排序病人名單；過濾<em>經核准類別</em>的已知雜訊；調整量測頻率</td><td>變更任何治療；抑制未列入清單的警報類型</td><td>即時審核、可隨時覆寫</td><td>識別探頭滑脫、夜間良性心搏過緩並留痕</td></tr>
+      <tr><td><b>A3</b></td><td>在協定參數內執行預核准措施</td><td>超出協定範圍；自行擴大適應症</td><td>簽署協定、設定上下限、抽查紀錄</td><td>依協定推送症狀問卷；在醫囑範圍內提示氧流量調整並由人員確認</td></tr>
+      <tr><td><b>A4</b></td><td>—</td><td>不進入真實照護</td><td>—</td><td>僅作研究沙盒基準</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>3.2　維度二：照護組織的四層責任圈</h3>
+  <p>自主權分級回答「AI 能做什麼」；組織分層回答「人各自管什麼」。由內而外，可以畫成四個同心圈：</p>
+  <figure>
+    <svg viewBox="0 0 760 400" role="img" aria-label="四層責任同心圓" class="svg-t">
+      <circle cx="230" cy="200" r="185" fill="#f4f1ea" stroke="#d9d3c5"/>
+      <circle cx="230" cy="200" r="135" fill="#e3e2f7" stroke="#b9b6e6"/>
+      <circle cx="230" cy="200" r="88" fill="#fdeccf" stroke="#f0c98a"/>
+      <circle cx="230" cy="200" r="44" fill="#d7efec" stroke="#0f766e"/>
+      <g text-anchor="middle" font-size="13.5" font-weight="700">
+        <text x="230" y="196" fill="#0f766e">病人</text><text x="230" y="214" fill="#0f766e" font-size="12">與照顧者</text>
+        <text x="230" y="136" fill="#b45309">第一層　現場照護</text>
+        <text x="230" y="88" fill="#3f3d9e">第二層　照護小組</text>
+        <text x="230" y="38" fill="#5b5446">第三層　機構治理</text>
+      </g>
+      <text x="230" y="392" text-anchor="middle" font-size="12" fill="#52606d">外環：第四層　主管機關・系統廠商</text>
+      <g font-size="13" fill="#1f2933">
+        <rect x="450" y="20" width="290" height="80" rx="10" fill="#fff" stroke="#f0c98a"/>
+        <text x="464" y="44" font-weight="700" fill="#b45309">第一層　現場照護</text>
+        <text x="464" y="66">到府護理師、居家照顧者、邊緣端設備</text>
+        <text x="464" y="86" fill="#52606d" font-size="12">責任：正確配戴、現場評估、立即處置</text>
+        <rect x="450" y="112" width="290" height="80" rx="10" fill="#fff" stroke="#b9b6e6"/>
+        <text x="464" y="136" font-weight="700" fill="#3f3d9e">第二層　照護小組</text>
+        <text x="464" y="158">主治醫師、個案管理師、藥師、呼吸治療師</text>
+        <text x="464" y="178" fill="#52606d" font-size="12">責任：診斷、處方、簽署協定、升級決策</text>
+        <rect x="450" y="204" width="290" height="80" rx="10" fill="#fff" stroke="#d9d3c5"/>
+        <text x="464" y="228" font-weight="700" fill="#5b5446">第三層　機構治理</text>
+        <text x="464" y="250">醫療品質／AI 治理委員會、資訊與資安</text>
+        <text x="464" y="270" fill="#52606d" font-size="12">責任：核准上線、抑制類別清單、稽核</text>
+        <rect x="450" y="296" width="290" height="80" rx="10" fill="#fff" stroke="#d9d3c5"/>
+        <text x="464" y="320" font-weight="700" fill="#5b5446">第四層　外部</text>
+        <text x="464" y="342">主管機關、系統廠商</text>
+        <text x="464" y="362" fill="#52606d" font-size="12">責任：法規審查／產品安全、更新與日誌</text>
+      </g>
+    </svg>
+    <figcaption><b>圖 4　四層責任圈。</b>AI 智能體不在任何一圈中——它是穿梭各層的「工具」，其每個輸出都必須落到某一層的某個人手上。</figcaption>
+  </figure>
+
+  <div class="callout indigo">
+    <h4>🇹🇼 台灣實例：試辦計畫已內建的人力分層</h4>
+    <p>健保署在宅急症照護試辦計畫的規範本身就是一套分層負責設計：醫師應於收案 3 天內完成實地訪視，護理人員於照護期間每日實地訪視；醫師未實地訪視時仍須每日以通訊方式追蹤病情；有藥事或呼吸照護需求時連結藥師或呼吸治療師；主治醫師同一時段收案上限 20 人<sup class="ref"><a href="#ref-21">21</a></sup>。照護小組並須提供 24 小時電話諮詢與緊急訪視<sup class="ref"><a href="#ref-22">22</a></sup>。多智能體系統若導入此類計畫，應<strong>嵌入而非取代</strong>這套既有分層——例如協助護理師在每日訪視前排出優先順序，而不是讓醫師因為「有 AI 在看」就放寬每日追蹤。</p>
+  </div>
+
+  <h3>3.3　RACI 責任矩陣：把「誰負責」寫成表格</h3>
+  <p>管理學常用 RACI 矩陣釐清分工：<span class="r">R</span> 執行（Responsible）、<span class="a">A</span> 最終負責（Accountable，每項任務只能有一位）、<span class="cc">C</span> 諮詢（Consulted）、<span class="i">I</span> 知會（Informed）。下表為居家多智能體監測的建議矩陣：</p>
+  <div class="tbl"><table class="raci">
+    <thead><tr><th>任務</th><th>AI 智能體</th><th>個案護理師</th><th>主治醫師</th><th>機構治理</th><th>系統廠商</th><th>病人／照顧者</th></tr></thead>
+    <tbody>
+      <tr><td>生命徵象擷取與訊號品質標記</td><td class="c"><span class="r">R</span></td><td class="c"><span class="i">I</span></td><td class="c">—</td><td class="c"><span class="a">A</span></td><td class="c"><span class="cc">C</span></td><td class="c"><span class="cc">C</span></td></tr>
+      <tr><td>已核准類別之雜訊抑制（每筆留痕）</td><td class="c"><span class="r">R</span></td><td class="c"><span class="i">I</span></td><td class="c"><span class="i">I</span></td><td class="c"><span class="a">A</span></td><td class="c"><span class="cc">C</span></td><td class="c">—</td></tr>
+      <tr><td>警報分級與工作清單排序</td><td class="c"><span class="r">R</span></td><td class="c"><span class="a">A</span></td><td class="c"><span class="i">I</span></td><td class="c"><span class="cc">C</span></td><td class="c">—</td><td class="c">—</td></tr>
+      <tr><td>協定化措施（問卷推送、採樣頻率等）</td><td class="c"><span class="r">R</span></td><td class="c"><span class="r">R</span></td><td class="c"><span class="a">A</span></td><td class="c"><span class="cc">C</span></td><td class="c">—</td><td class="c"><span class="i">I</span></td></tr>
+      <tr><td>診斷、處方與治療變更</td><td class="c"><span class="cc">C</span>（草稿）</td><td class="c"><span class="cc">C</span></td><td class="c"><span class="a">A</span>／<span class="r">R</span></td><td class="c"><span class="i">I</span></td><td class="c">—</td><td class="c"><span class="cc">C</span>（知情同意）</td></tr>
+      <tr><td>升級：緊急訪視、轉急診或返院</td><td class="c"><span class="r">R</span>（觸發）</td><td class="c"><span class="r">R</span></td><td class="c"><span class="a">A</span></td><td class="c"><span class="i">I</span></td><td class="c">—</td><td class="c"><span class="cc">C</span></td></tr>
+      <tr><td>模型更新、漂移監控與再驗證</td><td class="c">—</td><td class="c"><span class="cc">C</span></td><td class="c"><span class="cc">C</span>（覆寫回饋）</td><td class="c"><span class="a">A</span></td><td class="c"><span class="r">R</span></td><td class="c">—</td></tr>
+      <tr><td>不良事件通報與根因分析</td><td class="c">提供稽核軌跡</td><td class="c"><span class="r">R</span></td><td class="c"><span class="r">R</span></td><td class="c"><span class="a">A</span></td><td class="c"><span class="r">R</span>（技術日誌）</td><td class="c"><span class="cc">C</span></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--ink2)">注意 AI 欄位從未出現 <span class="a">A</span>：任何法律意義上的「最終負責」都必須由自然人或法人承擔。</p>
+
+  <h3>3.4　維度三：事件升級階梯</h3>
+  <p>一則警報從感測器出發，會經過哪些關卡？下圖把前兩個維度串成一條路徑。關鍵在於兩條「保底線」：<strong>邊緣端保底</strong>（斷網也能在地警示）與<strong>不確定就升級</strong>（無法確認為雜訊者一律送到人眼前）。</p>
+  <figure>
+    <svg viewBox="0 0 760 430" role="img" aria-label="警報升級流程圖" class="svg-t">
+      <g font-size="13.5" text-anchor="middle">
+        <rect x="20" y="30" width="140" height="56" rx="10" fill="#d7efec" stroke="#0f766e"/><text x="90" y="54" font-weight="700" fill="#0f766e">感測器事件</text><text x="90" y="73" font-size="12" fill="#33414e">心率・血氧・呼吸</text>
+        <rect x="200" y="30" width="150" height="56" rx="10" fill="#fff" stroke="#c2410c" stroke-width="2"/><text x="275" y="54" font-weight="700" fill="#c2410c">邊緣端安全規則</text><text x="275" y="73" font-size="12" fill="#33414e">跌倒・無脈搏</text>
+        <rect x="390" y="30" width="170" height="56" rx="10" fill="#e3e2f7" stroke="#3f3d9e"/><text x="475" y="54" font-weight="700" fill="#3f3d9e">多智能體分析</text><text x="475" y="73" font-size="12" fill="#33414e">情境・血統・專科判讀</text>
+        <polygon points="660,22 735,58 660,94 585,58" fill="#fdeccf" stroke="#b45309"/><text x="660" y="54" font-weight="700" fill="#b45309">能確認</text><text x="660" y="72" font-weight="700" fill="#b45309">是雜訊？</text>
+        <rect x="200" y="130" width="150" height="56" rx="10" fill="#fde2d6" stroke="#c2410c"/><text x="275" y="154" font-weight="700" fill="#c2410c">立即在地警示</text><text x="275" y="173" font-size="12" fill="#33414e">同步通知照護小組</text>
+        <rect x="590" y="150" width="150" height="70" rx="10" fill="#f4f1ea" stroke="#9aa5b1"/><text x="665" y="176" font-weight="700" fill="#33414e">是：抑制並留痕</text><text x="665" y="196" font-size="12" fill="#52606d">寫入稽核日誌</text><text x="665" y="212" font-size="12" fill="#52606d">定期抽查</text>
+        <rect x="390" y="150" width="170" height="70" rx="10" fill="#fff8ec" stroke="#b45309" stroke-width="2"/><text x="475" y="176" font-weight="700" fill="#b45309">否或不確定：升級</text><text x="475" y="196" font-size="12" fill="#33414e">附推理摘要與風險分數</text><text x="475" y="212" font-size="12" fill="#33414e">送入護理工作清單</text>
+        <rect x="390" y="262" width="170" height="56" rx="10" fill="#fff" stroke="#b45309"/><text x="475" y="286" font-weight="700" fill="#b45309">個案護理師評估</text><text x="475" y="305" font-size="12" fill="#33414e">電話／視訊／到府</text>
+        <rect x="390" y="356" width="170" height="56" rx="10" fill="#fff" stroke="#3f3d9e"/><text x="475" y="380" font-weight="700" fill="#3f3d9e">主治醫師決策</text><text x="475" y="399" font-size="12" fill="#33414e">調整治療・緊急訪視</text>
+        <rect x="600" y="356" width="140" height="56" rx="10" fill="#fde2d6" stroke="#c2410c"/><text x="670" y="380" font-weight="700" fill="#c2410c">轉急診／返院</text><text x="670" y="399" font-size="12" fill="#33414e">啟動緊急醫療</text>
+        <rect x="20" y="262" width="300" height="150" rx="10" fill="#fcfbf8" stroke="#d9d3c5" stroke-dasharray="5 4"/>
+        <text x="170" y="290" font-weight="700" fill="#33414e">回饋迴路</text>
+        <text x="170" y="316" font-size="12" fill="#52606d">每次人工覆寫＝一筆校準訊號</text>
+        <text x="170" y="338" font-size="12" fill="#52606d">抑制紀錄抽查＝偽陰性稽核</text>
+        <text x="170" y="360" font-size="12" fill="#52606d">由機構治理層彙整</text>
+        <text x="170" y="382" font-size="12" fill="#52606d">決定是否擴大或收回抑制類別</text>
+      </g>
+      <g stroke="#9aa5b1" stroke-width="2" fill="none" marker-end="url(#ar)">
+        <path d="M160,58 L196,58"/><path d="M350,58 L386,58"/><path d="M560,58 L583,58"/>
+        <path d="M275,86 L275,126"/>
+        <path d="M680,90 L680,146"/>
+        <path d="M640,90 Q600,130 560,160"/>
+        <path d="M475,220 L475,258"/><path d="M475,318 L475,352"/><path d="M560,384 L596,384"/>
+        <path d="M386,290 L324,320" stroke-dasharray="4 4"/>
+      </g>
+      <text x="690" y="125" font-size="12" fill="#52606d">是</text><text x="585" y="120" font-size="12" fill="#b45309">否／不確定</text>
+    </svg>
+    <figcaption><b>圖 5　警報升級階梯。</b>邊緣端規則與雲端智能體分析平行運作；凡無法確認為雜訊者一律升級。各關卡的回應時限應由機構協定明訂。</figcaption>
+  </figure>
+
+  <h3>3.5　法規如何定義「人必須在迴圈中」</h3>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag" style="color:var(--indigo)">美國 FDA</span>
+      <h4>臨床決策支援（CDS）軟體指引</h4>
+      <p>FDA 以四項標準判斷 CDS 軟體是否排除於醫療器材定義之外，必須<strong>四項全部符合</strong>才算非器材 CDS<sup class="ref"><a href="#ref-15">15</a></sup>。其中關鍵之一是：軟體不得處理醫學影像、訊號或模式。連續分析穿戴式生理訊號的居家監測智能體，因此通常落在器材監管範圍內。該指引最新版於 2026 年 1 月 29 日發布<sup class="ref"><a href="#ref-16">16</a></sup>。</p>
+    </div>
+    <div class="card">
+      <span class="tag" style="color:var(--teal)">歐盟 AI 法案</span>
+      <h4>第 14 條：人類監督</h4>
+      <p>高風險 AI 系統必須設計成能讓被指派的監督者理解系統能力與限制、正確解讀輸出，並能介入或停止系統<sup class="ref"><a href="#ref-17">17</a></sup>；監督者也須意識到自己可能過度依賴系統輸出的「自動化偏誤」<sup class="ref"><a href="#ref-18">18</a></sup>。依修正後時程，此條對附件三類高風險系統自 2027 年 12 月 2 日適用、對附件一（含醫療器材）類自 2028 年 8 月 2 日適用<sup class="ref"><a href="#ref-17">17</a></sup>。</p>
+    </div>
+  </div>
+  <p>值得釐清：法規並未逐字規定「只能使用 A1/A2 自主權」，而是要求<strong>監督強度與風險、自主程度及使用情境相稱</strong>。將改變病人生理狀態或用藥的動作綁定醫師授權，是目前最穩健的實務詮釋，也是本報告建議的預設。</p>
+
+  <h3>3.6　責任歸屬：當抑制錯了，誰負責？</h3>
+  <p>設想一個情境：系統把一則血氧下降判為「探頭偽影」並抑制，結果病人其實正在惡化。責任可能分散在三方——<strong>廠商</strong>（演算法缺陷、未揭露限制）、<strong>醫療機構</strong>（核准了不當的抑制類別、未做抽查）、<strong>臨床人員</strong>（未依規定每日追蹤、過度依賴系統）。分層負責制度的價值，在於事前就把這三方的邊界畫清楚：</p>
+  <ul class="tight">
+    <li><b>廠商</b>：揭露適用族群與已知失效模式、提供完整稽核日誌、負責模型更新的再驗證。</li>
+    <li><b>機構</b>：以書面核准「可抑制類別清單」、定期抽查被抑制的警報、追蹤覆寫率。</li>
+    <li><b>臨床人員</b>：維持既有的訪視與追蹤義務，不因 AI 存在而降低標準；覆寫時簡述理由。</li>
+  </ul>
+  <div class="callout coral">
+    <h4>🔁 覆寫不是不服從，而是最珍貴的回饋</h4>
+    <p>自動化偏誤是雙向的：過度信任會讓錯誤被放行；過度不信任則會讓醫護退回「自己盯原始數據」，系統形同虛設。儀表板應持續呈現醫師覆寫率與理由分布，把每一次覆寫當作校準訊號，而非使用者的不配合。</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <div class="secno">第 4 章</div>
+  <h2>多智能體的分工與協作</h2>
+  <p class="sub">與其讓一個巨大模型包山包海，不如讓幾個「專科」智能體各司其職。</p>
+
+  <h3>4.1　BDI 架構：會「改變心意」的居家機器人</h3>
+  <p>「信念—欲望—意圖」（Belief-Desire-Intention, BDI）是經典的智能體架構：<strong>信念</strong>是它對世界的認知（病人現在體溫多少）、<strong>欲望</strong>是照護目標（維持舒適與安全）、<strong>意圖</strong>是正在執行的計畫（打開窗戶通風）。義大利巴勒摩大學團隊提出以 BDI 多智能體系統驅動居家照護機器人，架構包含環境管理、知識管理、推理與行動等模組，讓機器人在醫師不在場時監測病人<sup class="ref"><a href="#ref-5">5</a></sup>。</p>
+  <p>它最有意思的設計在於「意外狀況」：當預定計畫無法處理新情況時，機器人能自行挑選最合適的替代計畫，但<strong>必須把選擇回報給醫師，取得驗證與許可後才執行</strong><sup class="ref"><a href="#ref-5">5</a></sup>。舉例來說：原本要開窗通風，卻偵測到病人體溫驟升——新信念與原意圖衝突，機器人暫停、提出替代方案，並向遠端醫師請求確認。這正是 3.1 節 A2/A3 邊界在實體世界的樣貌。</p>
+  <div class="lab">
+    <div class="lab-head">
+      <div><h4>互動情境：當信念與意圖衝突</h4><p>切換情境，觀察居家機器人端、知識管理端與醫師端三方智能體如何反應。</p></div>
+      <div class="btn-row" role="group" aria-label="BDI 情境切換">
+        <button type="button" class="btn" id="bdi-a" aria-pressed="true">情境 A：日常通風</button>
+        <button type="button" class="btn" id="bdi-b" aria-pressed="false">情境 B：突發高燒</button>
+      </div>
+    </div>
+    <div class="triad">
+      <div class="tcard" id="bdi-c1"><small>居家機器人端</small><b class="t">機器人智能體</b><span id="bdi-t1"></span></div>
+      <div class="tcard" id="bdi-c2"><small>情境中介</small><b class="t">知識管理智能體</b><span id="bdi-t2"></span></div>
+      <div class="tcard" id="bdi-c3"><small>醫師遠端終端</small><b class="t">虛擬助理智能體</b><span id="bdi-t3"></span></div>
+    </div>
+    <p style="font-size:.82rem;color:var(--ink2);margin:10px 0 0">情境為教學示意，用以說明 BDI 重新規劃與「醫師驗證後才執行」的流程。</p>
+  </div>
+
+  <h3>4.2　排程管線：把請求「接力」處理成預約</h3>
+  <p>MedScrubCrew 框架示範了另一種分工：把一個病人請求，交給五個智能體依序接力<sup class="ref"><a href="#ref-4">4</a></sup>。系統排程狀態在每個離散時間點更新：有新請求就經過整條管線，沒有則維持不變。</p>
+  <figure>
+    <div style="text-align:center;font-family:'Noto Serif TC',serif;font-size:1.05rem;margin-bottom:14px">
+      S(t+1) = F(S(t), R(t))　其中　F = F<sub>appointment</sub> ∘ F<sub>logistic</sub> ∘ F<sub>prognosis</sub> ∘ F<sub>profile</sub> ∘ F<sub>vital</sub> ∘ F<sub>history</sub>
+    </div>
+    <svg viewBox="0 0 760 150" role="img" aria-label="排程管線" class="svg-t">
+      <g font-size="13" text-anchor="middle">
+        <g transform="translate(70,60)"><rect x="-62" y="-36" width="124" height="72" rx="10" fill="#d7efec" stroke="#0f766e"/><text y="-10" font-weight="700" fill="#0f766e">資料庫智能體</text><text y="10" font-size="11.5" fill="#33414e">自然語言→Cypher</text><text y="26" font-size="11.5" fill="#33414e">查圖譜病歷</text></g>
+        <g transform="translate(225,60)"><rect x="-62" y="-36" width="124" height="72" rx="10" fill="#e3e2f7" stroke="#3f3d9e"/><text y="-10" font-weight="700" fill="#3f3d9e">分診護理師</text><text y="10" font-size="11.5" fill="#33414e">總管・分派任務</text><text y="26" font-size="11.5" fill="#33414e">判定嚴重度</text></g>
+        <g transform="translate(380,60)"><rect x="-62" y="-36" width="124" height="72" rx="10" fill="#e3e2f7" stroke="#3f3d9e"/><text y="-10" font-weight="700" fill="#3f3d9e">基層醫師</text><text y="10" font-size="11.5" fill="#33414e">預後與治療計畫</text><text y="26" font-size="11.5" fill="#33414e">建立病人剖面</text></g>
+        <g transform="translate(535,60)"><rect x="-62" y="-36" width="124" height="72" rx="10" fill="#fdeccf" stroke="#b45309"/><text y="-10" font-weight="700" fill="#b45309">醫療後勤</text><text y="10" font-size="11.5" fill="#33414e">語意比對資源</text><text y="26" font-size="11.5" fill="#33414e">選出前三名</text></g>
+        <g transform="translate(690,60)"><rect x="-62" y="-36" width="124" height="72" rx="10" fill="#fdeccf" stroke="#b45309"/><text y="-10" font-weight="700" fill="#b45309">預約排程</text><text y="10" font-size="11.5" fill="#33414e">Gale-Shapley</text><text y="26" font-size="11.5" fill="#33414e">穩定配對</text></g>
+      </g>
+      <g stroke="#9aa5b1" stroke-width="2" marker-end="url(#ar)"><path d="M132,60 L160,60"/><path d="M287,60 L315,60"/><path d="M442,60 L470,60"/><path d="M597,60 L625,60"/></g>
+      <text x="380" y="130" text-anchor="middle" font-size="12" fill="#52606d">函數複合由右至左執行：先查病史，最後完成預約</text>
+    </svg>
+    <figcaption><b>圖 6　MedScrubCrew 五智能體管線。</b>其中「分診護理師」是階層式設計中的管理者智能體，負責監督流程與分派任務；預約端以 Gale-Shapley 演算法讓病人與醫療提供者互相「求配」，直到形成無人想交換的穩定配對<sup class="ref"><a href="#ref-4">4</a></sup>。</figcaption>
+  </figure>
+  <div class="lab">
+    <div class="lab-head"><div><h4>互動管線：點選節點，看每個智能體在接力中負責什麼</h4></div></div>
+    <div class="pipe" role="group" aria-label="五智能體管線" id="pipe"></div>
+    <div class="pdesc" aria-live="polite"><b id="pd-t"></b><span id="pd-d"></span></div>
+  </div>
+  <div class="callout amber">
+    <h4>🔬 讀數據要冷靜</h4>
+    <p>該研究的知識圖譜由 100 名病人樣本建立（999 個節點、2,387 條關係）；其分診嚴重度迴歸模型 R² 約僅 0.037，顯示預測力有限；LLM 智能體綜合評分約 0.71<sup class="ref"><a href="#ref-4">4</a></sup>。它展示的是<strong>架構可行性</strong>，而非臨床效益。</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <div class="secno">第 5 章</div>
+  <h2>演算法分診：多智能體強化學習與早期預警分數</h2>
+  <p class="sub">語言模型擅長讀病歷；連續的心跳數據流，則需要數學框架來即時判斷。</p>
+  <p>強化學習（RL）的直覺像訓練新進住院醫師：做對了給獎勵、做錯了扣分，久而久之學會「什麼情況該叫誰」。Shaik 等人（2025）把它做成多智能體版本：<strong>三個智能體各自盯一項生命徵象</strong>——心率、呼吸、體溫——並在需要時合作或競爭（例如同時監測多位病人、醫護人力有限時）<sup class="ref"><a href="#ref-3">3</a></sup>。</p>
+
+  <h3>5.1　把監測寫成馬可夫決策過程</h3>
+  <div class="grid2">
+    <div class="card"><h4>狀態 S</h4><p>時間 t 的生理量測值（來自穿戴裝置）。</p></div>
+    <div class="card"><h4>行動 A</h4><p>五個離散選項 MET-0 至 MET-4：要通知哪一級醫療緊急團隊。</p></div>
+    <div class="card"><h4>獎勵 R</h4><p>選中與 MEWS 推導等級相符者 <b>+10</b>；不符者依偏離程度扣 <b>−1 至 −4</b><sup class="ref"><a href="#ref-3">3</a></sup>。</p></div>
+    <div class="card"><h4>更新規則</h4><p>以時序差分更新行動價值：<br><span style="font-family:serif">Q(s,a) ← Q(s,a) + α[R + γ·max Q(s′,a′) − Q(s,a)]</span></p></div>
+  </div>
+
+  <h3>5.2　獎勵的錨點：改良式早期預警分數</h3>
+  <p>改良式早期預警分數（MEWS）原由 Subbe 等人於 2001 年提出，用生命徵象偏離程度加總出風險分數<sup class="ref"><a href="#ref-23">23</a></sup>。原始 MEWS 並不含血氧；下表為該研究實際採用的改編版門檻<sup class="ref"><a href="#ref-3">3</a></sup>：</p>
+  <div class="tbl"><table class="mews">
+    <thead><tr><th>參數</th><th class="m4">4 分（MET）</th><th class="m3">3 分</th><th class="m2">2 分</th><th class="m1">1 分</th><th class="m0">0 分</th></tr></thead>
+    <tbody>
+      <tr><th style="text-align:left">呼吸（次/分）</th><td class="m4">≤4；≥36</td><td class="m3">5–8；31–35</td><td class="m2">25–30</td><td class="m1">21–24</td><td class="m0">9–20</td></tr>
+      <tr><th style="text-align:left">血氧 SpO₂（%）</th><td class="m4">≤84</td><td class="m3">85–89</td><td class="m2">90–92</td><td class="m1">93–94</td><td class="m0">≥95</td></tr>
+      <tr><th style="text-align:left">體溫（°C）</th><td class="m4">—</td><td class="m3">≤34.0</td><td class="m2">34.1–35.0</td><td class="m1">35.1–36.0；38.0–38.5</td><td class="m0">36.1–37.9</td></tr>
+      <tr><th style="text-align:left">心率（次/分）</th><td class="m4">≤39；≥140</td><td class="m3">130–139</td><td class="m2">110–129</td><td class="m1">40–49；100–109</td><td class="m0">50–99</td></tr>
+      <tr><th style="text-align:left">鎮靜程度</th><td class="m4">重度</td><td class="m3">中度</td><td class="m2">輕度</td><td class="m1">—</td><td class="m0">清醒</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--ink2)">原文表格未列出 38.5°C 以上的高溫分級；作者亦說明體溫智能體表現不佳，原因是 MEWS 門檻與資料集中的體溫數據單位不一致<sup class="ref"><a href="#ref-3">3</a></sup>。</p>
+
+  <div class="lab">
+    <div class="lab-head">
+      <div><h4>互動實驗室：MEWS 計分與強化學習獎勵模擬器</h4><p>拖曳生命徵象（綠色底帶為 0 分正常區間），再替智能體選一個通知行動，看它會得到獎勵還是懲罰。</p></div>
+      <div class="btn-row" role="group" aria-label="預設情境">
+        <button type="button" class="btn" data-preset="normal">基準正常</button>
+        <button type="button" class="btn" data-preset="fever">發燒併心搏過速</button>
+        <button type="button" class="btn" data-preset="critical">嚴重呼吸窘迫</button>
+      </div>
+    </div>
+    <div class="sim">
+      <div id="vitals"></div>
+      <div>
+        <div class="res" id="mews-res"><small>目標 MET 等級（單項最高分）</small><div class="big" id="mews-tier"></div><p id="mews-sum"></p></div>
+        <div class="vital">
+          <div class="vtop"><label for="act">智能體選擇的通知行動 a<sub>t</sub></label></div>
+          <select class="sel" id="act" style="margin-top:6px">
+            <option value="0">MET-0　持續常規監測</option>
+            <option value="1">MET-1　加強觀察</option>
+            <option value="2">MET-2　護理團隊審視</option>
+            <option value="3">MET-3　緊急醫師評估</option>
+            <option value="4">MET-4　最高層級緊急應變</option>
+          </select>
+        </div>
+        <div class="res" id="rw-res"><small>即時獎勵 R(s, a)</small><div class="big" id="rw-val"></div><p id="rw-note"></p></div>
+        <p style="font-size:.8rem;color:var(--ink2);margin:6px 0 0">教學模擬，非臨床工具。計分依研究採用之改編版門檻；以單項最高分對應 MET 等級為簡化呈現；38.5°C 以上原文未列分級，此處以 2 分示意。</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>5.3　結果：多數情況勝出，但不是全面碾壓</h3>
+  <figure>
+    <svg viewBox="0 0 760 360" role="img" aria-label="心率智能體累積獎勵比較長條圖" class="svg-t" id="barchart"></svg>
+    <figcaption><b>圖 7　心率智能體（Agent 1）在 PPG-DaLiA 資料集上的累積獎勵。</b>數據取自原文表 3<sup class="ref"><a href="#ref-3">3</a></sup>。提出的方法在心率與體溫智能體上最高；但在呼吸智能體（Agent 2），QMIX 的 30,520 略高於提出方法的 30,019。研究另報告決策正確率 88.3%（PPO 79.1%、A2C 76.4%），850 個 epoch 收斂。</figcaption>
+  </figure>
+  <div class="callout indigo">
+    <h4>🧪 證據等級提醒 <span class="badge b-bench">公開資料集</span></h4>
+    <p>PPG-DaLiA 與 WESAD 各僅 15 名受試者，且情境是日常活動與實驗室壓力誘發，<strong>並非急性病人</strong><sup class="ref"><a href="#ref-3">3</a></sup>。「累積獎勵較高」代表演算法更會拿到它被設計的分數，距離「病人更安全」還有一段臨床驗證的路。</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <div class="secno">第 6 章</div>
+  <h2>偽陽性抑制：Veritas-RPM 的五層過濾</h2>
+  <p class="sub">核心問題：如何證明一則警報「真的是雜訊」？答案是追溯它的「數據血統」。</p>
+  <p>Veritas-RPM（2026）提出以<strong>數據血統（provenance）</strong>為核心的五層多智能體架構：每個判斷都要能追溯到哪筆原始數據、哪條規則；而且<strong>由大型語言模型推論出的數值，不能被用來驅動抑制決策</strong>，以避免推論錯誤把真正的臨床事件靜音<sup class="ref"><a href="#ref-2">2</a></sup>。</p>
+  <figure>
+    <svg viewBox="0 0 760 370" role="img" aria-label="Veritas-RPM五層架構" class="svg-t">
+      <g font-size="13.5">
+        <rect x="40" y="14" width="440" height="52" rx="10" fill="#d7efec" stroke="#0f766e"/><text x="58" y="37" font-weight="700" fill="#0f766e">L1　VeritasAgent</text><text x="58" y="56" font-size="12" fill="#33414e">組裝基線事實：病史、基準值、診斷、用藥</text>
+        <rect x="60" y="76" width="400" height="52" rx="10" fill="#d7efec" stroke="#0f766e"/><text x="78" y="99" font-weight="700" fill="#0f766e">L2　SentinelLayer</text><text x="78" y="118" font-size="12" fill="#33414e">異常偵測：統計離群、門檻違規</text>
+        <rect x="80" y="138" width="360" height="52" rx="10" fill="#e3e2f7" stroke="#3f3d9e"/><text x="98" y="161" font-weight="700" fill="#3f3d9e">L3　DirectorAgent</text><text x="98" y="180" font-size="12" fill="#33414e">依情境路由至對應專科智能體</text>
+        <rect x="100" y="200" width="320" height="84" rx="10" fill="#fdeccf" stroke="#b45309"/><text x="118" y="223" font-weight="700" fill="#b45309">L4　六個專科智能體</text>
+        <text x="118" y="244" font-size="12" fill="#33414e">探頭完整性・活動完整性・心搏過速</text><text x="118" y="262" font-size="12" fill="#33414e">心搏過緩・COPD・夜間生理</text>
+        <rect x="120" y="294" width="280" height="56" rx="10" fill="#fde2d6" stroke="#c2410c"/><text x="138" y="318" font-weight="700" fill="#c2410c">L5　MetaSentinelAgent</text><text x="138" y="337" font-size="12" fill="#33414e">化解衝突；模糊時預設升級</text>
+      </g>
+      <g transform="translate(610,175)">
+        <circle r="92" fill="none" stroke="#e8e2d4" stroke-width="30"/>
+        <circle r="92" fill="none" stroke="#0f766e" stroke-width="30" stroke-dasharray="483.8 578" transform="rotate(-90)"/>
+        <circle r="92" fill="none" stroke="#c2410c" stroke-width="30" stroke-dasharray="94.2 578" stroke-dashoffset="-483.8" transform="rotate(-90)"/>
+        <text text-anchor="middle" y="-6" font-size="28" font-weight="700" fill="#0f766e" font-family="Noto Serif TC,serif">83.7%</text>
+        <text text-anchor="middle" y="18" font-size="12.5" fill="#52606d">真抑制 82/98</text>
+        <text text-anchor="middle" y="138" font-size="12.5" fill="#c2410c">錯誤升級 16.3%（16/98）</text>
+        <text text-anchor="middle" y="158" font-size="12.5" fill="#52606d">無法裁決 0%</text>
+      </g>
+    </svg>
+    <figcaption><b>圖 8　Veritas-RPM 架構與結果。</b>98 個合成偽陽性情境（衍生 530 個模擬病人時段）中，83.7% 被正確抑制，16.3% 被「保守地」升級，無任何案例懸而未決<sup class="ref"><a href="#ref-2">2</a></sup>。<span class="badge b-sim">合成資料</span></figcaption>
+  </figure>
+  <div class="lab">
+    <div class="lab-head">
+      <div><h4>互動追蹤台：一則原始警報如何穿過五層</h4><p>選擇一種警報情境，觀察各層如何組裝事實、路由專科、化解衝突並做出最終裁決。</p></div>
+      <div class="btn-row" role="group" aria-label="警報情境">
+        <button type="button" class="btn" data-vc="noct" aria-pressed="true">夜間良性心搏過緩</button>
+        <button type="button" class="btn" data-vc="probe" aria-pressed="false">血氧探頭鬆脫</button>
+        <button type="button" class="btn" data-vc="copd" aria-pressed="false">COPD 低基準血氧</button>
+        <button type="button" class="btn" data-vc="conf" aria-pressed="false">意見衝突：預設升級</button>
+      </div>
+    </div>
+    <div class="vcase"><b id="vc-t"></b><span id="vc-c"></span></div>
+    <div class="lstack" aria-live="polite">
+      <div class="lrow"><span class="lb">L1</span><div><b>VeritasAgent｜組裝基線事實</b><span id="vl1"></span></div></div>
+      <div class="lrow"><span class="lb">L2</span><div><b>SentinelLayer｜異常偵測</b><span id="vl2"></span></div></div>
+      <div class="lrow"><span class="lb">L3</span><div><b>DirectorAgent｜專科路由</b><span id="vl3"></span></div></div>
+      <div class="lrow"><span class="lb">L4</span><div><b>六個專科智能體</b><span id="vl4"></span>
+        <div class="spg">
+          <div class="sp" id="sp-probe"><b>ProbeIntegrity</b><br>探頭完整性</div>
+          <div class="sp" id="sp-act"><b>ActivityIntegrity</b><br>活動完整性</div>
+          <div class="sp" id="sp-tachy"><b>Tachycardia</b><br>心搏過速</div>
+          <div class="sp" id="sp-brady"><b>Bradycardia</b><br>心搏過緩</div>
+          <div class="sp" id="sp-copd"><b>COPD</b><br>慢性肺病基準</div>
+          <div class="sp" id="sp-noct"><b>Nocturnal</b><br>夜間生理</div>
+        </div></div></div>
+      <div class="lrow" id="vl5row"><span class="lb">L5</span><div><b>MetaSentinelAgent｜最終裁決：<span id="vfinal"></span></b><span id="vl5"></span></div></div>
+    </div>
+    <p style="font-size:.82rem;color:var(--ink2);margin:10px 0 0">情境為教學示意；六個專科智能體名稱依原論文。</p>
+  </div>
+
+  <h3>「錯誤升級」其實是刻意的設計</h3>
+  <p>16.3% 的錯誤升級，意思是本該抑制的雜訊仍被送給了人——這是成本，卻不是危險。作者明言：當專科智能體意見衝突時，最終裁決者<strong>在模糊情況下預設升級</strong>，是刻意保守的安全選擇；代價是衝突情境的準確度較低，而錯誤升級也大多集中在這類情境<sup class="ref"><a href="#ref-2">2</a></sup>。這與 3.4 節「不確定就升級」完全一致：<em>寧可多讓護理師看一眼，也不讓真正的惡化消失在演算法裡。</em></p>
+  <div class="callout coral">
+    <h4>⚠️ 作者自陳的限制</h4>
+    <ul class="tight">
+      <li><b>循環驗證</b>：測試病例來自與架構相同的分類學，無法代表真實部署表現。</li>
+      <li><b>小樣本</b>：心搏過緩（n=2）、夜間（n=3）的 100% 抑制率信賴區間極寬。</li>
+      <li><b>無對照</b>：未與傳統門檻警報或單一 LLM 方案比較，無法宣稱優越。</li>
+      <li><b>利益揭露</b>：作者隸屬於具 RPM 商業利益的公司<sup class="ref"><a href="#ref-2">2</a></sup>。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <div class="secno">第 7 章</div>
+  <h2>互通性與雲—邊架構：讓數據說同一種語言</h2>
+  <h3>7.1　FHIR：醫療資料的「通用插座」</h3>
+  <p>居家設備五花八門，醫院病歷系統各有門派。HL7 FHIR 標準把臨床資訊切成一個個「資源」，像樂高積木一樣可以組合交換<sup class="ref"><a href="#ref-24">24</a></sup>。多智能體平台常用的資源包括：</p>
+  <div class="tbl"><table>
+    <thead><tr><th>FHIR 資源</th><th>在居家監測中的用途</th></tr></thead>
+    <tbody>
+      <tr><td><code>Observation</code></td><td>單一生理量測值（心率、血氧、血糖），以 LOINC 代碼標示</td></tr>
+      <tr><td><code>Device</code></td><td>追蹤配發到家中的硬體與其狀態</td></tr>
+      <tr><td><code>CarePlan</code></td><td>記錄協定化的監測參數與照護目標</td></tr>
+      <tr><td><code>DetectedIssue</code></td><td>記錄系統偵測到的臨床問題（例如潛在惡化）</td></tr>
+      <tr><td><code>Flag</code></td><td>在病人紀錄上掛出需注意的提示</td></tr>
+      <tr><td><code>Provenance</code></td><td>記錄數據與判斷的來源及產生者——支撐第 6 章「數據血統」的稽核需求</td></tr>
+    </tbody>
+  </table></div>
+  <p>透過 SMART on FHIR 與 CDS Hooks，風險分數與排序清單可以直接出現在醫師熟悉的病歷介面裡，不必另開一套系統。</p>
+
+  <h3>7.2　雲—邊分工：安全反射在家，深度思考在雲</h3>
+  <figure>
+    <svg viewBox="0 0 760 270" role="img" aria-label="雲邊架構圖" class="svg-t">
+      <g font-size="13.5">
+        <rect x="20" y="20" width="230" height="230" rx="14" fill="#f1f9f7" stroke="#0f766e"/>
+        <text x="135" y="46" text-anchor="middle" font-weight="700" fill="#0f766e">🏠 病人家中（邊緣端）</text>
+        <text x="40" y="80" fill="#33414e">• 穿戴裝置、居家集線器</text>
+        <text x="40" y="106" fill="#33414e">• 安全關鍵規則在地執行</text>
+        <text x="52" y="128" font-size="12" fill="#52606d">嚴重跌倒、無脈搏等</text>
+        <text x="40" y="156" fill="#33414e">• 斷網仍可在地警示</text>
+        <text x="40" y="184" fill="#33414e">• 數據暫存、斷線補傳</text>
+        <rect x="290" y="95" width="180" height="80" rx="12" fill="#fff" stroke="#9aa5b1" stroke-dasharray="5 4"/>
+        <text x="380" y="125" text-anchor="middle" font-weight="700" fill="#33414e">🔒 加密通道</text>
+        <text x="380" y="148" text-anchor="middle" font-size="12" fill="#52606d">VPN／TLS・身分驗證</text>
+        <rect x="510" y="20" width="230" height="230" rx="14" fill="#f5f4fc" stroke="#3f3d9e"/>
+        <text x="625" y="46" text-anchor="middle" font-weight="700" fill="#3f3d9e">☁️ 私有雲（編排端）</text>
+        <text x="530" y="80" fill="#33414e">• 多智能體推理與檢索</text>
+        <text x="530" y="106" fill="#33414e">• 縱向趨勢與群體風險</text>
+        <text x="530" y="132" fill="#33414e">• 角色權限控管</text>
+        <text x="530" y="158" fill="#33414e">• 對外資料經隔離暫存區</text>
+        <text x="542" y="180" font-size="12" fill="#52606d">去除敏感個資後才輸出</text>
+        <text x="530" y="208" fill="#33414e">• 事件日誌供流程探勘</text>
+      </g>
+      <g stroke="#9aa5b1" stroke-width="2" marker-end="url(#ar)"><path d="M250,120 L286,120"/><path d="M470,120 L506,120"/><path d="M506,150 L474,150"/><path d="M286,150 L254,150"/></g>
+    </svg>
+    <figcaption><b>圖 9　雲—邊混合拓撲。</b>邊緣端負責「反射」，雲端負責「思考」；兩者之間以加密通道連接。</figcaption>
+  </figure>
+  <div class="callout teal">
+    <h4>🇮🇹 杜林的真實部署 <span class="badge b-real">真實世界</span></h4>
+    <p>義大利杜林的在宅醫療-在家住院服務已有病人與院方人員實際使用一套環境輔助生活（AAL）架構：運算平台 HPC4AI 建於 OpenStack，其上運行私有 Kubernetes；對外流量經 OpenVPN 保護，身分驗證採 OpenID Connect（目前使用 Keycloak）；資料載入模組是對外輸出的唯一通道，會清除敏感內容<sup class="ref"><a href="#ref-6">6</a></sup>。團隊以 PM4PY 從 ICD-9 編碼事件建立直接跟隨圖（DFG）進行流程探勘，而符合性檢查、離散事件模擬與預測監控則列為後續工作。到府團隊每天早上依病人照護複雜度、照顧者狀況與住家位置排定訪視，以平衡訪視與車程時間<sup class="ref"><a href="#ref-6">6</a></sup>。</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <div class="secno">第 8 章</div>
+  <h2>實證對照與證據等級</h2>
+  <p class="sub">同樣是「百分比」，來自真實病人、回溯模擬或合成資料，意義天差地遠。</p>
+  <div class="lab">
+    <div class="lab-head">
+      <div><h4 id="bc-h"></h4><p id="bc-p"></p></div>
+      <div class="btn-row" role="group" aria-label="圖表切換">
+        <button type="button" class="btn" data-bc="clin" aria-pressed="true">臨床分診與抑制指標</button>
+        <button type="button" class="btn" data-bc="sec" aria-pressed="false">5G 傳輸認證</button>
+      </div>
+    </div>
+    <div class="hbars" id="bc"></div>
+    <div class="legend" id="bc-lg"></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>系統</th><th>領域</th><th>架構</th><th>資料與證據等級</th><th>關鍵結果</th></tr></thead>
+    <tbody>
+      <tr><td><b>Veritas-RPM</b><sup class="ref"><a href="#ref-2">2</a></sup></td><td>遠端監測偽陽性抑制</td><td>五層、六專科智能體，數據血統引導</td><td>98 個合成情境、530 個模擬時段<br><span class="badge b-sim">合成資料</span></td><td>真抑制率 83.7%；錯誤升級 16.3%；無法裁決 0%</td></tr>
+      <tr><td><b>Sentinel</b><sup class="ref"><a href="#ref-9">9</a></sup></td><td>遠端監測臨床分診</td><td>自主 AI 智能體，系統化脈絡彙整</td><td>467 例，對照臨床人員多數決<br><span class="badge b-ret">回溯評估</span></td><td>緊急事件敏感度 95.8%；特異度 85.7%；95.9% 落在一級誤差內；每次分診中位成本 0.34 美元；分歧偏向過度分診（22.5%）</td></tr>
+      <tr><td><b>MIRA</b><sup class="ref"><a href="#ref-8">8</a></sup></td><td>急診診斷與處置</td><td>EHR 沙盒中的自主智能體，11 種工具、逾 85,000 個選項，與模擬病人智能體對話</td><td>574 例 MIMIC-IV 急診病例<br><span class="badge b-ret">回溯模擬</span></td><td>診斷正確率 88.9%；311 例配對比較 87.8%，專科醫師 78.1%</td></tr>
+      <tr><td><b>多智能體 DRL</b><sup class="ref"><a href="#ref-3">3</a></sup></td><td>生理訊號即時監測</td><td>三個 DQN 智能體，MEWS 錨定 MDP</td><td>PPG-DaLiA、WESAD（各 15 人）<br><span class="badge b-bench">公開資料集</span></td><td>多數智能體累積獎勵最高；決策正確率 88.3%</td></tr>
+      <tr><td><b>5G 安全監測</b><sup class="ref"><a href="#ref-7">7</a></sup></td><td>遙測傳輸安全</td><td>ANN、強化學習、Lasso、Choquet 模糊 VIKOR、實體層安全</td><td>無線醫療物聯網模擬<br><span class="badge b-sim">模擬</span></td><td>身分驗證正確率 97.25%（PLA-SIT 97%、FPLA 96.8%）</td></tr>
+      <tr><td><b>MedScrubCrew</b><sup class="ref"><a href="#ref-4">4</a></sup></td><td>預約排程</td><td>五智能體管線＋知識圖譜＋穩定配對</td><td>100 名病人樣本圖譜<br><span class="badge b-sim">原型</span></td><td>LLM 智能體綜合評分約 0.71；分診迴歸 R² ≈ 0.037</td></tr>
+      <tr><td><b>TeleAI-CVD</b><sup class="ref"><a href="#ref-10">10</a></sup></td><td>心臟科門診遠距照護</td><td>AI 結構化問診＋遠距監測</td><td>斯洛伐克前瞻研究計畫書<br><span class="badge b-proto">研究設計</span></td><td>尚無成果；主要終點為 12 個月時的高血壓、血脂、心衰竭控制複合指標</td></tr>
+      <tr><td><b>台灣在宅急症</b><sup class="ref"><a href="#ref-20">20</a></sup></td><td>在宅醫療-在家住院（制度面，非 AI）</td><td>多職類照護小組＋遠距監測</td><td>2024/7–2025/3 共 2,158 人、184 家機構<br><span class="badge b-real">真實世界</span></td><td>89.9% 完成治療；14 天內轉急診 2.9%；14／30 天死亡率 4%／7%</td></tr>
+    </tbody>
+  </table></div>
+  <figure>
+    <svg viewBox="0 0 760 200" role="img" aria-label="證據等級階梯" class="svg-t">
+      <g font-size="13" text-anchor="middle">
+        <rect x="20" y="130" width="135" height="50" rx="8" fill="#eeebe4"/><text x="87" y="160" fill="#5b5446" font-weight="700">研究設計</text>
+        <rect x="165" y="110" width="135" height="70" rx="8" fill="#e3e2f7"/><text x="232" y="150" fill="#3f3d9e" font-weight="700">合成／模擬</text>
+        <rect x="310" y="90" width="135" height="90" rx="8" fill="#d7efec"/><text x="377" y="140" fill="#0f766e" font-weight="700">公開資料集</text>
+        <rect x="455" y="65" width="135" height="115" rx="8" fill="#fdeccf"/><text x="522" y="128" fill="#b45309" font-weight="700">回溯真實病例</text>
+        <rect x="600" y="35" width="140" height="145" rx="8" fill="#e2f0d6" stroke="#3f7d20" stroke-dasharray="5 4"/><text x="670" y="100" fill="#3f7d20" font-weight="700">前瞻臨床試驗</text><text x="670" y="122" fill="#3f7d20" font-size="12">（多智能體居家監測</text><text x="670" y="140" fill="#3f7d20" font-size="12">仍待補足）</text>
+      </g>
+      <text x="20" y="22" font-size="12.5" fill="#52606d">證據強度 →</text>
+    </svg>
+    <figcaption><b>圖 10　證據階梯。</b>本報告所列多智能體系統的成果，目前集中在左側四級；以真實居家病人為對象、以病人結局為終點的前瞻試驗仍是空白。</figcaption>
+  </figure>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <div class="secno">第 9 章</div>
+  <h2>挑戰：成本、偏誤與責任</h2>
+  <p class="sub">多智能體不是免費的午餐。它把一個大問題拆成許多小問題，也同時帶來了新的成本、延遲與失效方式。</p>
+  <p>本章把挑戰分成三組：<strong>運算面</strong>（算得起、算得快、算得動嗎）、<strong>數據面</strong>（數據可信嗎、智能體會吵架嗎、AI 會不會胡說）、<strong>人與制度面</strong>（人會不會過度依賴、出事誰負責、系統會不會走樣）。</p>
+
+  <figure>
+    <svg viewBox="0 0 760 250" role="img" aria-label="挑戰三組分類圖" class="svg-t">
+      <g font-size="13.5">
+        <rect x="20" y="20" width="230" height="210" rx="14" fill="#fff8ec" stroke="#e8c78e"/>
+        <text x="135" y="50" text-anchor="middle" font-weight="700" fill="#b45309">⚙️ 運算面</text>
+        <text x="40" y="88" fill="#33414e">9.1　Token 消耗與成本</text>
+        <text x="40" y="118" fill="#33414e">9.2　推理延遲與急症時效</text>
+        <text x="40" y="148" fill="#33414e">9.3　地端算力受限</text>
+        <text x="135" y="200" text-anchor="middle" font-size="12" fill="#7a4a0c">對策核心：分層運算、規則先行</text>
+        <rect x="265" y="20" width="230" height="210" rx="14" fill="#f5f4fc" stroke="#b9b6e6"/>
+        <text x="380" y="50" text-anchor="middle" font-weight="700" fill="#3f3d9e">🧬 數據面</text>
+        <text x="285" y="88" fill="#33414e">9.4　感測器校準與偽影</text>
+        <text x="285" y="118" fill="#33414e">9.5　智能體間決策衝突</text>
+        <text x="285" y="148" fill="#33414e">9.6　AI 幻覺污染臨床數據</text>
+        <text x="380" y="200" text-anchor="middle" font-size="12" fill="#3f3d9e">對策核心：數據血統、預設升級</text>
+        <rect x="510" y="20" width="230" height="210" rx="14" fill="#fff4ef" stroke="#f8cdb9"/>
+        <text x="625" y="50" text-anchor="middle" font-weight="700" fill="#c2410c">👥 人與制度面</text>
+        <text x="530" y="88" fill="#33414e">9.7　自動化偏誤與人在迴圈</text>
+        <text x="530" y="118" fill="#33414e">9.8　責任與監管</text>
+        <text x="530" y="148" fill="#33414e">9.9　模型漂移</text>
+        <text x="625" y="200" text-anchor="middle" font-size="12" fill="#9a3412">對策核心：分層負責、持續稽核</text>
+      </g>
+    </svg>
+    <figcaption><b>圖 11　多智能體居家監測的九項挑戰。</b>三組挑戰互相牽動：例如為了省 Token 而把判斷移到地端，就會碰上地端算力與校準問題。</figcaption>
+  </figure>
+
+  <h3>⚙️ 運算面</h3>
+  <div class="grid3">
+    <div class="card"><span class="tag" style="color:var(--amber)">9.1</span><h4>Token 消耗與運算成本</h4>
+      <p>病歷檢索、症狀分診、訊號判讀、衝突裁決⋯⋯每多一個專化智能體，就多幾輪對話、推理與工具呼叫。Anthropic 工程團隊揭露，其多智能體研究系統的 token 用量約為一般聊天的 15 倍，單一智能體約 4 倍，因此只適合價值足以支付成本的任務<sup class="ref"><a href="#ref-14">14</a></sup>。</p>
+      <p>連帶的工程問題是 API 呼叫頻率上限與上下文視窗被快速填滿；該團隊即以子智能體各自持有獨立上下文、再壓縮重點回報的方式因應<sup class="ref"><a href="#ref-14">14</a></sup>。</p></div>
+    <div class="card"><span class="tag" style="color:var(--amber)">9.2</span><h4>推理延遲與急症時效</h4>
+      <p>跌倒、嚴重心律不整、血氧驟降等事件必須立即反應。多智能體之間的協商、知識圖譜查詢與衝突仲裁，會一層層累積「審議延遲」。</p>
+      <p>因此安全關鍵警報<strong>不能只靠雲端智能體</strong>：應由邊緣端的確定性規則直接觸發，雲端分析只負責補上脈絡與後續排序（見 3.4 節圖 5）。</p></div>
+    <div class="card"><span class="tag" style="color:var(--amber)">9.3</span><h4>地端算力受限</h4>
+      <p>居家閘道器與穿戴裝置的晶片、記憶體與電池都有限，大型語言模型、向量資料庫與知識圖譜難以完整在地端運行。</p>
+      <p>這迫使系統採用「邊緣做基本安全防護＋雲端做深度分析」的混合拓撲；杜林的在宅醫療-在家住院部署即以私有雲承載運算、對外資料經單一暫存通道輸出<sup class="ref"><a href="#ref-6">6</a></sup>。</p></div>
+  </div>
+  <div class="callout amber">
+    <h4>💡 運算面的共同解法：讓便宜的先上</h4>
+    <p>把處理流程排成「確定性規則 → 輕量模型 → 多智能體深度分析」的漏斗：大部分明確事件由規則在地端處理，只有規則無法判斷的灰色地帶才交給昂貴的多智能體。再搭配 token 預算上限、快取與逾時退回機制——<strong>智能體想太久，就直接升級給人</strong>。</p>
+  </div>
+
+  <h3>🧬 數據面</h3>
+  <div class="grid3">
+    <div class="card"><span class="tag" style="color:var(--indigo)">9.4</span><h4>感測器校準與偽影</h4>
+      <p>居家穿戴設備精準度不一、少有定期校準，常見訊號漂移與貼附不良。多智能體<strong>修不好硬體</strong>，但能辨識硬體問題：Veritas-RPM 以專責的探頭完整性與活動完整性智能體，判斷異常是否源自探頭或動作，避免把偽影誤判為惡化<sup class="ref"><a href="#ref-2">2</a></sup>。</p>
+      <p>該研究也坦言其假設病人自評資料正確，這在高齡或認知障礙族群未必成立<sup class="ref"><a href="#ref-2">2</a></sup>。</p></div>
+    <div class="card"><span class="tag" style="color:var(--indigo)">9.5</span><h4>智能體間的決策衝突</h4>
+      <p>硬體智能體說「貼片滑脫」，慢性病智能體說「急性惡化」——誰說了算？Veritas-RPM 的最終裁決者被設計成每案必判（無法裁決率 0%），且<strong>意見衝突時預設升級</strong><sup class="ref"><a href="#ref-2">2</a></sup>。</p>
+      <p>代價是：衝突情境正是錯誤集中處，衝突裁決的真抑制率僅約 70%，探頭與病況衝突的少數案例甚至全數未能正確抑制（n=3）<sup class="ref"><a href="#ref-2">2</a></sup>。衝突不會讓真警報消失，但會讓雜訊回流。</p></div>
+    <div class="card"><span class="tag" style="color:var(--indigo)">9.6</span><h4>防止 AI 幻覺污染臨床數據</h4>
+      <p>語言模型可能「說得頭頭是道卻是錯的」。架構上必須把<strong>模型生成的推論文字</strong>與<strong>客觀量測數值</strong>嚴格分開。</p>
+      <p>Veritas-RPM 的數據血統設計，確保由語言模型推論出的數值不能驅動抑制決策，因此推論錯誤不至於把真正的臨床事件靜音<sup class="ref"><a href="#ref-2">2</a></sup>。寫回病歷時，以 FHIR <code>Provenance</code> 標明每筆資料的來源與產生者<sup class="ref"><a href="#ref-24">24</a></sup>。</p></div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 200" role="img" aria-label="數據血統隔離示意" class="svg-t">
+      <g font-size="13.5">
+        <rect x="20" y="20" width="220" height="70" rx="10" fill="#d7efec" stroke="#0f766e"/>
+        <text x="130" y="48" text-anchor="middle" font-weight="700" fill="#0f766e">量測數值</text>
+        <text x="130" y="70" text-anchor="middle" font-size="12" fill="#33414e">感測器・病歷・醫師設定</text>
+        <rect x="20" y="110" width="220" height="70" rx="10" fill="#fde2d6" stroke="#c2410c" stroke-dasharray="5 4"/>
+        <text x="130" y="138" text-anchor="middle" font-weight="700" fill="#c2410c">模型推論內容</text>
+        <text x="130" y="160" text-anchor="middle" font-size="12" fill="#33414e">語言模型生成的文字或數值</text>
+        <rect x="320" y="20" width="200" height="70" rx="10" fill="#fff" stroke="#0f766e" stroke-width="2"/>
+        <text x="420" y="48" text-anchor="middle" font-weight="700" fill="#0f766e">可驅動抑制決策</text>
+        <text x="420" y="70" text-anchor="middle" font-size="12" fill="#33414e">附來源標籤</text>
+        <rect x="320" y="110" width="200" height="70" rx="10" fill="#fff" stroke="#c2410c" stroke-width="2"/>
+        <text x="420" y="138" text-anchor="middle" font-weight="700" fill="#c2410c">僅供說明與摘要</text>
+        <text x="420" y="160" text-anchor="middle" font-size="12" fill="#33414e">不得單獨抑制警報</text>
+        <rect x="590" y="65" width="150" height="70" rx="10" fill="#f4f1ea" stroke="#9aa5b1"/>
+        <text x="665" y="93" text-anchor="middle" font-weight="700" fill="#33414e">稽核日誌</text>
+        <text x="665" y="115" text-anchor="middle" font-size="12" fill="#52606d">每筆可追溯</text>
+      </g>
+      <g stroke="#9aa5b1" stroke-width="2" fill="none" marker-end="url(#ar)">
+        <path d="M240,55 L316,55"/><path d="M240,145 L316,145"/><path d="M520,55 Q560,60 586,88"/><path d="M520,145 Q560,140 586,112"/>
+      </g>
+    </svg>
+    <figcaption><b>圖 12　數據血統隔離。</b>量測數值與模型推論內容走不同通道；只有前者能觸發抑制，兩者都寫入稽核日誌。</figcaption>
+  </figure>
+
+  <h3>👥 人與制度面</h3>
+  <div class="grid3">
+    <div class="card"><span class="tag" style="color:var(--coral)">9.7</span><h4>自動化偏誤與人在迴圈</h4>
+      <p>醫護可能過度依賴 AI 篩選，也可能因早期誤報而完全不信任。歐盟 AI 法案要求高風險系統的監督者能理解系統的能力與限制，並意識到自己過度依賴輸出的傾向<sup class="ref"><a href="#ref-18">18</a></sup>。</p>
+      <p>對策：可解釋的推理摘要、完整稽核軌跡、追蹤覆寫率、定期抽查被抑制的警報；高風險處置一律保留醫師終審（見 3.1、3.3 節）。</p></div>
+    <div class="card"><span class="tag" style="color:var(--coral)">9.8</span><h4>責任與監管</h4>
+      <p>錯誤抑制導致惡化時，廠商、機構與醫師的責任劃分複雜。分層負責矩陣（3.3 節）與完整稽核軌跡，是事後釐清與事前預防的共同基礎。</p></div>
+    <div class="card"><span class="tag" style="color:var(--coral)">9.9</span><h4>系統會「走樣」</h4>
+      <p>病人族群改變、設備換代、季節性疾病流行，都可能讓模型表現悄悄滑落。分類學回顧發現，模型漂移偵測在現有研究中幾乎全數缺席<sup class="ref"><a href="#ref-12">12</a></sup>。美國 FDA 的「預定變更控制計畫」（PCCP）被視為管理上市後更新的途徑，歐盟 AI 法案亦將 AI 遠端監測歸為高風險類別<sup class="ref"><a href="#ref-11">11</a></sup>。</p></div>
+  </div>
+
+  <h3>挑戰與對策總覽</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>挑戰</th><th>風險會怎麼發生</th><th>主要對策</th><th>負責層級</th></tr></thead>
+    <tbody>
+      <tr><td>Token 成本</td><td>成本失控、呼叫被限流、上下文耗盡</td><td>規則先篩、token 預算、快取、子智能體分攤上下文</td><td>廠商／機構治理</td></tr>
+      <tr><td>推理延遲</td><td>急症警報被審議拖慢</td><td>安全關鍵規則放邊緣端；逾時即升級</td><td>廠商</td></tr>
+      <tr><td>地端算力</td><td>深度模型無法在家中運行</td><td>邊緣—雲端混合拓撲；斷網時在地警示</td><td>廠商／資訊部門</td></tr>
+      <tr><td>校準與偽影</td><td>硬體誤差被當成病情惡化</td><td>探頭與活動完整性判讀；提示重新配戴；定期設備檢查</td><td>現場照護／廠商</td></tr>
+      <tr><td>智能體衝突</td><td>裁決錯誤、雜訊回流</td><td>衝突預設升級；衝突案例納入抽查與再訓練</td><td>機構治理</td></tr>
+      <tr><td>AI 幻覺</td><td>錯誤推論抑制真警報或污染病歷</td><td>數據血統隔離；推論值不得驅動抑制；Provenance 紀錄</td><td>廠商／機構治理</td></tr>
+      <tr><td>自動化偏誤</td><td>盲從或完全不信任</td><td>可解釋輸出、覆寫追蹤、抽查、醫師終審</td><td>照護小組／機構治理</td></tr>
+      <tr><td>責任與監管</td><td>事故後責任不清</td><td>RACI 矩陣、書面核准抑制類別、完整稽核軌跡</td><td>機構治理／主管機關</td></tr>
+      <tr><td>模型漂移</td><td>表現悄悄下滑</td><td>固定週期再驗證；表現下滑自動收回權限</td><td>機構治理／廠商</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="secno">第 10 章</div>
+  <h2>部署藍圖：三階段、兩道閘門</h2>
+  <p class="sub">從模擬走到病人家中，每一步都要先證明安全，才能多放一點權限。</p>
+  <div class="phase">
+    <div class="ph"><span class="n">01</span><h4>離線評估與影子模式</h4><p>以歷史虛擬病房資料離線驗證；再讓系統「影子運行」——只判斷、不影響任何實際警報，與人工判讀逐筆比對。</p><p><b>自主權：</b>A1</p><div class="gate">閘門一：在多元族群中達到預設門檻，且<strong>偽陰性（漏報真惡化）必須接近零</strong>；抑制率等效益指標其次。</div></div>
+    <div class="ph"><span class="n">02</span><h4>監督式試行</h4><p>系統產生風險分數與文件草稿，但每一筆抑制都需人工確認。記錄互動模式與覆寫理由，用以修正提示範本與獎勵函數。</p><p><b>自主權：</b>A1 → A2（人工確認）</p><div class="gate">閘門二：機構治理層審查覆寫率與抽查結果，書面核准「可自主抑制類別清單」。</div></div>
+    <div class="ph"><span class="n">03</span><h4>限定自主與規模化</h4><p>僅對已核准的雜訊類別（如短暫動作偽影、良性睡眠心搏過緩）自主抑制並完整留痕；高風險決策繼續綁定人工授權。</p><p><b>自主權：</b>A2；A3 限協定內</p><div class="gate">持續：定期再驗證；表現下滑即自動收回權限、退回第二階段。</div></div>
+  </div>
+  <div class="callout teal">
+    <h4>🎯 一句話總結</h4>
+    <p>多智能體系統在「在宅醫療-在家住院」中的最佳定位，是<strong>把醫護的注意力留給真正需要的病人</strong>。它可以替人看、替人篩、替人寫，但決定與責任，始終屬於人。分層負責制度不是阻礙創新的繁文縟節，而是讓病人、家屬與醫護都敢放心使用這項技術的前提。</p>
+  </div>
+</section>
+
+<!-- refs -->
+<section id="refs" class="refs">
+  <div class="secno">References</div>
+  <h2>參考資料</h2>
+  <p class="sub">點擊文中上標數字可跳至對應條目；所有連結皆指向原始出處或官方頁面。</p>
+  <ol>
+    <div class="grp">警報疲勞與早期預警</div>
+    <li id="ref-1">Sendelbach S, Funk M. Alarm fatigue: a patient safety concern. <i>AACN Advanced Critical Care</i>. 2013;24(4):378–386. <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Sendelbach+Funk+Alarm+fatigue+a+patient+safety+concern" target="_blank" rel="noopener">PubMed</a>；另見 AHRQ PSNet 警報疲勞主題：<a href="https://www.ncbi.nlm.nih.gov/books/NBK555522/" target="_blank" rel="noopener">NCBI Bookshelf NBK555522</a></li>
+
+    <div class="grp">多智能體系統研究</div>
+    <li id="ref-2">Misro A, Sharma V, Gowda SN. Veritas-RPM: Provenance-Guided Multi-Agent False Positive Suppression for Remote Patient Monitoring. arXiv:2604.16081; 2026. <a href="https://arxiv.org/abs/2604.16081" target="_blank" rel="noopener">arxiv.org/abs/2604.16081</a></li>
+    <li id="ref-3">Shaik T, Tao X, Li L, Xie H, Dai HN, Zhao F, Yong J. AI-driven multi-agent reinforcement learning framework for real-time monitoring of physiological signals in stress and depression contexts. <i>Brain Informatics</i>. 2025;12:14. doi:10.1186/s40708-025-00262-1. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12149378/" target="_blank" rel="noopener">PMC12149378</a></li>
+    <li id="ref-4">Ruiz Mejia JM, Rawat DB. MedScrubCrew: A Medical Multi-Agent Framework for Automating Appointment Scheduling Based on Patient-Provider Profile Resource Matching. <i>Healthcare</i>. 2025;13(14):1649. <a href="https://www.mdpi.com/2227-9032/13/14/1649" target="_blank" rel="noopener">mdpi.com/2227-9032/13/14/1649</a></li>
+    <li id="ref-5">Lanza F, Seidita V, Chella A. Agents and robots for collaborating and supporting physicians in healthcare scenarios. <i>Journal of Biomedical Informatics</i>. 2020;108:103483. doi:10.1016/j.jbi.2020.103483. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7320857/" target="_blank" rel="noopener">PMC7320857</a></li>
+    <li id="ref-6">Sulis E, Amantea IA, Aldinucci M, et al. An ambient assisted living architecture for hospital at home coupled with a process-oriented perspective. <i>Journal of Ambient Intelligence and Humanized Computing</i>. 2022. doi:10.1007/s12652-022-04388-6. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9490692/" target="_blank" rel="noopener">PMC9490692</a></li>
+    <li id="ref-7">Chinnaperumal S, Periyasamy M, Alhussan AA, et al. Secure and intelligent 5G-enabled remote patient monitoring using ANN and Choquet integral fuzzy VIKOR. <i>Scientific Reports</i>. 2025;15:9913. doi:10.1038/s41598-025-93829-1. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11929924/" target="_blank" rel="noopener">PMC11929924</a></li>
+    <li id="ref-8">MIRA（Medical Intelligence for Reasoning and Action）研究，Kather 團隊，<i>Nature</i>，2026。TU Dresden 新聞稿：<a href="https://tu-dresden.de/med/der-bereich/news/ki-agent-mira-unterstuetzt-als-co-pilot-klinische-ablaeufe-in-elektronischen-patientenakten" target="_blank" rel="noopener">tu-dresden.de</a>；研究摘要報導：<a href="https://www.news-medical.net/news/20260621/Autonomous-medical-AI-outperforms-doctors-in-simulated-EHR-cases.aspx" target="_blank" rel="noopener">News-Medical</a></li>
+    <li id="ref-9">Kim S, et al. From Days to Minutes: An Autonomous AI Agent Achieves Reliable Clinical Triage in Remote Patient Monitoring. arXiv:2603.09052; 2026. <a href="https://arxiv.org/abs/2603.09052" target="_blank" rel="noopener">arxiv.org/abs/2603.09052</a></li>
+    <li id="ref-10">Toth S, Barbierik Vachalcova M, Barbierik K, et al. Application of Telemedicine and Artificial Intelligence in Outpatient Cardiology Care: TeleAI-CVD Study (Design). <i>Diagnostics</i>. 2026;16(1):145. doi:10.3390/diagnostics16010145. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12786149/" target="_blank" rel="noopener">PMC12786149</a></li>
+
+    <div class="grp">綜論、分類學與治理</div>
+    <li id="ref-11">Nabi J, Staynings R, Sofi JI, Willis HH. Understanding the Risks and Benefits of Implementing AI-Enabled Remote Patient Monitoring Systems for Disease Management. <i>Int J Environ Res Public Health</i>. 2025. doi:10.3390/ijerph22111734. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12652748/" target="_blank" rel="noopener">PMC12652748</a></li>
+    <li id="ref-12">Vatsal S, Dubey H, Singh A. Agentic AI in Healthcare &amp; Medicine: A Seven-Dimensional Taxonomy for Empirical Evaluation of LLM-based Agents. arXiv:2602.04813; 2026. <a href="https://arxiv.org/html/2602.04813v1" target="_blank" rel="noopener">arxiv.org/html/2602.04813v1</a></li>
+    <li id="ref-13">Ragusa I, Guiducci L, Cavallo F. From AI-Enabled Remote Patient Monitoring Toward Agentic Robotics: Embodiment, Governance, and Care Integration. arXiv:2611.18484; 2026（已獲 <i>Annual Review of Control, Robotics, and Autonomous Systems</i> 第 10 卷接受）。<a href="https://arxiv.org/abs/2611.18484" target="_blank" rel="noopener">arxiv.org/abs/2611.18484</a></li>
+    <li id="ref-14">Anthropic Engineering. How we built our multi-agent research system. 2025. <a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">anthropic.com/engineering/multi-agent-research-system</a></li>
+
+    <div class="grp">法規</div>
+    <li id="ref-15">U.S. FDA. Your Clinical Decision Support Software: Is It a Medical Device? <a href="https://www.fda.gov/medical-devices/software-medical-device-samd/your-clinical-decision-support-software-it-medical-device" target="_blank" rel="noopener">fda.gov</a></li>
+    <li id="ref-16">U.S. FDA. Clinical Decision Support Software — Guidance for Industry and FDA Staff（2026 年 1 月 29 日版）。<a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/clinical-decision-support-software" target="_blank" rel="noopener">fda.gov</a></li>
+    <li id="ref-17">EU Artificial Intelligence Act, Article 14: Human Oversight（含適用日期）。<a href="https://artificialintelligenceact.eu/article/14/" target="_blank" rel="noopener">artificialintelligenceact.eu/article/14</a>；歐盟執委會 AI Act Service Desk：<a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-14" target="_blank" rel="noopener">ec.europa.eu</a></li>
+    <li id="ref-18">How to Test for Compliance with Human Oversight Requirements in AI Regulation? arXiv:2504.03300. <a href="https://arxiv.org/html/2504.03300v1" target="_blank" rel="noopener">arxiv.org/html/2504.03300v1</a></li>
+
+    <div class="grp">台灣在宅急症照護</div>
+    <li id="ref-19">衛生福利部中央健康保險署。在宅急症照護試辦計畫新聞稿（照護小組組成、適用疾病）。<a href="https://www.mohw.gov.tw/cp-16-79794-1.html" target="_blank" rel="noopener">mohw.gov.tw</a></li>
+    <li id="ref-20">中央社。在宅急症登國際　近 9 成自家臥室就完成住院治療（2026-06-21；研究刊於《台灣醫誌》JFMA）。<a href="https://www.cna.com.tw/news/ahel/202606210040.aspx" target="_blank" rel="noopener">cna.com.tw</a></li>
+    <li id="ref-21">中央健康保險署。全民健康保險在宅急症照護試辦計畫說明簡報（訪視頻率、收案上限）。<a href="https://www.nhi.gov.tw/ch/dl-68917-5b20fb4dd2a847ff967183476038c1b1-1.pdf" target="_blank" rel="noopener">nhi.gov.tw（PDF）</a></li>
+    <li id="ref-22">衛生福利部全民健康保險會。健保會委員關切「在宅急症照護試辦計畫」之實施內容（2024 年 7 月）。<a href="https://mohw.gov.tw/dl-89519-4bb504d0-937c-4330-88d1-64ce147427f2.html" target="_blank" rel="noopener">mohw.gov.tw</a></li>
+
+    <div class="grp">標準</div>
+    <li id="ref-23">Subbe CP, Kruger M, Rutherford P, Gemmel L. Validation of a modified Early Warning Score in medical admissions. <i>QJM</i>. 2001;94(10):521–526. <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Subbe+Validation+of+a+modified+Early+Warning+Score+in+medical+admissions" target="_blank" rel="noopener">PubMed</a></li>
+    <li id="ref-24">HL7 International. FHIR R4 Resource List. <a href="https://hl7.org/fhir/R4/resourcelist.html" target="_blank" rel="noopener">hl7.org/fhir/R4/resourcelist.html</a></li>
+  </ol>
+</section>
+
+</main>
+</div>
+<footer>在宅醫療-在家住院與虛擬病房多智能體系統報告 · 本文內容僅供教育與研究參考，不構成醫療建議</footer>
+
+<script>
+// Waffle chart (Fig 1)
+(function(){
+  var g=document.getElementById('waffle'); if(!g) return;
+  var ns='http://www.w3.org/2000/svg', s=20, gap=3;
+  for(var i=0;i<100;i++){
+    var r=Math.floor(i/10), c=i%10, rect=document.createElementNS(ns,'rect');
+    rect.setAttribute('x',20+c*(s+gap)); rect.setAttribute('y',10+r*(s+gap));
+    rect.setAttribute('width',s); rect.setAttribute('height',s); rect.setAttribute('rx',3);
+    rect.setAttribute('fill', i<72?'#b9b2a3':(i<99?'#e8e2d4':'#c2410c'));
+    g.appendChild(rect);
+  }
+})();
+// Bar chart (Fig 7)
+(function(){
+  var svg=document.getElementById('barchart'); if(!svg) return;
+  var ns='http://www.w3.org/2000/svg';
+  var d=[["Proposed DRL",48354],["QMIX",44800],["MADDPG",42500],["CA-MQL",32985],["WISEML",28654],["DDPG",26760],["Q-Learning",25878],["Double DQN",25569],["A2C",24717],["PPO",23688]];
+  var x0=140, w=560, max=50000, bh=24, gap=8, y0=16;
+  function el(t,a,txt){var e=document.createElementNS(ns,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e;}
+  [0,10000,20000,30000,40000,50000].forEach(function(v){
+    var x=x0+w*v/max; el('line',{x1:x,x2:x,y1:y0-4,y2:y0+d.length*(bh+gap),stroke:'#ece8de'});
+    el('text',{x:x,y:y0+d.length*(bh+gap)+16,'font-size':11,'text-anchor':'middle',fill:'#7b8794'},(v/1000)+'k');
+  });
+  d.forEach(function(r,i){
+    var y=y0+i*(bh+gap), bw=w*r[1]/max, top=i===0;
+    el('text',{x:x0-10,y:y+bh*0.68,'font-size':13,'text-anchor':'end',fill:top?'#0f766e':'#33414e','font-weight':top?700:400},r[0]);
+    el('rect',{x:x0,y:y,width:bw,height:bh,rx:4,fill:top?'#0f766e':(i<3?'#7fb8b1':'#cfd8d6')});
+    el('text',{x:x0+bw+6,y:y+bh*0.68,'font-size':12,fill:'#52606d'},r[1].toLocaleString());
+  });
+})();
+</script>
+<script>
+(function(){
+function $(id){return document.getElementById(id);}
+function press(group,el){group.forEach(function(b){b.setAttribute('aria-pressed',b===el?'true':'false');});}
+
+/* 1. Six-module explorer */
+var mods=[
+ ['① 感測層','Sensing','把各種來源的數據對齊時間，並標上「品質好不好」。','穿戴式遙測、IoT 感測器、病歷紀錄、病人自評量表（PROMs）、環境與活動辨識。','多模態擷取、訊號前處理、時間戳記狀態映射。','帶品質標籤的時間序列病人狀態 s<sub>t</sub>。'],
+ ['② 知識層','Knowledge','查指引、查院內協定、查病人過去紀錄，而且記得每一筆出處。','臨床指引、院內協定、文獻、醫學術語集（SNOMED 等）。','向量資料庫、混合式檢索增強生成、知識圖譜。','可追溯來源的臨床實證封包。'],
+ ['③ 推理層','Reasoning','提出「可能是什麼」與「有多危險」。','狀態 s<sub>t</sub>、實證封包、病人現行問題清單。','符號推理、領域調校的語言模型、不確定性分類。','鑑別診斷假說、風險分層。'],
+ ['④ 計畫層','Planning','把下一步拆成有順序、有停止條件的任務。','排序後的假說、照護資源與人力限制。','任務拆解圖、計畫合成、成本效益權衡。','附明確退出條件的任務圖。'],
+ ['⑤ 行動層','Action','只在被授權的範圍內動手。','任務圖、經授權的 API 端點。','工具呼叫：FHIR 寫入、SMART on FHIR、排程系統。','結構化交易、排程、處方「草稿」（須醫師簽署）。'],
+ ['⑥ 回饋層','Feedback','檢查結果、記錄醫師覆寫、監測模型有沒有走樣。','再評估數據、臨床反應、醫師覆寫。','確定性安全檢查、閉環評估、漂移監控。','重新計畫、安全退回、人工升級標記。']];
+var mg=$('modgrid'),mb=[];
+mods.forEach(function(m,i){var b=document.createElement('button');b.type='button';b.className='modbtn';b.innerHTML='<small>'+m[1].toUpperCase()+'</small><b>'+m[0]+'</b>';b.onclick=function(){selMod(i);};mg.appendChild(b);mb.push(b);});
+function selMod(i){var m=mods[i];press(mb,mb[i]);$('md-title').textContent=m[0]+'（'+m[1]+' Layer）';$('md-plain').textContent=m[2];$('md-in').innerHTML=m[3];$('md-mech').textContent=m[4];$('md-out').innerHTML=m[5];}
+selMod(0);
+
+/* 2. BDI */
+var bdi={a:['<b>信念：</b>室溫 24°C、二氧化碳略高；長者體溫 36.7°C 穩定。<br><b>欲望：</b>維持空氣品質與呼吸舒適。<br><b>意圖：</b>打開窗戶通風。','把感測串流與病人長期基準同步，維持各端狀態一致；目前無規則衝突。','監測畫面一切正常，僅留背景紀錄。'],
+ b:['<b>信念更新：</b>體溫升至 38.9°C、呼吸變快。<br><b>衝突：</b>「開窗通風」與「避免發燒病人受涼」相牴觸。<br><b>重新規劃：</b>暫停開窗，提出替代方案。','寫入新事件，結合慢性支氣管炎病史，標記通風計畫與體溫目標的衝突。','收到<b>驗證請求</b>：「建議暫停通風並評估退燒處置」。<b>醫師核准前，機器人不執行任何新動作。</b>']};
+var ba=$('bdi-a'),bb=$('bdi-b');
+function setBdi(k){press([ba,bb],k==='a'?ba:bb);for(var i=0;i<3;i++){$('bdi-t'+(i+1)).innerHTML=bdi[k][i];}
+ $('bdi-c1').className='tcard'+(k==='b'?' alert':'');$('bdi-c2').className='tcard'+(k==='b'?' warn':'');$('bdi-c3').className='tcard'+(k==='b'?' alert':'');}
+ba.onclick=function(){setBdi('a');};bb.onclick=function(){setBdi('b');};setBdi('a');
+
+/* 3. Pipeline */
+var pipe=[['F_history','資料庫智能體','把自然語言請求轉成 Cypher 圖查詢，從圖譜化病歷中取出病史、基準生命徵象與共病；角色類似檢索增強生成元件。'],
+ ['F_vital','分診護理師智能體','階層式設計中的「管理者」：監督整體流程、審閱病歷、分派任務並指定排程時段。'],
+ ['F_profile・F_prognosis','基層醫師智能體','給出預後與治療計畫草案，作為病人需求剖面的基礎。'],
+ ['F_logistic','醫療後勤智能體','以語意比對病人與醫療提供者剖面、確認資源可用性，挑出前三名候選提供者。'],
+ ['F_appointment','預約排程智能體','以 Gale-Shapley 演算法配對：病人依相容度向偏好的提供者「求配」，提供者保留最佳提議，反覆至形成穩定配對。']];
+var pg=$('pipe'),pb=[];
+pipe.forEach(function(p,i){var b=document.createElement('button');b.type='button';b.className='modbtn';b.innerHTML='<small>'+p[0]+'</small><b>'+p[1]+'</b>';b.onclick=function(){selPipe(i);};pg.appendChild(b);pb.push(b);});
+function selPipe(i){press(pb,pb[i]);$('pd-t').textContent=pipe[i][1]+'（'+pipe[i][0]+'）';$('pd-d').textContent=pipe[i][2];}
+selPipe(0);
+
+/* 4. MEWS simulator (thresholds per Shaik et al. 2025) */
+var V=[{id:'rr',name:'呼吸速率',unit:'次/分',min:2,max:40,step:1,val:16,n:[9,20],f:function(v){return(v<=4||v>=36)?4:((v<=8||v>=31)?3:(v>=25?2:(v>=21?1:0)));}},
+ {id:'spo2',name:'血氧 SpO₂',unit:'%',min:80,max:100,step:1,val:97,n:[95,100],f:function(v){return v<=84?4:(v<=89?3:(v<=92?2:(v<=94?1:0)));}},
+ {id:'temp',name:'體溫',unit:'°C',min:33,max:40,step:.1,val:36.8,n:[36.1,37.9],f:function(v){v=Math.round(v*10)/10;return v<=34.0?3:(v<=35.0?2:(v<=36.0?1:(v<=37.9?0:(v<=38.5?1:2))));}},
+ {id:'hr',name:'心率',unit:'次/分',min:30,max:155,step:1,val:76,n:[50,99],f:function(v){return(v<=39||v>=140)?4:(v>=130?3:(v>=110?2:((v<=49||v>=100)?1:0)));}}];
+var col=['#e4f2e1','#fbf1cf','#fbdcb8','#f7c0a4','#eea09a'];
+var vh='';
+V.forEach(function(x){var l=(x.n[0]-x.min)/(x.max-x.min)*100,w=(x.n[1]-x.n[0])/(x.max-x.min)*100;
+ vh+='<div class="vital"><div class="vtop"><label for="s-'+x.id+'">'+x.name+'（'+x.unit+'）</label><span><b id="v-'+x.id+'"></b> '+x.unit+'　<span class="sc" id="c-'+x.id+'"></span></span></div><div class="meter"><div class="band" style="left:'+l+'%;width:'+w+'%"></div><div class="mk" id="m-'+x.id+'"></div></div><input type="range" id="s-'+x.id+'" min="'+x.min+'" max="'+x.max+'" step="'+x.step+'" value="'+x.val+'"></div>';});
+vh+='<div class="vital"><div class="vtop"><label for="s-sed">鎮靜／意識程度</label><span class="sc" id="c-sed"></span></div><select class="sel" id="s-sed" style="margin-top:6px"><option value="0">清醒</option><option value="2">輕度鎮靜</option><option value="3">中度鎮靜</option><option value="4">重度鎮靜／無反應</option></select></div>';
+$('vitals').innerHTML=vh;
+function upd(){var mx=0,sum=0;
+ V.forEach(function(x){var el=$('s-'+x.id),v=parseFloat(el.value),sc=x.f(v);mx=Math.max(mx,sc);sum+=sc;
+  $('v-'+x.id).textContent=x.step<1?v.toFixed(1):v;var c=$('c-'+x.id);c.textContent=sc+' 分';c.style.background=col[sc];
+  $('m-'+x.id).style.left=((v-x.min)/(x.max-x.min)*100)+'%';});
+ var sd=parseInt($('s-sed').value,10);mx=Math.max(mx,sd);sum+=sd;var cs=$('c-sed');cs.textContent=sd+' 分';cs.style.background=col[sd];
+ var names=['MET-0　穩定','MET-1　輕度警示','MET-2　中度警示','MET-3　高度緊急','MET-4　緊急應變'];
+ $('mews-tier').textContent=names[mx];$('mews-sum').textContent='單項最高 '+mx+' 分｜五項加總 '+sum+' 分';
+ $('mews-res').className='res'+(mx===0?'':(mx<=2?' warn':' alert'));
+ var a=parseInt($('act').value,10),d=Math.abs(a-mx);
+ if(d===0){$('rw-val').textContent='+10';$('rw-note').textContent='行動 MET-'+a+' 與目標等級相符，強化這個「狀態—行動」的價值。';$('rw-res').className='res';}
+ else{var pen=-Math.min(4,d);$('rw-val').textContent=pen;$('rw-note').textContent='選了 MET-'+a+'，目標是 MET-'+mx+'，差 '+d+' 級（'+(a<mx?'低估風險、延遲升級':'過度升級、增加偽警報')+'），扣 '+(-pen)+' 分並修正 Q 值。';$('rw-res').className='res alert';}}
+document.querySelectorAll('#vitals input,#s-sed,#act').forEach(function(e){e.addEventListener('input',upd);e.addEventListener('change',upd);});
+var pre={normal:[16,97,36.8,76,0,0],fever:[23,94,38.3,118,0,2],critical:[33,84,38.9,136,2,4]};
+document.querySelectorAll('[data-preset]').forEach(function(b){b.onclick=function(){var p=pre[b.dataset.preset];
+ ['rr','spo2','temp','hr'].forEach(function(k,i){$('s-'+k).value=p[i];});$('s-sed').value=p[4];$('act').value=p[5];upd();};});
+upd();
+
+/* 5. Veritas trace */
+var vc={
+ noct:{t:'輸入：凌晨 03:18，穿戴式心率 44 次/分（低於 50 的固定門檻）',c:'背景：68 歲，高血壓穩定，服用乙型阻斷劑；活動訊號顯示深度靜止睡眠。',
+  l:['載入用藥清單、過去夜間心率基準（42–48 次/分）與近 7 日無暈厥紀錄，封裝為不可變快照。','心率跌破下限，產生待審警報。','依時段（深夜）與心率通道，路由至 Bradycardia 與 Nocturnal 智能體。','兩者比對晝夜節律、藥物作用與低活動狀態，判定為良性睡眠心搏過緩，且所用數值皆來自量測或病歷，非語言模型推論。','無衝突，抑制警報並寫入稽核紀錄，供日後抽查。'],on:['sp-brady','sp-noct'],out:'sup',fin:'抑制並留痕'},
+ probe:{t:'輸入：15 秒內血氧由 97% 驟降至 81%',c:'背景：72 歲術後居家復健，無呼吸困難主訴；光學訊號品質指標驟降。',
+  l:['組裝術後病歷、用藥與無肺栓塞風險因子的基線。','血氧 ≤84%，觸發最高等級門檻警報。','偵測訊號品質異常與動作訊號，路由至 ProbeIntegrity 與 ActivityIntegrity 智能體。','ProbeIntegrity 判定灌流訊號消失、疑似探頭脫落；ActivityIntegrity 同步看到翻身動作。','兩者共識且無反對意見，抑制緊急警報，改發「請重新配戴血氧夾」提示；若數分鐘後讀值未恢復則重新升級。'],on:['sp-probe','sp-act'],out:'sup',fin:'抑制並提示重新配戴'},
+ copd:{t:'輸入：白天靜息血氧持續 89%（低於一般成人標準）',c:'背景：76 歲重度 COPD，主治醫師於病歷設定個人化血氧目標 88–92%。',
+  l:['自病歷取得重度 COPD 診斷與醫師核准的個人化目標區間。','通用門檻判定為持續低血氧。','因慢性肺病標籤，路由至 COPD 智能體。','89% 落在醫師設定的個人目標內，呼吸 19 次/分、心率 82 次/分穩定，無急性惡化跡象。','判定為門檻與個人基準不符造成的系統性偽警報，抑制並留痕；個人化區間的變更權仍屬主治醫師。'],on:['sp-copd'],out:'sup',fin:'抑制並留痕'},
+ conf:{t:'輸入：心率 126、呼吸 28、體溫 38.9°C、血氧 90%',c:'背景：65 歲尿路感染居家抗生素治療第 2 天；訊號品質短暫波動。',
+  l:['彙整感染診斷、治療計畫與前 24 小時穩定基準（心率 78、體溫 37.1°C）。','多項生命徵象同時越界，產生複合異常。','分派至 Tachycardia、ProbeIntegrity、ActivityIntegrity 智能體交叉驗證。','ProbeIntegrity 認為訊號波動可能是偽影；Tachycardia 認為與感染惡化相符；ActivityIntegrity 找不到足以解釋的活動。意見衝突。','專科意見衝突、無法確認為雜訊，依設計在模糊情況下預設升級：送至護理工作清單，附推理摘要與證據。'],on:['sp-tachy','sp-probe','sp-act'],out:'esc',fin:'預設升級給臨床人員'}};
+var vbs=[].slice.call(document.querySelectorAll('[data-vc]'));
+function selVc(k){var d=vc[k];press(vbs,document.querySelector('[data-vc="'+k+'"]'));$('vc-t').textContent=d.t;$('vc-c').textContent=d.c;
+ for(var i=0;i<5;i++)$('vl'+(i+1)).textContent=d.l[i];
+ ['sp-probe','sp-act','sp-tachy','sp-brady','sp-copd','sp-noct'].forEach(function(id){$(id).className='sp'+(d.on.indexOf(id)>-1?(d.out==='esc'?' cf':' on'):'');});
+ $('vl5row').className='lrow '+d.out;$('vfinal').textContent=d.fin;}
+vbs.forEach(function(b){b.onclick=function(){selVc(b.dataset.vc);};});selVc('noct');
+
+/* 6. Benchmark chart */
+var bcd={clin:{h:'臨床分診與偽警報抑制指標（%）',p:'不同系統、不同任務與資料來源，數值不可直接橫向比較；顏色標示證據等級。',
+  rows:[['Veritas-RPM 真抑制率',83.7,'#3f3d9e'],['Sentinel 緊急事件敏感度',95.8,'#b45309'],['Sentinel 特異度',85.7,'#b45309'],['MIRA 診斷正確率（574 例）',88.9,'#b45309'],['MIRA 配對比較（311 例）',87.8,'#b45309'],['專科醫師對照（311 例）',78.1,'#c9c2b2'],['多智能體 DRL 決策正確率',88.3,'#0f766e'],['PPO 決策正確率（對照）',79.1,'#c9c2b2']],
+  lg:[['#3f3d9e','合成資料'],['#b45309','回溯真實病例'],['#0f766e','公開資料集'],['#c9c2b2','對照組']]},
+ sec:{h:'5G 遠端監測傳輸身分驗證正確率（%）',p:'Chinnaperumal 等（2025）模擬比較；摘要中其餘比較項目的數字定義不明，未列入。',
+  rows:[['提出模型（ANN＋RL＋模糊 VIKOR）',97.25,'#3f3d9e'],['PLA-SIT',97.0,'#c9c2b2'],['FPLA',96.8,'#c9c2b2'],['隱私嵌入式輕量 PLA',95.3,'#c9c2b2']],
+  lg:[['#3f3d9e','提出方法（模擬）'],['#c9c2b2','既有方法']]}};
+var bcb=[].slice.call(document.querySelectorAll('[data-bc]'));
+function selBc(k){var d=bcd[k];press(bcb,document.querySelector('[data-bc="'+k+'"]'));$('bc-h').textContent=d.h;$('bc-p').textContent=d.p;
+ var lo=k==='sec'?90:0,h='';d.rows.forEach(function(r){h+='<div class="hb"><div class="lbl">'+r[0]+'</div><div class="track"><div class="fill" style="width:0;background:'+r[2]+'" data-w="'+((r[1]-lo)/(100-lo)*100)+'"></div></div><div class="v">'+r[1]+'%</div></div>';});
+ $('bc').innerHTML=h;$('bc-lg').innerHTML=d.lg.map(function(l){return '<span><i style="background:'+l[0]+'"></i>'+l[1]+'</span>';}).join('')+(k==='sec'?'<span>橫軸自 90% 起算</span>':'');
+ requestAnimationFrame(function(){document.querySelectorAll('#bc .fill').forEach(function(f){f.style.width=f.dataset.w+'%';});});}
+bcb.forEach(function(b){b.onclick=function(){selBc(b.dataset.bc);};});selBc('clin');
+
+/* 7. Roadmap */
+var phs=[].slice.call(document.querySelectorAll('.ph'));
+phs.forEach(function(p,i){p.setAttribute('tabindex','0');p.onclick=function(){phs.forEach(function(q){q.classList.toggle('on',q===p);});};p.onkeydown=function(e){if(e.key==='Enter')p.onclick();};});
+if(phs[0])phs[0].classList.add('on');
+})();
+</script>
+</body>
+</html>

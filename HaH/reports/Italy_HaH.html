@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把醫院搬回家：義大利都靈 CANP 居家住院與 AAL 系統研究報告</title>
+<meta name="description" content="義大利皮埃蒙特大區 CANP（La Casa nel Parco）計畫研究報告：都靈居家住院服務、AAL 智慧照護架構、分層負責制度、臨床證據與可移植經驗。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F0; --paper:#FFFFFF; --ink:#22303C; --muted:#5F6B76; --line:#E6E0D4;
+  --teal:#0E7C74; --teal-soft:#E3F2EF; --coral:#D9694C; --coral-soft:#FBEAE4;
+  --gold:#C28A12; --gold-soft:#FBF1DA; --blue:#3567A6; --blue-soft:#E6EEF8;
+  --plum:#7A4E8C; --plum-soft:#F1E8F5; --green:#4E8A3E; --green-soft:#E8F3E3;
+  --gray-soft:#F1EEE8; --radius:16px; --shadow:0 6px 24px rgba(40,50,60,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.85;font-size:17px}
+a{color:var(--blue)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:rgba(250,247,240,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;align-items:center;overflow-x:auto;white-space:nowrap;padding-top:10px;padding-bottom:10px}
+nav.top .brand{font-weight:900;color:var(--teal);margin-right:10px;text-decoration:none}
+nav.top a.l{font-size:14px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:99px}
+nav.top a.l:hover{background:var(--teal-soft);color:var(--teal)}
+/* hero */
+header.hero{padding:70px 0 50px;background:radial-gradient(1200px 400px at 85% 0%,#E3F2EF 0%,transparent 60%),radial-gradient(900px 380px at 0% 100%,#FBEAE4 0%,transparent 60%)}
+.hero .kicker{display:inline-block;font-size:14px;letter-spacing:.12em;color:var(--teal);background:var(--teal-soft);padding:4px 12px;border-radius:99px;font-weight:700}
+.hero h1{font-family:"Noto Serif TC",serif;font-size:clamp(32px,5vw,54px);line-height:1.25;margin:18px 0 10px}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero .sub{font-size:19px;color:var(--muted);max-width:760px}
+.hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:34px;align-items:center}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr}}
+/* sections */
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:nth-of-type(even){background:#FFFDF8}
+h2{font-family:"Noto Serif TC",serif;font-size:clamp(26px,3.4vw,36px);margin:0 0 8px;line-height:1.35}
+h2 .num{display:inline-block;color:#fff;background:var(--teal);border-radius:10px;font-family:"Noto Sans TC";font-size:.6em;padding:2px 10px;margin-right:10px;vertical-align:middle}
+h3{font-size:21px;margin:30px 0 10px}
+.lead{font-size:18.5px;color:var(--muted);max-width:860px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.stat .v{font-size:34px;font-weight:900;color:var(--teal);line-height:1.2}
+.stat .v small{font-size:16px;font-weight:700}
+.stat .k{font-size:15px;color:var(--muted)}
+.stat.c .v{color:var(--coral)} .stat.g .v{color:var(--gold)} .stat.b .v{color:var(--blue)}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 9px;border-radius:99px;margin:2px 4px 2px 0;vertical-align:middle}
+.t-ok{background:var(--green-soft);color:var(--green)}
+.t-inf{background:var(--gold-soft);color:#8A6209}
+.t-gap{background:var(--coral-soft);color:#A64528}
+.callout{border-left:5px solid var(--coral);background:var(--coral-soft);padding:16px 20px;border-radius:0 12px 12px 0;margin:22px 0}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.gold{border-color:var(--gold);background:var(--gold-soft)}
+.callout b{color:var(--ink)}
+.cite{font-size:.78em;vertical-align:super;line-height:0}
+.cite a{text-decoration:none;color:var(--blue);font-weight:700}
+/* tables */
+.tbl{overflow-x:auto;border-radius:14px;border:1px solid var(--line);background:#fff;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:15.5px;min-width:640px}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--gray-soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.c{text-align:center}
+/* timeline */
+.timeline{position:relative;margin:26px 0 0;padding-left:28px}
+.timeline:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--teal),var(--coral));border-radius:3px}
+.tl{position:relative;margin-bottom:18px}
+.tl:before{content:"";position:absolute;left:-25px;top:8px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--teal)}
+.tl .y{font-weight:900;color:var(--teal);margin-right:8px}
+.tl.hot:before{border-color:var(--coral)}
+.tl.hot .y{color:var(--coral)}
+/* flow */
+.flow{display:flex;flex-direction:column;gap:0;align-items:stretch;max-width:820px;margin:22px auto}
+.step{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.step .ic{flex:0 0 48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:24px}
+.step h4{margin:0 0 2px;font-size:17.5px}
+.step p{margin:0;font-size:15.5px;color:var(--muted)}
+.arrow{text-align:center;color:var(--line);font-size:26px;line-height:1.2;margin:2px 0}
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.fork{grid-template-columns:1fr}}
+/* layers */
+.layers{display:flex;flex-direction:column;gap:12px;margin-top:22px}
+.layer{display:grid;grid-template-columns:86px 1fr;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.layer .lv{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:900;padding:14px 6px;text-align:center}
+.layer .lv span{font-size:28px;line-height:1}
+.layer .lv small{font-size:12px;font-weight:500;opacity:.9;margin-top:4px}
+.layer .bd{padding:16px 20px}
+.layer .bd h4{margin:0 0 4px;font-size:18.5px}
+.layer .bd .who{font-size:14.5px;color:var(--muted);margin-bottom:6px}
+.layer .bd ul{margin:6px 0 0;padding-left:20px;font-size:15.5px}
+.layer .bd li{margin:2px 0}
+@media(max-width:600px){.layer{grid-template-columns:64px 1fr}}
+/* raci */
+.chip{display:inline-block;min-width:26px;text-align:center;font-weight:900;font-size:13px;border-radius:7px;padding:1px 6px}
+.R{background:var(--teal);color:#fff}.A{background:var(--coral);color:#fff}.C{background:var(--blue-soft);color:var(--blue)}.I{background:var(--gray-soft);color:var(--muted)}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.bar-row{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;font-size:14.5px}
+.stack{display:flex;height:30px;border-radius:8px;overflow:hidden;background:var(--gray-soft)}
+.stack div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.hbar{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;font-size:14.5px;margin:7px 0}
+.hbar .track{height:16px;background:var(--gray-soft);border-radius:99px;overflow:hidden}
+.hbar .fill{height:100%;border-radius:99px}
+/* misc */
+.pill-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pill-list span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:14px}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:10px 0}
+details summary{cursor:pointer;font-weight:700}
+.refs ol{padding-left:26px;font-size:14.5px;line-height:1.7}
+.refs li{margin-bottom:8px;word-break:break-word}
+.refs h3{font-size:17px;color:var(--teal)}
+footer{padding:36px 0 60px;color:var(--muted);font-size:14px;text-align:center}
+.svgbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+.svgbox svg{width:100%;height:auto;display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media(max-width:880px){.two{grid-template-columns:1fr}}
+.qa{font-size:15.5px}
+.qa b{color:var(--teal)}
+</style>
+</head>
+<body>
+
+<nav class="top"><div class="wrap">
+  <a class="brand" href="#top">CANP 研究報告</a>
+  <a class="l" href="#s1">一分鐘看懂</a>
+  <a class="l" href="#s2">計畫輪廓</a>
+  <a class="l" href="#s3">居家住院</a>
+  <a class="l" href="#s4">病人旅程</a>
+  <a class="l" href="#s5">分層負責</a>
+  <a class="l" href="#s6">AAL 架構</a>
+  <a class="l" href="#s7">智慧輔具</a>
+  <a class="l" href="#s8">警訊治理</a>
+  <a class="l" href="#s9">財源</a>
+  <a class="l" href="#s10">證據</a>
+  <a class="l" href="#s11">借鏡與風險</a>
+  <a class="l" href="#refs">參考資料</a>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">義大利・皮埃蒙特大區・居家住院 × 智慧照護</span>
+      <h1>把醫院<em>搬回家</em>：<br>都靈 CANP 居家住院與 AAL 系統</h1>
+      <p class="sub">一位 91 歲、重度失智的奶奶確診 COVID-19。她沒有被送進病房，醫師和護理師帶著遠距監測設備來到家裡，同時教女兒怎麼量血氧、看警訊。這背後是一套運作了四十年的居家住院服務，和一個想替它裝上數位神經系統的區域研發計畫：<b>CANP（La Casa nel Parco，「公園中的家」）</b>。</p>
+    </div>
+    <div class="svgbox" aria-label="示意圖：醫院、資料平台與住家的關係">
+      <svg viewBox="0 0 420 300" role="img">
+        <title>醫院、平台與住家示意</title>
+        <!-- hospital -->
+        <rect x="20" y="70" width="120" height="150" rx="10" fill="#E3F2EF" stroke="#0E7C74" stroke-width="2"/>
+        <rect x="62" y="40" width="36" height="36" rx="6" fill="#0E7C74"/>
+        <rect x="76" y="46" width="8" height="24" fill="#fff"/><rect x="68" y="54" width="24" height="8" fill="#fff"/>
+        <g fill="#0E7C74" opacity=".55">
+          <rect x="38" y="92" width="22" height="20" rx="3"/><rect x="70" y="92" width="22" height="20" rx="3"/><rect x="102" y="92" width="22" height="20" rx="3"/>
+          <rect x="38" y="126" width="22" height="20" rx="3"/><rect x="70" y="126" width="22" height="20" rx="3"/><rect x="102" y="126" width="22" height="20" rx="3"/>
+        </g>
+        <rect x="66" y="176" width="28" height="44" rx="4" fill="#0E7C74"/>
+        <text x="80" y="245" text-anchor="middle" font-size="15" font-weight="700" fill="#22303C">醫院團隊</text>
+        <!-- home -->
+        <polygon points="280,110 345,60 410,110" fill="#D9694C"/>
+        <rect x="292" y="108" width="106" height="112" rx="6" fill="#FBEAE4" stroke="#D9694C" stroke-width="2"/>
+        <circle cx="330" cy="150" r="13" fill="#22303C" opacity=".8"/>
+        <rect x="318" y="164" width="24" height="34" rx="10" fill="#22303C" opacity=".8"/>
+        <circle cx="368" cy="158" r="10" fill="#C28A12" opacity=".9"/>
+        <rect x="359" y="169" width="19" height="29" rx="8" fill="#C28A12" opacity=".9"/>
+        <rect x="324" y="176" width="12" height="9" rx="3" fill="#0E7C74"/>
+        <text x="345" y="245" text-anchor="middle" font-size="15" font-weight="700" fill="#22303C">病人與照顧者</text>
+        <!-- cloud platform -->
+        <ellipse cx="210" cy="60" rx="54" ry="26" fill="#E6EEF8" stroke="#3567A6" stroke-width="2"/>
+        <text x="210" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#3567A6">事件平台</text>
+        <!-- links -->
+        <path d="M150 140 C 200 120, 230 120, 282 140" stroke="#0E7C74" stroke-width="3" fill="none" stroke-dasharray="7 6"/>
+        <text x="216" y="118" text-anchor="middle" font-size="12.5" fill="#0E7C74">到府訪視</text>
+        <path d="M300 104 C 280 80, 270 70, 262 66" stroke="#3567A6" stroke-width="2.5" fill="none"/>
+        <path d="M158 66 C 150 70, 140 76, 130 84" stroke="#3567A6" stroke-width="2.5" fill="none"/>
+        <circle r="4" fill="#3567A6"><animateMotion dur="3s" repeatCount="indefinite" path="M300 104 C 280 80, 270 70, 262 66"/></circle>
+        <circle r="4" fill="#3567A6"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M158 66 C 150 70, 140 76, 130 84"/></circle>
+        <text x="210" y="280" text-anchor="middle" font-size="12.5" fill="#5F6B76">人到府服務，資料走平台；臨床判斷留在醫院團隊</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- 1 -->
+<section id="s1"><div class="wrap">
+  <h2><span class="num">01</span>一分鐘看懂</h2>
+  <p class="lead">CANP 不是要「發明」居家住院。都靈早在 1985 年就在做了。CANP 做的事，是在這個成熟的臨床服務上，加裝遠距監測、穿戴裝置、資料串流平台與流程分析工具，並研究這些東西該怎麼接進臨床日常。</p>
+  <div class="grid g4" style="margin-top:22px">
+    <div class="card stat"><div class="v">€1,146.5<small> 萬</small></div><div class="k">計畫總投資（2018 年核定）<span class="cite"><a href="#r1">[1]</a><a href="#r9">[9]</a></span></div></div>
+    <div class="card stat c"><div class="v">48.1<small>%</small></div><div class="k">區域公共補助占比（€550.95 萬）<span class="cite"><a href="#r9">[9]</a></span></div></div>
+    <div class="card stat g"><div class="v">23<small> 個單位</small></div><div class="k">領銜企業＋22 個夥伴，含 4 家醫療機構<span class="cite"><a href="#r9">[9]</a></span></div></div>
+    <div class="card stat b"><div class="v">1985<small> 年起</small></div><div class="k">都靈居家住院服務開始運作<span class="cite"><a href="#r24">[24]</a></span></div></div>
+    <div class="card stat"><div class="v">≈600<small> 件/年</small></div><div class="k">2026 年報導的都靈居家住院量<span class="cite"><a href="#r29">[29]</a></span></div></div>
+    <div class="card stat c"><div class="v">08–20<small> 時</small></div><div class="k">團隊每日服務時段，週一至週日<span class="cite"><a href="#r24">[24]</a><a href="#r29">[29]</a></span></div></div>
+    <div class="card stat g"><div class="v">84<small> 歲</small></div><div class="k">2018 年病人平均年齡（490 人）<span class="cite"><a href="#r12">[12]</a></span></div></div>
+    <div class="card stat b"><div class="v">≈83<small>%</small></div><div class="k">2019–2020 年出院返家比率<span class="cite"><a href="#r24">[24]</a></span></div></div>
+  </div>
+  <div class="callout teal"><b>閱讀提醒：</b>這份報告會同時談到三件事：皮埃蒙特大區的<b>數位研發計畫</b>（CANP 本身）、都靈既有的<b>居家住院服務</b>，以及 Novara 的 <b>ALS 遠距照護</b>。三者可以並列比較服務設計，但看到成效數字時，要先問：這是哪段期間、哪群病人、用了哪些技術？例如「每年約 600 件」是都靈居家住院的服務量，不能拿來推算 CANP 設備用了多少次。</div>
+</div></section>
+
+<!-- 2 -->
+<section id="s2"><div class="wrap">
+  <h2><span class="num">02</span>計畫輪廓：誰出錢、誰來做、做多久</h2>
+  <p class="lead">CANP 由皮埃蒙特大區以 POR FESR 2014–2020（歐洲區域發展基金區域執行計畫）「健康與福祉」科技平台資助，由產學醫組成的臨時聯合體執行。</p>
+  <div class="tbl"><table>
+    <tr><th>項目</th><th>內容</th><th>來源</th></tr>
+    <tr><td>全名</td><td>CANP — La Casa nel Parco（CAsa Nel Parco，公園中的家）</td><td>[1][7][9]</td></tr>
+    <tr><td>資助計畫</td><td>POR FESR Piemonte 2014–2020，行動 I.1b.2.2「Salute e Benessere」科技平台，經 Finpiemonte 支持</td><td>[1][7]</td></tr>
+    <tr><td>領銜單位</td><td>Consoft Sistemi S.p.A.（capofila）；該公司其後併入 ALTEN Italia S.p.A.（ALTEN 研發計畫頁載為 2021 年 10 月 1 日生效）</td><td>[1][9][11]</td></tr>
+    <tr><td>執行主體</td><td>專門目的臨時聯合會（Associazione Temporanea di Scopo, ATS）。這裡的 ATS 是合作契約形式，<b>不是</b>義大利地方衛生局體系</td><td>[1]</td></tr>
+    <tr><td>執行期間</td><td>理工大學名冊：2018/4/1–2020/9/30；ISI 基金會頁面：2018/5/16–2021/4/5。兩者差異原因未見公開說明</td><td>[7][9]</td></tr>
+    <tr><td>經費</td><td>總投資 €11,465,000；核定補助 €5,509,500（約 48.1%）；差額 €5,955,500 為預算上由夥伴自籌的部分，實際支出仍以決算為準</td><td>[1][9]</td></tr>
+    <tr><td>行政沿革</td><td>2018/4/5 第 127 號處長令核定 → 2019/11/25 第 656 號令調整 → 2021 年第 97 號令調整 → 2023/6/7 第 241 號令再調整</td><td>[1][3][4][5]</td></tr>
+    <tr><td>醫療場域</td><td>AOU Città della Salute e della Scienza di Torino（Molinette 院區）、AOU Maggiore della Carità（Novara，含 ALS 中心）、AOU San Luigi Gonzaga（Orbassano）、Fondazione Don Carlo Gnocchi</td><td>[7][9]</td></tr>
+    <tr><td>學研夥伴</td><td>都靈大學、都靈理工大學、Fondazione ISI；Novara 臨床作者隸屬東皮埃蒙特大學</td><td>[9][20]</td></tr>
+    <tr><td>定位</td><td>區域型研究與創新示範計畫，<b>不是</b>義大利全國統一的法定居家住院制度</td><td>[1][2]</td></tr>
+  </table></div>
+
+  <h3>23 個夥伴的分工生態</h3>
+  <div class="grid g4">
+    <div class="card"><b style="color:var(--teal)">🏥 醫療機構（4）</b><div class="pill-list"><span>都靈 Città della Salute</span><span>Novara Maggiore della Carità</span><span>Orbassano San Luigi</span><span>Don Gnocchi 基金會</span></div></div>
+    <div class="card"><b style="color:var(--blue)">🎓 學研單位（4）</b><div class="pill-list"><span>都靈大學</span><span>都靈理工大學</span><span>Fondazione ISI</span><span>H&amp;S 軟體品質</span></div></div>
+    <div class="card"><b style="color:var(--coral)">💻 大型 ICT 企業（2）</b><div class="pill-list"><span>Consoft Sistemi（領銜）</span><span>Santer Reply</span></div></div>
+    <div class="card"><b style="color:var(--gold)">🔧 中小企業與合作社</b><div class="pill-list"><span>Caretek</span><span>Tesi</span><span>Experientia</span><span>Agile Lab</span><span>CELI</span><span>Augeos</span><span>Infologic</span><span>SSB Progetti</span><span>Fullbrand</span><span>Libre</span><span>L'altra Idea</span><span>Puzzle</span><span>Panacea</span></div></div>
+  </div>
+  <p style="font-size:14px;color:var(--muted)">名單依都靈理工大學 POR FESR 計畫名冊整理<span class="cite"><a href="#r9">[9]</a></span>；分類為本報告依機構性質歸納，H&amp;S 為軟體品質企業，此處因其驗證角色併入學研欄。</p>
+</div></section>
+
+<!-- 3 -->
+<section id="s3"><div class="wrap">
+  <h2><span class="num">03</span>居家住院：不是居家護理，是「住院」搬到家裡</h2>
+  <p class="lead">居家住院（Ospedalizzazione a Domicilio, OAD；Hospital at Home）收治的是「本來應該住院」的急性病人，例如肺炎、心衰竭急性惡化。差別在於病床換成自家的床，醫療責任仍然歸醫院。</p>
+
+  <div class="two">
+    <div>
+      <h3>四十年的時間軸</h3>
+      <div class="timeline">
+        <div class="tl"><span class="y">1984.07</span>都靈衛生主管機關通過第 1134/41/84 號決議，啟動居家住院實驗計畫<span class="cite"><a href="#r24">[24]</a></span></div>
+        <div class="tl"><span class="y">1985.10</span>服務正式運作，目標是替虛弱長者提供住院替代方案與提早出院的保護性銜接<span class="cite"><a href="#r24">[24]</a></span></div>
+        <div class="tl hot"><span class="y">2018</span>CANP 核定；同年服務照護 490 人，平均住院約 15 天<span class="cite"><a href="#r1">[1]</a><a href="#r12">[12]</a></span></div>
+        <div class="tl"><span class="y">2019–20</span>流程建模、模擬與流程探勘研究陸續發表<span class="cite"><a href="#r13">[13]</a><a href="#r14">[14]</a></span></div>
+        <div class="tl hot"><span class="y">2020</span>COVID-19 期間以遠距設備照護失智確診長者；家醫轉介比例大增<span class="cite"><a href="#r18">[18]</a><a href="#r24">[24]</a></span></div>
+        <div class="tl"><span class="y">2021.05</span>CANP 獲皮埃蒙特大區 IR20「創新與研究」獎<span class="cite"><a href="#r25">[25]</a><a href="#r26">[26]</a></span></div>
+        <div class="tl"><span class="y">2023.06</span>第 241 號處長令再調整補助<span class="cite"><a href="#r4">[4]</a></span></div>
+        <div class="tl"><span class="y">2026.04</span>報導指出服務每年約 600 件住院，平均年齡逾 80 歲<span class="cite"><a href="#r29">[29]</a></span></div>
+      </div>
+    </div>
+    <div>
+      <h3>誰可以在家「住院」？</h3>
+      <div class="card">
+        <p style="margin-top:0">依 2021 年老年醫學年會簡報，收案須同時符合<span class="cite"><a href="#r24">[24]</a></span>：</p>
+        <div class="step" style="box-shadow:none;margin-bottom:8px"><div class="ic" style="background:var(--teal-soft)">🩺</div><div><h4>病情達住院等級</h4><p>急性病況需要住院治療，但不需要密集或侵入性監測</p></div></div>
+        <div class="step" style="box-shadow:none;margin-bottom:8px"><div class="ic" style="background:var(--gold-soft)">👨‍👩‍👧</div><div><h4>家裡有人照顧</h4><p>具備適當的家庭照顧支持；2026 年報導強調照顧者須持續在場<span class="cite"><a href="#r29">[29]</a></span></p></div></div>
+        <div class="step" style="box-shadow:none;margin-bottom:8px"><div class="ic" style="background:var(--blue-soft)">📞</div><div><h4>聯絡得到</h4><p>家中有電話聯繫管道</p></div></div>
+        <div class="step" style="box-shadow:none;margin-bottom:8px"><div class="ic" style="background:var(--coral-soft)">📍</div><div><h4>住在服務範圍內</h4><p>住所位於醫院服務區，團隊能及時到府</p></div></div>
+        <div class="step" style="box-shadow:none"><div class="ic" style="background:var(--plum-soft)">✍️</div><div><h4>知情同意</h4><p>病人和／或照顧者同意</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>雙向使用：避免住院（Step-up）與提早出院（Step-down）</h3>
+  <div class="grid g2">
+    <div class="card"><b style="color:var(--teal)">⬆️ Step-up：從急診或社區直接收進家裡</b><p style="margin-bottom:0">2018 年有 46% 病人直接由急診收案<span class="cite"><a href="#r12">[12]</a></span>。2020 年疫情期間，家庭醫師轉介占比由 21.1% 升至 54%<span class="cite"><a href="#r24">[24]</a></span>，顯示服務在疫情下成為社區分流的重要出口。</p></div>
+    <div class="card"><b style="color:var(--coral)">⬇️ Step-down：從病房提早回家</b><p style="margin-bottom:0">2019 年有 46.3% 轉介來自醫院病房<span class="cite"><a href="#r24">[24]</a></span>。Don Gnocchi 基金會則為出院病人提供居家遠距神經復健<span class="cite"><a href="#r25">[25]</a></span>。出院後追蹤上限與回歸家醫的標準流程未見公開。</p></div>
+  </div>
+
+  <h3>轉介來源的疫情位移</h3>
+  <div class="card">
+    <div class="bars">
+      <div class="bar-row"><b>2019<br><small style="color:var(--muted)">565 件</small></b>
+        <div class="stack"><div style="width:32.6%;background:var(--coral)">急診 32.6%</div><div style="width:46.3%;background:var(--teal)">病房 46.3%</div><div style="width:21.1%;background:var(--gold)">家醫 21.1%</div></div></div>
+      <div class="bar-row"><b>2020<br><small style="color:var(--muted)">655 件</small></b>
+        <div class="stack"><div style="width:18.6%;background:var(--coral)">急診 18.6%</div><div style="width:27.4%;background:var(--teal)">病房 27.4%</div><div style="width:54%;background:var(--gold)">家醫 54%</div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--coral)"></i>急診</span><span><i style="background:var(--teal)"></i>醫院病房</span><span><i style="background:var(--gold)"></i>家庭醫師（MMG）</span><span>資料來源：Tibaldi 2021 年會簡報<span class="cite"><a href="#r24">[24]</a></span></span></div>
+  </div>
+</div></section>
+
+<!-- 4 -->
+<section id="s4"><div class="wrap">
+  <h2><span class="num">04</span>病人旅程：從轉介到回家（或回醫院）</h2>
+  <p class="lead">下圖由多份公開文獻交叉重建。裝置配置、遠距復健與 GoCare 儀表板依個案或研究情境選用，並非每位病人都會用到。</p>
+  <div class="flow">
+    <div class="step"><div class="ic" style="background:var(--coral-soft)">🚑</div><div><h4>① 轉介</h4><p>急診、醫院病房或社區家庭醫師開立居家住院轉介<span class="cite"><a href="#r24">[24]</a></span></p></div></div>
+    <div class="arrow">▼</div>
+    <div class="step"><div class="ic" style="background:var(--teal-soft)">📋</div><div><h4>② 收案評估</h4><p>評估臨床條件、照顧者能力、住家位置與同意；團隊設有專責收案的護理人員<span class="cite"><a href="#r12">[12]</a></span>。此流程是 BPMN 建模與流程探勘的主要研究對象<span class="cite"><a href="#r13">[13]</a><a href="#r14">[14]</a></span></p></div></div>
+    <div class="arrow">▼</div>
+    <div class="step"><div class="ic" style="background:var(--blue-soft)">⌚</div><div><h4>③ 照護計畫與設備配置</h4><p>醫院提供藥品、醫材與技術設備<span class="cite"><a href="#r24">[24]</a></span>；依需要配置遠距監測（如血氧、心電圖）、跌倒偵測手錶或復健套件<span class="cite"><a href="#r12">[12]</a><a href="#r25">[25]</a></span></p></div></div>
+    <div class="arrow">▼</div>
+    <div class="step"><div class="ic" style="background:var(--gold-soft)">🏠</div><div><h4>④ 每日到府＋遠距監測</h4><p>每位病人每天至少由醫師或護理師其中一人探視；輸血、抗生素治療等病人可能有下午第二次訪視<span class="cite"><a href="#r12">[12]</a></span></p></div></div>
+    <div class="arrow">▼</div>
+    <div class="step"><div class="ic" style="background:var(--plum-soft)">📊</div><div><h4>⑤ 團隊協調</h4><p>每天早上醫師與護理師一起排定訪視路線；GoCare 原型儀表板支援狀態檢視、行事曆與後勤<span class="cite"><a href="#r12">[12]</a><a href="#r23">[23]</a></span></p></div></div>
+    <div class="arrow">▼</div>
+    <div class="fork">
+      <div class="step" style="border-color:var(--green)"><div class="ic" style="background:var(--green-soft)">🌿</div><div><h4>⑥a 穩定 → 出院</h4><p>2019 年 83.8% 返家出院，可視需要銜接其他整合居家照護<span class="cite"><a href="#r12">[12]</a><a href="#r24">[24]</a></span></p></div></div>
+      <div class="step" style="border-color:var(--coral)"><div class="ic" style="background:var(--coral-soft)">⚠️</div><div><h4>⑥b 惡化 → 升級</h4><p>加強到府處置或轉送醫院；2019 年轉院比率 4.5%。病人可快速、免費回醫院檢查或會診<span class="cite"><a href="#r24">[24]</a></span></p></div></div>
+    </div>
+  </div>
+
+  <h3>結局分布：三個年度的對照</h3>
+  <div class="card">
+    <div class="bars">
+      <div class="bar-row"><b>2018</b><div class="stack"><div style="width:81.2%;background:var(--teal)">返家出院 81.2%</div><div style="width:11.8%;background:#8C97A3">11.8%</div><div style="width:6.9%;background:var(--coral)">6.9%</div></div></div>
+      <div class="bar-row"><b>2019</b><div class="stack"><div style="width:83.8%;background:var(--teal)">返家出院 83.8%</div><div style="width:11.5%;background:#8C97A3">11.5%</div><div style="width:4.5%;background:var(--coral)">4.5</div></div></div>
+      <div class="bar-row"><b>2020</b><div class="stack"><div style="width:83.0%;background:var(--teal)">返家出院 83.0%</div><div style="width:13.1%;background:#8C97A3">13.1%</div><div style="width:3.9%;background:var(--coral)">3.9</div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--teal)"></i>返家出院</span><span><i style="background:#8C97A3"></i>在家過世</span><span><i style="background:var(--coral)"></i>轉送醫院</span><span>2018 年見 [12]；2019–2020 年見 [24]</span></div>
+    <p style="font-size:14.5px;color:var(--muted);margin-bottom:0">在家過世比率約一成，反映收治對象多為高齡、多重共病、部分處於生命末期的病人，許多家庭選擇在家走完最後一程。這些是服務層級的描述統計，未與住院病人做隨機對照，不能直接解讀為「居家比住院更安全」。</p>
+  </div>
+</div></section>
+
+<!-- 5 -->
+<section id="s5"><div class="wrap">
+  <h2><span class="num">05</span>分層負責制度：誰出錢、誰開藥、誰半夜接電話</h2>
+  <p class="lead">居家住院最常被問的問題是：「出事了誰負責？」CANP 的經驗可以拆成七個層次。核心原則只有一句：<b>研發計畫的責任與臨床醫療的責任分開</b>。企業夥伴負責把系統做出來、讓設備能用；病人的醫療決策與法律責任始終留在醫院。</p>
+
+  <div class="callout gold"><b>標示說明：</b><span class="tag t-ok">文獻明載</span>有公開文件直接記載　<span class="tag t-inf">依職能推論</span>由角色職能合理推得，尚無書面規範　<span class="tag t-gap">證據缺口</span>公開資料未揭露</div>
+
+  <div class="layers">
+    <div class="layer"><div class="lv" style="background:#3567A6"><span>L1</span><small>政策財源</small></div><div class="bd">
+      <h4>區域政府與歐盟基金：定規則、給補助、管核銷</h4>
+      <div class="who">皮埃蒙特大區政府（競爭力與研究主管部門）、Finpiemonte、POR FESR 2014–2020</div>
+      <ul>
+        <li>以處長令核定補助，並多次調整（2018、2019、2021、2023）<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r1">[1]</a><a href="#r3">[3]</a><a href="#r4">[4]</a><a href="#r5">[5]</a></span></li>
+        <li>補助的是研發與試辦，<b>不是</b>醫療給付；不介入個別病人的臨床決策<span class="tag t-inf">依職能推論</span></li>
+        <li>最終結案、決算與驗收文件未見公開<span class="tag t-gap">證據缺口</span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#7A4E8C"><span>L2</span><small>計畫治理</small></div><div class="bd">
+      <h4>ATS 聯合體與領銜企業：協調研發、對政府負責</h4>
+      <div class="who">Consoft Sistemi（領銜，後併入 ALTEN Italia）＋ 22 個夥伴</div>
+      <ul>
+        <li>領銜單位代表聯合體與區域政府往來，補助令附件列出各夥伴投資與補助額<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r1">[1]</a><a href="#r9">[9]</a></span></li>
+        <li>各夥伴依分工承擔各自的研發成果與自籌經費<span class="tag t-inf">依職能推論</span></li>
+        <li>專案風險另以 PDCA 循環的 IT 風險評估框架管理（隱私外洩、系統可用性、控制措施）<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r17">[17]</a></span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#0E7C74"><span>L3</span><small>機構責任</small></div><div class="bd">
+      <h4>公立大學醫院：法律與財務責任的最終承擔者</h4>
+      <div class="who">AOU Città della Salute e della Scienza di Torino・老年醫學科</div>
+      <ul>
+        <li><b>醫院承擔居家住院的法律責任與經濟責任</b><span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a></span></li>
+        <li>醫院提供藥品、醫療與非醫療耗材及技術設備；病人可快速、免費回院做檢查、處置或專科會診<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a></span></li>
+        <li>設有資料保護官（DPO）監督個資管理與法規遵循<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r12">[12]</a></span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#D9694C"><span>L4</span><small>臨床團隊</small></div><div class="bd">
+      <h4>居家住院多專業團隊：每天的醫療決策與執行</h4>
+      <div class="who">老年醫學科醫師、護理協調者、個案管理／收案護理師、護理師、物理治療師、社工、諮商師</div>
+      <ul>
+        <li>醫師與護理師每天早上共同排定訪視，依照護複雜度、照顧者狀態與住家位置分配<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r12">[12]</a></span></li>
+        <li>訪視小組為「醫師＋護理師」或「護理師單獨」兩種；前者處理的任務範圍較廣<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r12">[12]</a></span></li>
+        <li>服務時段內緊急到府保證在 20–30 分鐘內<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a></span></li>
+        <li>收案的最終核准層級、遠距資料的判讀分工未見書面規範<span class="tag t-gap">證據缺口</span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#C28A12"><span>L5</span><small>家庭</small></div><div class="bd">
+      <h4>照顧者：收案前提，也是夜間第一線</h4>
+      <div class="who">家屬或固定照顧者</div>
+      <ul>
+        <li>適當的照顧支持是收案條件；照顧者須持續在場<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a><a href="#r29">[29]</a></span></li>
+        <li>團隊教導病人與照顧者如何處理緊急狀況、何時求救<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a></span></li>
+        <li>COVID-19 個案中，團隊透過遠距設備訓練家屬執行居家監測<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r18">[18]</a></span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#4E8A3E"><span>L6</span><small>技術支援</small></div><div class="bd">
+      <h4>平台與設備夥伴：讓資料可靠地流動</h4>
+      <div class="who">Tesi（遠距監測 TMS）、Caretek（ADAMO 手錶）、Experientia（GoCare）、Healthy Reply（Ticuro 遠距復健）、Agile Lab（WASP）、HPC4AI 運算平台</div>
+      <ul>
+        <li>提供設備、平台、資料管線與運算資源；手錶資料經基地台加密傳輸<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r12">[12]</a><a href="#r18">[18]</a><a href="#r25">[25]</a></span></li>
+        <li>不承擔臨床判斷；設備異常應通報醫院團隊<span class="tag t-inf">依職能推論</span></li>
+        <li>計畫結束後的設備所有權、維修、資安事件通報與責任保險未見公開<span class="tag t-gap">證據缺口</span></li>
+      </ul></div></div>
+
+    <div class="layer"><div class="lv" style="background:#5F6B76"><span>L7</span><small>緊急系統</small></div><div class="bd">
+      <h4>區域緊急醫療：補上 20:00 到 08:00 的空檔</h4>
+      <div class="who">區域緊急服務（簡報列 112 單一緊急號碼）</div>
+      <ul>
+        <li>夜間緊急狀況轉由區域緊急服務處理<span class="tag t-ok">文獻明載</span><span class="cite"><a href="#r24">[24]</a></span></li>
+        <li>隔天早上居家住院團隊應接回後續處置<span class="tag t-inf">依職能推論</span></li>
+        <li>夜間出勤紀錄如何回傳團隊、急診收治後責任何時轉移，未見公開協議<span class="tag t-gap">證據缺口</span></li>
+      </ul></div></div>
+  </div>
+
+  <h3>24 小時責任時鐘</h3>
+  <div class="two">
+    <div class="svgbox">
+      <svg viewBox="0 0 320 300" role="img">
+        <title>居家住院 24 小時責任分配</title>
+        <circle cx="160" cy="150" r="96" fill="none" stroke="#F1EEE8" stroke-width="34"/>
+        <!-- day 8->20 : theta 30 -> 210 -->
+        <path d="M 243.14 198 A 96 96 0 1 1 76.86 102" fill="none" stroke="#0E7C74" stroke-width="34"/>
+        <!-- night 20->8 -->
+        <path d="M 76.86 102 A 96 96 0 0 1 243.14 198" fill="none" stroke="#5F6B76" stroke-width="34" opacity=".85" transform="rotate(0)"/>
+        <g font-size="13" fill="#22303C" font-weight="700" text-anchor="middle">
+          <text x="160" y="36">0 時</text><text x="284" y="155">6</text><text x="160" y="282">12 時</text><text x="36" y="155">18</text>
+        </g>
+        <text x="262" y="228" font-size="12" fill="#0E7C74" font-weight="700">08:00</text>
+        <text x="22" y="86" font-size="12" fill="#5F6B76" font-weight="700">20:00</text>
+        <text x="160" y="140" text-anchor="middle" font-size="15" font-weight="900" fill="#22303C">誰在值班？</text>
+        <text x="160" y="162" text-anchor="middle" font-size="12" fill="#5F6B76">照顧者全天在場</text>
+        <circle cx="160" cy="150" r="58" fill="none" stroke="#C28A12" stroke-width="5" stroke-dasharray="4 5"/>
+      </svg>
+      <div class="legend" style="justify-content:center"><span><i style="background:var(--teal)"></i>08–20 居家住院團隊</span><span><i style="background:#5F6B76"></i>20–08 區域緊急服務</span><span><i style="background:var(--gold)"></i>照顧者</span></div>
+    </div>
+    <div class="card qa">
+      <p style="margin-top:0"><b>白天（08:00–20:00）</b>：團隊每天執行訪視；病情變化時可在 20–30 分鐘內緊急到府<span class="cite"><a href="#r24">[24]</a></span>。</p>
+      <p><b>夜間（20:00–08:00）</b>：照顧者依受訓內容判斷，緊急時撥打區域緊急服務<span class="cite"><a href="#r24">[24]</a></span>。</p>
+      <p><b>設備告警呢？</b>公開資料沒有說明夜間誰接收穿戴裝置或遠距監測的告警。ADAMO 手錶研究階段的資料是自動存檔，事後由研究與醫療人員檢視<span class="cite"><a href="#r21">[21]</a></span>，因此不能假設「戴了手錶，跌倒就會有人立刻趕來」。</p>
+      <p style="margin-bottom:0"><b>為什麼重要？</b>如果系統 24 小時產生資料，但人力只排 12 小時，夜間就會出現「有資料、沒人看」的空窗。任何移植 CANP 模式的地方，都要先把這段寫清楚。</p>
+    </div>
+  </div>
+
+  <h3>任務責任矩陣</h3>
+  <p style="font-size:15px;color:var(--muted)"><span class="chip R">主</span> 主責執行　<span class="chip A">核</span> 最終負責或核定　<span class="chip C">協</span> 協助或提供資料　<span class="chip I">知</span> 被告知</p>
+  <div class="tbl"><table>
+    <tr><th>任務</th><th>醫院</th><th>醫師</th><th>護理協調／個管</th><th>護理師</th><th>其他專業</th><th>照顧者</th><th>技術夥伴</th><th>緊急服務</th><th>依據</th></tr>
+    <tr><td>收案評估與同意</td><td class="c"><span class="chip A">核</span></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">協</span></td><td></td><td></td><td>[12][24]<br><span class="tag t-inf">分工推論</span></td></tr>
+    <tr><td>每日訪視排程</td><td></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip I">知</span></td><td class="c"><span class="chip C">協</span></td><td></td><td>[12][23]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>到府處置（輸液、抗生素、輸血）</td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip C">協</span></td><td></td><td></td><td>[12]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>藥品、耗材、設備供應</td><td class="c"><span class="chip A">核</span></td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td></td><td></td><td class="c"><span class="chip C">協</span></td><td></td><td>[24]<br><span class="tag t-ok">醫院明載</span></td></tr>
+    <tr><td>遠距資料產生與傳輸</td><td></td><td></td><td></td><td></td><td></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip R">主</span></td><td></td><td>[12]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>遠距資料判讀與介入</td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">協</span></td><td></td><td class="c"><span class="chip I">知</span></td><td></td><td><span class="tag t-inf">推論</span></td></tr>
+    <tr><td>營養監測（聊天機器人飲食日誌）</td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">協</span></td><td></td><td>[12]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>服務時段內緊急狀況</td><td></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip C">協</span></td><td></td><td></td><td>[24]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>夜間緊急狀況</td><td></td><td class="c"><span class="chip I">知</span></td><td></td><td></td><td></td><td class="c"><span class="chip R">主</span></td><td></td><td class="c"><span class="chip R">主</span></td><td>[24]<br><span class="tag t-gap">回報機制缺</span></td></tr>
+    <tr><td>個資保護與合規</td><td class="c"><span class="chip A">核</span></td><td></td><td></td><td></td><td class="c"><span class="chip R">DPO</span></td><td></td><td class="c"><span class="chip C">協</span></td><td></td><td>[12][16]<br><span class="tag t-ok">明載</span></td></tr>
+    <tr><td>出院與社區銜接</td><td></td><td class="c"><span class="chip R">主</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">協</span></td><td class="c"><span class="chip C">社工</span></td><td class="c"><span class="chip C">協</span></td><td></td><td></td><td><span class="tag t-inf">推論</span></td></tr>
+    <tr><td>研發經費執行與核銷</td><td class="c"><span class="chip C">協</span></td><td></td><td></td><td></td><td></td><td></td><td class="c"><span class="chip R">領銜</span></td><td></td><td>[1][9]<br><span class="tag t-ok">明載</span></td></tr>
+  </table></div>
+
+  <h3>團隊人力：三個時間點的快照</h3>
+  <div class="tbl"><table>
+    <tr><th>職類</th><th>2018 年前後（架構論文）<span class="cite"><a href="#r12">[12]</a></span></th><th>2021 年（年會簡報）<span class="cite"><a href="#r24">[24]</a></span></th><th>2026 年（新聞報導）<span class="cite"><a href="#r29">[29]</a></span></th></tr>
+    <tr><td>醫師</td><td>老年醫學科醫師 4 人＋實習生 2 人</td><td>5 人（老年醫學 4、內科 1）</td><td>4 人</td></tr>
+    <tr><td>護理</td><td>14 人（含護理協調者、收案管理者）</td><td>護理師 13＋個管 1＋協調者 1</td><td>護理師 11＋協調者 1</td></tr>
+    <tr><td>復健</td><td>物理治療師 4 人（兼任）</td><td>2 人</td><td>未載</td></tr>
+    <tr><td>社會支持</td><td>社工 1、諮商師 1</td><td>社工 1</td><td>未載</td></tr>
+  </table></div>
+  <p style="font-size:14.5px;color:var(--muted)">各來源統計口徑不同（是否含兼任、實習、行政），只能看出大致規模：一支約 20 人的團隊，每日同時照護約 20 位病人<span class="cite"><a href="#r12">[12]</a></span>。</p>
+</div></section>
+
+<!-- 6 -->
+<section id="s6"><div class="wrap">
+  <h2><span class="num">06</span>AAL 架構：替居家住院裝上「數位神經系統」</h2>
+  <p class="lead">AAL（Ambient Assisted Living，環境輔助生活）常被想成「家裡裝感測器」。CANP 的定義寬得多：它把居家環境、醫療設備、臨床團隊和醫院資訊系統視為同一個服務生態系<span class="cite"><a href="#r12">[12]</a></span>。</p>
+
+  <h3>七項整合服務</h3>
+  <div class="grid g4">
+    <div class="card"><b>📡 遠距醫療平台</b><p style="margin:4px 0 0;font-size:15px">血氧、心電圖等居家量測</p></div>
+    <div class="card"><b>💊 用藥與遵從管理</b><p style="margin:4px 0 0;font-size:15px">藥物治療與服藥遵循度</p></div>
+    <div class="card"><b>🧪 臨床試驗管理</b><p style="margin:4px 0 0;font-size:15px">CLIP 平台編排研究流程</p></div>
+    <div class="card"><b>🗣️ 語言復健</b><p style="margin:4px 0 0;font-size:15px">神經疾病後的語言訓練</p></div>
+    <div class="card"><b>🤖 語音助理與聊天機器人</b><p style="margin:4px 0 0;font-size:15px">按鈕式飲食日誌，供營養師檢視</p></div>
+    <div class="card"><b>⌚ 活動與跌倒監測</b><p style="margin:4px 0 0;font-size:15px">穿戴式手錶＋居家基地台</p></div>
+    <div class="card"><b>🫀 慢性病遠距照護</b><p style="margin:4px 0 0;font-size:15px">慢性與神經退化疾病管理</p></div>
+    <div class="card" style="background:var(--teal-soft)"><b>來源</b><p style="margin:4px 0 0;font-size:15px">Sulis 等人架構論文<span class="cite"><a href="#r12">[12]</a></span></p></div>
+  </div>
+
+  <h3>一筆資料怎麼走：從手錶到資料庫</h3>
+  <div class="svgbox">
+    <svg viewBox="0 0 1000 430" role="img">
+      <title>CANP 事件驅動資料流</title>
+      <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8C97A3"/></marker></defs>
+      <!-- sources -->
+      <g font-size="14" font-weight="700" fill="#22303C">
+        <rect x="20" y="30" width="190" height="56" rx="12" fill="#FBEAE4" stroke="#D9694C"/><text x="115" y="54" text-anchor="middle">穿戴手錶／基地台</text><text x="115" y="74" text-anchor="middle" font-size="12" font-weight="400" fill="#5F6B76">加密傳輸＋CRC 校驗</text>
+        <rect x="20" y="104" width="190" height="56" rx="12" fill="#FBEAE4" stroke="#D9694C"/><text x="115" y="128" text-anchor="middle">遠距量測設備</text><text x="115" y="148" text-anchor="middle" font-size="12" font-weight="400" fill="#5F6B76">血氧、心電圖等</text>
+        <rect x="20" y="178" width="190" height="56" rx="12" fill="#FBEAE4" stroke="#D9694C"/><text x="115" y="202" text-anchor="middle">聊天機器人／App</text><text x="115" y="222" text-anchor="middle" font-size="12" font-weight="400" fill="#5F6B76">飲食日誌、病人回報</text>
+        <rect x="20" y="252" width="190" height="56" rx="12" fill="#FBEAE4" stroke="#D9694C"/><text x="115" y="276" text-anchor="middle">醫院居家住院資料</text><text x="115" y="296" text-anchor="middle" font-size="12" font-weight="400" fill="#5F6B76">新增／修改／刪除事件</text>
+        <rect x="20" y="326" width="190" height="56" rx="12" fill="#F1EEE8" stroke="#8C97A3"/><text x="115" y="350" text-anchor="middle">批次檔案</text><text x="115" y="370" text-anchor="middle" font-size="12" font-weight="400" fill="#5F6B76">經 SFTP 暫存區匯入匯出</text>
+      </g>
+      <!-- arrows to kafka -->
+      <g stroke="#8C97A3" stroke-width="2" marker-end="url(#ar)" fill="none">
+        <path d="M210 58 L300 170"/><path d="M210 132 L300 180"/><path d="M210 206 L300 195"/><path d="M210 280 L300 210"/><path d="M210 354 L500 354 L500 290 L536 290"/>
+      </g>
+      <text x="252" y="120" font-size="12" fill="#5F6B76" transform="rotate(50 252 120)">JSON</text>
+      <!-- kafka -->
+      <rect x="302" y="140" width="190" height="100" rx="14" fill="#E6EEF8" stroke="#3567A6" stroke-width="2"/>
+      <text x="397" y="172" text-anchor="middle" font-size="16" font-weight="900" fill="#3567A6">事件管理器</text>
+      <text x="397" y="194" text-anchor="middle" font-size="13" fill="#22303C">Apache Kafka</text>
+      <text x="397" y="214" text-anchor="middle" font-size="12" fill="#5F6B76">每條資料流一個 topic</text>
+      <text x="397" y="231" text-anchor="middle" font-size="12" fill="#5F6B76">交易日誌：晚到者也讀得到</text>
+      <!-- wasp -->
+      <rect x="540" y="110" width="200" height="200" rx="14" fill="#E3F2EF" stroke="#0E7C74" stroke-width="2"/>
+      <text x="640" y="140" text-anchor="middle" font-size="16" font-weight="900" fill="#0E7C74">WASP 資料管線</text>
+      <text x="640" y="162" text-anchor="middle" font-size="12" fill="#22303C">Spark 串流＋批次</text>
+      <rect x="560" y="176" width="160" height="50" rx="10" fill="#fff" stroke="#0E7C74"/>
+      <text x="640" y="197" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">路徑一：原樣保存</text>
+      <text x="640" y="215" text-anchor="middle" font-size="11.5" fill="#5F6B76">原始 JSON 存 MongoDB</text>
+      <rect x="560" y="236" width="160" height="56" rx="10" fill="#fff" stroke="#0E7C74"/>
+      <text x="640" y="257" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">路徑二：整理入庫</text>
+      <text x="640" y="276" text-anchor="middle" font-size="11.5" fill="#5F6B76">辨識主鍵、欄位映射 → 集合</text>
+      <path d="M492 190 L538 190" stroke="#8C97A3" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- REST -->
+      <rect x="560" y="330" width="160" height="50" rx="10" fill="#FBF1DA" stroke="#C28A12"/>
+      <text x="640" y="352" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">REST API</text>
+      <text x="640" y="370" text-anchor="middle" font-size="11.5" fill="#5F6B76">啟停管線、觸發批次分析</text>
+      <path d="M640 330 L640 312" stroke="#C28A12" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- consumers -->
+      <g stroke="#8C97A3" stroke-width="2" marker-end="url(#ar)" fill="none"><path d="M740 160 L790 80"/><path d="M740 210 L790 190"/><path d="M740 260 L790 300"/></g>
+      <rect x="792" y="44" width="190" height="70" rx="12" fill="#F1E8F5" stroke="#7A4E8C"/>
+      <text x="887" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#22303C">臨床工作介面</text>
+      <text x="887" y="94" text-anchor="middle" font-size="12" fill="#5F6B76">GoCare 原型儀表板</text>
+      <rect x="792" y="154" width="190" height="70" rx="12" fill="#F1E8F5" stroke="#7A4E8C"/>
+      <text x="887" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#22303C">臨床試驗平台 CLIP</text>
+      <text x="887" y="204" text-anchor="middle" font-size="12" fill="#5F6B76">Keycloak 身分驗證</text>
+      <rect x="792" y="264" width="190" height="70" rx="12" fill="#F1E8F5" stroke="#7A4E8C"/>
+      <text x="887" y="292" text-anchor="middle" font-size="14" font-weight="700" fill="#22303C">HPC4AI 運算</text>
+      <text x="887" y="314" text-anchor="middle" font-size="12" fill="#5F6B76">AI 與流程探勘分析</text>
+      <text x="500" y="418" text-anchor="middle" font-size="12.5" fill="#5F6B76">依 Sulis 等人架構論文圖 3 與第 3.4 節重繪；各連線在正式醫療環境的部署程度仍待介接文件確認</text>
+    </svg>
+  </div>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card"><b style="color:var(--teal)">比喻：郵局的分信中心</b><p style="margin-bottom:0">Kafka 像一座分信中心。每台設備把信（JSON 訊息）投進自己的信箱（topic），誰需要就去訂閱。寄件者不必認識收件者，新系統加入時只要多訂一個信箱，不用改動既有設備。這就是「鬆耦合」，也是 CANP 避免被單一廠商綁住的設計。</p></div>
+    <div class="card"><b style="color:var(--coral)">但信送到了，不等於有人讀了</b><p style="margin-bottom:0">系統能發出「資料已異動」的通知，卻無法證明臨床人員已經簽收、評估並回寫處置。這三件事要分別留下紀錄。另外，使用 JSON 和 REST API 不代表採用 HL7 FHIR；架構論文中並未提到 FHIR 或 HL7<span class="cite"><a href="#r12">[12]</a></span>。</p></div>
+  </div>
+
+  <h3>資料標準與互通性</h3>
+  <div class="tbl"><table>
+    <tr><th>面向</th><th>公開可確認</th><th>尚待確認</th></tr>
+    <tr><td>整合機制</td><td>Kafka 事件管理器、WASP 管線、MongoDB、REST、SFTP；CLIP 以微服務、Docker 與 Kubernetes 部署<span class="cite"><a href="#r12">[12]</a></span></td><td>正式上線的服務版本與部署規模</td></tr>
+    <tr><td>身分與存取</td><td>OpenID Connect／Keycloak 身分驗證<span class="cite"><a href="#r12">[12]</a></span></td><td>角色權限矩陣、稽核軌跡保存年限</td></tr>
+    <tr><td>流程與法規模型</td><td>BPMN 2.0 流程建模；以可廢止道義邏輯（DDL）半自動檢核部分 GDPR 規則<span class="cite"><a href="#r13">[13]</a><a href="#r16">[16]</a></span></td><td>檢核結果是否用於正式營運</td></tr>
+    <tr><td>醫療資料標準</td><td>未見 HL7 FHIR、openEHR、HL7 v2 的明確使用<span class="cite"><a href="#r12">[12]</a></span></td><td>資源對應、Profile、術語代碼</td></tr>
+    <tr><td>EHR 寫回</td><td>EHR 被列為核心資料來源<span class="cite"><a href="#r7">[7]</a><a href="#r12">[12]</a></span></td><td>哪些居家讀數進入正式病歷、簽核規則、病人與裝置身分配對</td></tr>
+  </table></div>
+</div></section>
+
+<!-- 7 -->
+<section id="s7"><div class="wrap">
+  <h2><span class="num">07</span>智慧輔具與遠距監測</h2>
+  <p class="lead">CANP 的設備不是孤立的硬體試辦，每一項都要回答同一個問題：這筆資料進來後，誰會看、看了會做什麼？</p>
+  <div class="tbl"><table>
+    <tr><th>工具</th><th>提供者</th><th>公開可確認</th><th>臨床用途</th><th>尚待確認</th></tr>
+    <tr><td><b>ADAMO 跌倒偵測手錶</b></td><td>Caretek</td><td>登錄 NCT04398615：單臂開放標籤、預計收 100 人、75 歲以上且過去一年至少跌倒 2 次的社區長者、追蹤 6 個月；登錄狀態為「不明」，最後已知狀態為「尚未收案」<span class="cite"><a href="#r21">[21]</a></span></td><td>活動量遙測、偵測跌倒事件、找出預測跌倒的模式</td><td>是否完成收案、真實跌倒偵測率、誤報率、即時告警的接手人</td></tr>
+    <tr><td><b>遠距監測系統 TMS</b></td><td>Tesi</td><td>用於 COVID-19 合併失智症長者的居家照護與家屬訓練<span class="cite"><a href="#r18">[18]</a></span></td><td>生命徵象遠距監測、視訊評估、照顧者指導</td><td>部署套數、量測頻率、異常自動通報規則</td></tr>
+    <tr><td><b>GoCare 儀表板</b></td><td>Experientia</td><td>與 Molinette 醫院人員透過訪談、跟班觀察、參與式工作坊迭代設計的原型<span class="cite"><a href="#r23">[23]</a></span></td><td>病人狀態總覽、訪視行事曆、團隊後勤</td><td>正式上線狀態、與 HIS 的讀寫權限</td></tr>
+    <tr><td><b>Ticuro 遠距神經復健</b></td><td>Healthy Reply／Don Gnocchi</td><td>出院病人收到套件，透過同步視訊、VR 頭戴裝置與電視小遊戲做復健；參與者為數十位虛弱長者與神經疾病病人<span class="cite"><a href="#r25">[25]</a></span></td><td>延續或恢復疫情期間中斷的復健</td><td>正式成效指標與功能改善數據</td></tr>
+    <tr><td><b>ALS 多專業遠距門診</b></td><td>Novara ALS 中心</td><td>神經科醫師、營養師、心理師、物理治療師組成遠距團隊<span class="cite"><a href="#r19">[19]</a><a href="#r20">[20]</a></span></td><td>用藥調整、呼吸評估、營養與心理支持、輔具處方</td><td>呼吸器數據串接規格、長期結果</td></tr>
+    <tr><td><b>飲食日誌聊天機器人</b></td><td>計畫夥伴</td><td>按鈕式飲食紀錄，臨床人員與營養師可檢視並快速介入<span class="cite"><a href="#r12">[12]</a></span></td><td>營養監測</td><td>使用率與介入標準</td></tr>
+  </table></div>
+  <div class="callout"><b>別混用兩種驗證：</b>ADAMO 另有一篇計步準確度研究<span class="cite"><a href="#r22">[22]</a></span>，它回答的是「步數算得準不準」，不能拿來代替「真實生活中跌倒偵測得到嗎」。要證明手錶能救人，還得追蹤真實跌倒次數、漏偵事件、每人每天誤報量、誰接手、多久到場。</div>
+</div></section>
+
+<!-- 8 -->
+<section id="s8"><div class="wrap">
+  <h2><span class="num">08</span>警訊治理：最需要補上的那一塊</h2>
+  <p class="lead">公開資料沒有揭露 CANP 的警訊分級表、數值閾值、回應時限或夜間值班制度。為了守住科學嚴謹度，本報告不把外部常見的「綠黃橘紅」色碼或固定生理閾值套到 CANP 身上。</p>
+  <div class="two">
+    <div class="card">
+      <b style="color:var(--teal)">一則警訊的完整生命週期</b>
+      <div class="hbar"><span>① 觸發</span><div class="track"><div class="fill" style="width:100%;background:var(--coral)"></div></div><span>設備</span></div>
+      <div class="hbar"><span>② 傳輸與過濾</span><div class="track"><div class="fill" style="width:85%;background:var(--blue)"></div></div><span>平台</span></div>
+      <div class="hbar"><span>③ 推送給誰</span><div class="track"><div class="fill" style="width:60%;background:var(--gold)"></div></div><span>？</span></div>
+      <div class="hbar"><span>④ 簽收與判讀</span><div class="track"><div class="fill" style="width:45%;background:var(--teal)"></div></div><span>？</span></div>
+      <div class="hbar"><span>⑤ 處置與升級</span><div class="track"><div class="fill" style="width:35%;background:var(--plum)"></div></div><span>？</span></div>
+      <div class="hbar"><span>⑥ 寫回病歷</span><div class="track"><div class="fill" style="width:20%;background:#8C97A3"></div></div><span>？</span></div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:0">條長示意公開資料的揭露程度：前段技術面記載較多，後段臨床治理面幾乎空白（本報告評估）。</p>
+    </div>
+    <div class="card">
+      <b style="color:var(--coral)">取得內部 SOP 時應優先查核</b>
+      <ul style="font-size:15.5px;padding-left:20px;margin-bottom:0">
+        <li><b>觸發來源</b>：血氧、心率、症狀主訴、活動量下降、跌倒、漏服藥、照顧者回報，各自如何進入系統</li>
+        <li><b>推送方式</b>：即時推播給值班人員，還是由臨床人員在儀表板定時檢視</li>
+        <li><b>分級與時限</b>：各級警訊的接收人、內部回應時限、升級轉診路徑</li>
+        <li><b>非上班時段</b>：夜間、週末、假日與區域緊急服務及連續照護服務的銜接</li>
+        <li><b>設備異常</b>：誤報過濾、漏報追蹤、斷線、電量耗盡、逾時未回應的自動升級</li>
+        <li><b>歸檔</b>：觸發與處置紀錄是否寫回正式病歷，或只留在平台日誌</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- 9 -->
+<section id="s9"><div class="wrap">
+  <h2><span class="num">09</span>財源、支付與誘因</h2>
+  <div class="two">
+    <div class="svgbox">
+      <svg viewBox="0 0 360 260" role="img">
+        <title>CANP 經費結構</title>
+        <circle cx="130" cy="130" r="80" fill="none" stroke="#F1EEE8" stroke-width="38"/>
+        <circle cx="130" cy="130" r="80" fill="none" stroke="#D9694C" stroke-width="38" stroke-dasharray="241.5 502.7" transform="rotate(-90 130 130)"/>
+        <circle cx="130" cy="130" r="80" fill="none" stroke="#0E7C74" stroke-width="38" stroke-dasharray="261.2 502.7" stroke-dashoffset="-241.5" transform="rotate(-90 130 130)"/>
+        <text x="130" y="124" text-anchor="middle" font-size="22" font-weight="900" fill="#22303C">€1,146.5 萬</text>
+        <text x="130" y="146" text-anchor="middle" font-size="12.5" fill="#5F6B76">總投資</text>
+        <rect x="240" y="92" width="14" height="14" rx="3" fill="#D9694C"/><text x="260" y="104" font-size="13" fill="#22303C">公共補助</text><text x="260" y="122" font-size="13" font-weight="700" fill="#D9694C">€550.95 萬・48.1%</text>
+        <rect x="240" y="146" width="14" height="14" rx="3" fill="#0E7C74"/><text x="260" y="158" font-size="13" fill="#22303C">預算差額</text><text x="260" y="176" font-size="13" font-weight="700" fill="#0E7C74">€595.55 萬・51.9%</text>
+      </svg>
+      <p style="font-size:13.5px;color:var(--muted);text-align:center;margin:0">依 2018 年核定數<span class="cite"><a href="#r1">[1]</a><a href="#r9">[9]</a></span>；差額由誰實際負擔仍須決算佐證</p>
+    </div>
+    <div>
+      <div class="card">
+        <b style="color:var(--teal)">居家住院本身「省」嗎？</b>
+        <p>架構論文提到，居家住院的每日平均成本由約 400 歐元降到約 155 歐元<span class="cite"><a href="#r12">[12]</a></span>。不過論文未說明 400 歐元的比較基準與計算方法，宜視為描述性數字，不是正式的成本效益分析。</p>
+        <p style="margin-bottom:0">醫院負擔藥品、耗材與設備，病人回院檢查不另收費<span class="cite"><a href="#r24">[24]</a></span>；這說明居家住院在都靈屬於公立醫院的住院服務範疇。</p>
+      </div>
+    </div>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>財源類別</th><th>可確認內容</th><th>尚待確認</th></tr>
+    <tr><td>區域與歐盟研發補助</td><td>POR FESR 就總投資 €11,465,000 核定初始補助 €5,509,500；補助令附件列有各夥伴經濟表<span class="cite"><a href="#r1">[1]</a><a href="#r9">[9]</a></span></td><td>實際核銷、撥付與自籌支出</td></tr>
+    <tr><td>國家衛生服務（SSN）</td><td>居家住院由公立醫院提供，醫院承擔經濟責任<span class="cite"><a href="#r24">[24]</a></span></td><td>CANP 平台或遠距監測是否納入大區給付項目與費率代碼</td></tr>
+    <tr><td>長照與社會照護</td><td>團隊配置社工<span class="cite"><a href="#r12">[12]</a><a href="#r24">[24]</a></span></td><td>照顧服務員、喘息服務、住家改善的給付來源與搭配規則</td></tr>
+    <tr><td>病人自費</td><td>回院檢查、處置與會診免費<span class="cite"><a href="#r24">[24]</a></span></td><td>正式營運後是否有其他自付項目</td></tr>
+    <tr><td>設備維運</td><td>研發期間由計畫支應平台開發與設備試辦</td><td>常態化後的租賃、耗材、維修、回收與折舊歸屬</td></tr>
+  </table></div>
+</div></section>
+
+<!-- 10 -->
+<section id="s10"><div class="wrap">
+  <h2><span class="num">10</span>成效與證據：我們到底知道多少？</h2>
+  <p class="lead">CANP 的學術產出豐富，但大多屬於流程分析、架構設計、個案報告與單組觀察。截至目前，尚未查得針對整個整合平台的隨機對照試驗或完整成本效益分析。</p>
+
+  <div class="two">
+    <div class="svgbox">
+      <svg viewBox="0 0 420 330" role="img">
+        <title>CANP 證據層級</title>
+        <polygon points="210,20 270,90 150,90" fill="#F1EEE8" stroke="#C9C2B4" stroke-dasharray="5 4"/>
+        <text x="210" y="74" text-anchor="middle" font-size="12" fill="#8C97A3">RCT／成本效益</text>
+        <polygon points="150,94 270,94 320,160 100,160" fill="#FBF1DA" stroke="#C28A12"/>
+        <text x="210" y="124" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">單組前後比較</text>
+        <text x="210" y="144" text-anchor="middle" font-size="11.5" fill="#5F6B76">Novara ALS 19 人</text>
+        <polygon points="100,164 320,164 370,230 50,230" fill="#FBEAE4" stroke="#D9694C"/>
+        <text x="210" y="194" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">個案報告與服務統計</text>
+        <text x="210" y="214" text-anchor="middle" font-size="11.5" fill="#5F6B76">COVID 失智個案、年度結局、Don Gnocchi 復健</text>
+        <polygon points="50,234 370,234 410,300 10,300" fill="#E3F2EF" stroke="#0E7C74"/>
+        <text x="210" y="262" text-anchor="middle" font-size="13" font-weight="700" fill="#22303C">流程建模、模擬、架構、法規邏輯、風險框架</text>
+        <text x="210" y="282" text-anchor="middle" font-size="11.5" fill="#5F6B76">產出最多、也最扎實的一層</text>
+        <text x="210" y="322" text-anchor="middle" font-size="12" fill="#5F6B76">虛線＝尚未查得</text>
+      </svg>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><b style="color:var(--teal)">① 流程分析與模擬</b><p style="margin:4px 0 0;font-size:15.5px">以 Molinette 居家住院的真實事件日誌，進行 BPMN 建模、離散事件模擬與流程探勘，找出收案瓶頸並模擬導入遠距設備後的人力負荷<span class="cite"><a href="#r13">[13]</a><a href="#r14">[14]</a><a href="#r15">[15]</a></span>。</p></div>
+      <div class="card" style="margin-bottom:14px"><b style="color:var(--blue)">② 架構、法規與風險</b><p style="margin:4px 0 0;font-size:15.5px">事件驅動 AAL 架構<span class="cite"><a href="#r12">[12]</a></span>；以 BPMN 結合 DDL 半自動檢核部分 GDPR 規則<span class="cite"><a href="#r16">[16]</a></span>；以三年期專案建立 PDCA 式 IT 風險評估框架<span class="cite"><a href="#r17">[17]</a></span>。</p></div>
+      <div class="card"><b style="color:var(--gold)">③ 區域認可</b><p style="margin:4px 0 0;font-size:15.5px">2021 年 5 月獲皮埃蒙特大區「創新與研究」獎，並獲公私協力類別肯定<span class="cite"><a href="#r25">[25]</a><a href="#r26">[26]</a></span>；媒體報導 Novara 醫院與 ALS 中心的居家照護角色<span class="cite"><a href="#r27">[27]</a></span>。</p></div>
+    </div>
+  </div>
+
+  <h3>三個臨床研究，各自說明了什麼</h3>
+  <div class="grid g3">
+    <div class="card">
+      <b style="color:var(--coral)">👵 都靈：COVID-19＋失智</b>
+      <p style="font-size:15.5px">一位 91 歲重度失智女性確診後留在家中照護。家屬積極參與，團隊以遠距設備指導照顧者並補充居家監測<span class="cite"><a href="#r18">[18]</a></span>。</p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:0"><b>能說明：</b>照顧者訓練的具體作用。<br><b>不能說明：</b>避免住院率，也無法把結果單獨歸功於 TMS。</p>
+    </div>
+    <div class="card">
+      <b style="color:var(--teal)">🧠 Novara：ALS 遠距門診</b>
+      <div class="hbar" style="grid-template-columns:96px 1fr 50px"><span>調整藥物</span><div class="track"><div class="fill" style="width:57.9%;background:var(--teal)"></div></div><span>11/19</span></div>
+      <div class="hbar" style="grid-template-columns:96px 1fr 50px"><span>開立輔具</span><div class="track"><div class="fill" style="width:56.3%;background:var(--blue)"></div></div><span>9/16</span></div>
+      <div class="hbar" style="grid-template-columns:96px 1fr 50px"><span>啟動 NIV</span><div class="track"><div class="fill" style="width:10.5%;background:var(--coral)"></div></div><span>2/19</span></div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:0">功能量表（ALSFRS-R）每月下降幅度，視訊期間 0.49 分，視訊前 0.88 分<span class="cite"><a href="#r20">[20]</a></span>。<b>但</b>這是單組前後比較，不能推論平台延緩了病程；ALS 本身進展速度就因人因時而異。</p>
+    </div>
+    <div class="card">
+      <b style="color:var(--gold)">⌚ ADAMO：跌倒偵測</b>
+      <p style="font-size:15.5px">研究問題是手錶能否辨識日常生活中的跌倒。主要終點為自述跌倒事件，另評估生活品質與跌倒恐懼<span class="cite"><a href="#r21">[21]</a></span>。</p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:0"><b>注意：</b>登錄的 100 人是預估值，預定 2020 年底完成，目前狀態不明。預估人數與日期無法證實收足人數或救援成效。</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 11 -->
+<section id="s11"><div class="wrap">
+  <h2><span class="num">11</span>可移植的經驗與落地風險</h2>
+  <p class="lead">想借鏡 CANP，最值得帶走的不是某支手錶或某個 App，而是一套工程方法：<b>既有的居家住院臨床量能 ＋ 先看清流程 ＋ 事件驅動的整合平台</b>。</p>
+  <div class="grid g3">
+    <div class="card"><b>🔍 先分析流程，再導入科技</b><p style="font-size:15.5px;margin-bottom:0">用 BPMN 與流程探勘找出收案、訪視、出院的真實瓶頸，再決定科技介入點<span class="cite"><a href="#r13">[13]</a><a href="#r14">[14]</a></span>。</p></div>
+    <div class="card"><b>👩‍⚕️ 讓第一線參與設計</b><p style="font-size:15.5px;margin-bottom:0">GoCare 透過跟班觀察與參與式工作坊迭代，目標是減少排程與協調負擔<span class="cite"><a href="#r23">[23]</a></span>。</p></div>
+    <div class="card"><b>🔌 鬆耦合整合異質資料</b><p style="font-size:15.5px;margin-bottom:0">以事件管理器串接不同廠商設備與醫院資料，降低資料孤島與廠商鎖定<span class="cite"><a href="#r12">[12]</a></span>。</p></div>
+    <div class="card"><b>🏡 把 AAL 當服務生態系</b><p style="font-size:15.5px;margin-bottom:0">串起居家環境、照顧者訓練、設備商、臨床團隊與資訊系統<span class="cite"><a href="#r12">[12]</a><a href="#r18">[18]</a></span>。</p></div>
+    <div class="card"><b>🔒 隱私與合規內建</b><p style="font-size:15.5px;margin-bottom:0">設計階段即導入 GDPR 邏輯檢核與 IT 風險控制<span class="cite"><a href="#r16">[16]</a><a href="#r17">[17]</a></span>。</p></div>
+    <div class="card"><b>⚖️ 分清計畫責任與臨床責任</b><p style="font-size:15.5px;margin-bottom:0">技術夥伴交付系統，醫院承擔醫療的法律與財務責任<span class="cite"><a href="#r24">[24]</a></span>；這條線劃清楚，合作才走得久。</p></div>
+  </div>
+
+  <h3>五項落地風險</h3>
+  <div class="tbl"><table>
+    <tr><th>風險</th><th>為什麼會發生</th><th>可以怎麼防</th></tr>
+    <tr><td><b>資料互通</b></td><td>公開文獻未證實 FHIR 等國際標準在正式環境落地，新增設備或對接其他醫院 HIS 可能需要大量客製</td><td>在採購規格中明訂標準 API 與術語代碼</td></tr>
+    <tr><td><b>警訊疲勞</b></td><td>連續監測資料大量湧入，若無分級閾值、過濾與回應時限，容易「有資料、無人處置」</td><td>先定義誰看、多久內看、看完做什麼，再擴大監測</td></tr>
+    <tr><td><b>夜間與跨機構責任</b></td><td>團隊 08–20 運作，夜間轉由緊急服務；設備告警與交接若無書面協議，易生爭議</td><td>建立夜間告警路由、交接紀錄與隔日接回流程</td></tr>
+    <tr><td><b>財務永續</b></td><td>研發補助有期限；若平台與監測未納入常規給付，示範結束後難以維持</td><td>試辦期間同步蒐集成本資料，規劃給付項目</td></tr>
+    <tr><td><b>設備全生命週期</b></td><td>穿戴裝置需要校準、充電、清消、物流回收與資安修補，公開資料未揭露規模化後的後勤體系</td><td>把維運責任寫進合約，含資安事件通報時限</td></tr>
+  </table></div>
+
+  <h3>跨案例比較時建議使用的欄位</h3>
+  <div class="tbl"><table>
+    <tr><th>比較面向</th><th>CANP（都靈／皮埃蒙特）</th></tr>
+    <tr><td>制度定位</td><td>區域研發補助計畫，依附在公立大學醫院既有的居家住院服務上</td></tr>
+    <tr><td>病人旅程</td><td>急診／病房／家醫轉介 → 收案與照顧者評估 → 每日到府＋遠距監測 → 出院或轉院</td></tr>
+    <tr><td>團隊組成</td><td>老年醫學科醫師、護理師（含協調者與個管）、物理治療師、社工、照顧者，及技術與研究夥伴</td></tr>
+    <tr><td>智慧輔具</td><td>跌倒偵測手錶、遠距監測系統、協調儀表板、遠距復健、飲食聊天機器人</td></tr>
+    <tr><td>資料架構</td><td>Kafka 事件管理器＋WASP 管線；BPMN 2.0；FHIR 使用情形未揭露</td></tr>
+    <tr><td>責任分層</td><td>區域政府 → ATS 聯合體 → 醫院（法律與財務責任）→ 臨床團隊 → 照顧者 → 技術夥伴 → 區域緊急服務</td></tr>
+    <tr><td>時間覆蓋</td><td>08–20 團隊；服務時段內 20–30 分鐘緊急到府；夜間轉區域緊急服務</td></tr>
+    <tr><td>財務</td><td>總投資 €1,146.5 萬、補助 48.1%；常規給付拆分未揭露</td></tr>
+    <tr><td>實證</td><td>流程模型、法規邏輯、風險框架、個案與單組研究、區域獎項；缺大型對照試驗</td></tr>
+  </table></div>
+
+  <h3>解讀限制</h3>
+  <div class="grid g2">
+    <div class="card"><b>1. 區域試辦 ≠ 全國制度</b><p style="font-size:15.5px;margin-bottom:0">CANP 是皮埃蒙特大區的研發計畫，不應等同義大利全國的居家住院標準<span class="cite"><a href="#r1">[1]</a><a href="#r9">[9]</a></span>。</p></div>
+    <div class="card"><b>2. 數位化是疊加，不是從零開始</b><p style="font-size:15.5px;margin-bottom:0">服務自 1985 年運作，許多成效來自成熟的臨床組織，不能全歸功於科技<span class="cite"><a href="#r24">[24]</a></span>。</p></div>
+    <div class="card"><b>3. 技術揭露多，治理揭露少</b><p style="font-size:15.5px;margin-bottom:0">資料管線寫得很細，警訊閾值、夜間人力、FHIR 對應與給付費率幾乎未公開。</p></div>
+    <div class="card"><b>4. 機構與時程變動</b><p style="font-size:15.5px;margin-bottom:0">領銜企業已併入 ALTEN Italia，補助調整延續到 2023 年，兩份名冊的起訖日期也不一致<span class="cite"><a href="#r4">[4]</a><a href="#r7">[7]</a><a href="#r9">[9]</a><a href="#r11">[11]</a></span>。</p></div>
+  </div>
+</div></section>
+
+<!-- refs -->
+<section id="refs" class="refs"><div class="wrap">
+  <h2><span class="num">📚</span>參考資料</h2>
+  <p style="color:var(--muted);font-size:14.5px">所有連結於 2026 年 11 月查閱。</p>
+
+  <h3>一、官方行政文件</h3>
+  <ol>
+    <li id="r1">Regione Piemonte. Determinazione Dirigenziale n. 127 del 05/04/2018 — POR FESR 2014/2020, Azione I.1b.2.2, Piattaforma "Salute e Benessere". Concessione contributo progetto "La Casa nel Parco (CANP)". <a href="https://bandi.regione.piemonte.it/system/files/DD%20127%20DEL%2005-04-2018%20-CONCESSIONE%20CONTRIBUTO%20PROGETTO%20%20CANP.pdf">PDF</a></li>
+    <li id="r2">Regione Piemonte. (2021). IR20, "CANP" e gli altri: esempi dell'eccellenza di un sistema. <a href="https://www.regione.piemonte.it/web/temi/fondi-progetti-europei/fondo-europeo-sviluppo-regionale-fesr/programmazione-2014-2020/ir20-canp-gli-altri-esempi-delleccellenza-un-sistema">網頁</a></li>
+    <li id="r3">Regione Piemonte. (2021). Determinazione Dirigenziale n. 97 — CANP. Bollettino Ufficiale n. 16. <a href="https://www.regione.piemonte.it/governo/bollettino/abbonati/2021/16/attach/dda1900000097_10600.pdf">PDF</a></li>
+    <li id="r4">Regione Piemonte. (2023). Determinazione Dirigenziale n. 241 del 07/06/2023 — Rimodulazione concessione contributo CANP. Bollettino Ufficiale n. 24. <a href="https://www.regione.piemonte.it/governo/bollettino/abbonati/2023/24/attach/dda1900000241_10600.pdf">PDF</a>；<a href="https://www.regione.piemonte.it/governo/bollettino/abbonati/2023/24/siste/index.htm">官方索引</a></li>
+    <li id="r5">Regione Piemonte. D.D. 25 novembre 2019, n. 656（CANP 補助調整）. <a href="https://www.regione.piemonte.it/governo/bollettino/abbonati/2020/06/suppo1/index.htm">公報目錄</a></li>
+    <li id="r6">Regione Piemonte. (2021). Fondo Europeo di Sviluppo Regionale 2014-20: un Album delle Buone Pratiche. <a href="https://www.regione.piemonte.it/web/media/27678/download">PDF</a></li>
+  </ol>
+
+  <h3>二、研究機構與合作夥伴</h3>
+  <ol start="7">
+    <li id="r7">ISI Foundation. CANP – Casa Nel Parco. <a href="https://www.isi.it/project/canp-casa-nel-parco/">網頁</a></li>
+    <li id="r8">HPC4AI, University of Turin. CANP: AI-enabled telemedicine. <a href="https://hpc4ai.unito.it/canp-ai-enabled-telemedicine/">網頁</a></li>
+    <li id="r9">Politecnico di Torino. (2024). Progetti POR FESR 2014-2020（CANP – La casa nel parco）. <a href="https://www.polito.it/sites/default/files/2024-10/Progetti_POR_FESR_2014_20_rev11.pdf">PDF</a></li>
+    <li id="r10">Augeos S.p.A. Progetti — La Casa Nel Parco (CANP). <a href="https://www.augeos.it/progetti/">網頁</a></li>
+    <li id="r11">ALTEN Italia. ALTEN Italia Research Programs. <a href="https://www.alten.it/alten-italia-research-programs/">網頁</a></li>
+  </ol>
+
+  <h3>三、同行評審論文與會議文獻</h3>
+  <ol start="12">
+    <li id="r12">Sulis E, Amantea IA, Aldinucci M, Boella G, Marinello R, Grosso M, Platter P, Ambrosini S. (2024). An ambient assisted living architecture for hospital at home coupled with a process-oriented perspective. <i>Journal of Ambient Intelligence and Humanized Computing</i>, 15(5), 2737–2755. doi:10.1007/s12652-022-04388-6. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9490692/">PMC9490692</a></li>
+    <li id="r13">Amantea IA, Arnone M, Di Leva A, Sulis E, Bianca D, Brunetti E, Marinello R. (2019). Modeling and Simulation of the Hospital-at-Home Service Admission Process. <i>SIMULTECH 2019</i>, 293–300. doi:10.5220/0007928602930300. <a href="https://www.scitepress.org/Papers/2019/79286/79286.pdf">PDF</a></li>
+    <li id="r14">Amantea IA, Sulis E, Boella G, Marinello R, Bianca D, Brunetti E, Bo M, Fernández-Llatas C. (2020). A Process Mining Application for the Analysis of Hospital-at-Home Admissions. <i>Stud Health Technol Inform</i>, 270, 522–526. doi:10.3233/SHTI200215. <a href="https://iris.unito.it/retrieve/882775f2-6b6e-4abd-90c4-d7d4ae7ffc0b/MIE_2020_Geneve.pdf">PDF</a></li>
+    <li id="r15">Amantea IA, Sulis E, Boella G, Marinello R, Grosso M, Crespo A. (2022). A Modeling Framework for an Innovative e-Health Service: The Hospital at Home. In <i>Simulation and Modeling Methodologies, Technologies and Applications</i> (LNNS 306). Springer. <a href="https://iris.unito.it/handle/2318/1889411">IRIS UniTo</a></li>
+    <li id="r16">Amantea IA, Robaldo L, Sulis E, Boella G, Governatori G. (2021). Semi-automated checking for regulatory compliance in e-Health. arXiv:2110.07710. <a href="https://arxiv.org/abs/2110.07710">arXiv</a></li>
+    <li id="r17">Sulis E, Cordero A, Donetti S, Ferrero P, Violato A. (2021). A Framework for Project Risk Assessment in Telehealth. <i>IEEE/ACM CHASE 2021</i>, 216–221. doi:10.1109/CHASE52844.2021.00043. <a href="https://iris.unito.it/retrieve/c9bb5e22-173f-408c-821e-073d6f7c9f53/AIIOT4DH_risk_assessment.pdf">PDF</a></li>
+    <li id="r18">Marinello R, Brunetti E, Luppi C, Bianca D, Tibaldi V, Isaia G, Bo M. (2021). Telemedicine-assisted care of an older patient with COVID-19 and dementia: bridging the gap between hospital and home. <i>Aging Clin Exp Res</i>, 33(6), 1753–1756. doi:10.1007/s40520-021-01875-2. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8129597/">PMC8129597</a></li>
+    <li id="r19">De Marchi F, Cantello R, Ambrosini S, Mazzini L; CANPALS Study Group. (2020). Telemedicine and technological devices for amyotrophic lateral sclerosis in the era of COVID-19. <i>Neurol Sci</i>, 41(6), 1365–1367. doi:10.1007/s10072-020-04457-8. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7240164/">PMC7240164</a></li>
+    <li id="r20">De Marchi F, Sarnelli MF, Serioli M, De Marchi I, Zani E, Bottone N, Ambrosini S, Garone R, Cantello R, Mazzini L; CANPALS Study Group. (2021). Telehealth approach for amyotrophic lateral sclerosis patients: the experience during COVID-19 pandemic. <i>Acta Neurol Scand</i>, 143(5), 489–496. doi:10.1111/ane.13373. <a href="https://pubmed.ncbi.nlm.nih.gov/33185886/">PubMed</a>；<a href="https://research.uniupo.it/en/publications/telehealth-approach-for-amyotrophic-lateral-sclerosis-patients-th/">UPO 典藏</a></li>
+    <li id="r21">A.O.U. Città della Salute e della Scienza di Torino. Validation of the ADAMO Watch for the Early Detection of Fall Events in Older Patients (ClinicalTrials.gov NCT04398615；合作單位 Caretek S.r.l.、Consoft Sistemi S.p.A.；CANP 計畫). <a href="https://clinicaltrials.gov/study/NCT04398615">登錄頁</a></li>
+    <li id="r22">Validation of the ADAMO Care Watch for step counting in older adults（計步準確度研究）. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5806873/">PMC5806873</a></li>
+  </ol>
+
+  <h3>四、臨床服務、設計案例與媒體報導</h3>
+  <ol start="23">
+    <li id="r23">Experientia. (2020). GoCare: Interactive Dashboard For A Better Home Hospitalization Service. <a href="https://www.experientia.com/portfolio_/gocare-interactive-dashboard-for-a-better-home-hospitalization-service/">網頁</a></li>
+    <li id="r24">Tibaldi V. (2021). L'ospedale al domicilio ai tempi del COVID-19. 66° Congresso Nazionale SIGG（含服務沿革、收案條件、團隊、時段與責任）. <a href="https://www.sigg.it/assets/congressi/66-congresso-nazionale-sigg/slide/75_Tibaldi.pdf">PDF</a></li>
+    <li id="r25">Fondazione Don Carlo Gnocchi. (2021, May 28). Torino, il progetto CaNP vince il premio regionale "Innovazione e Ricerca". <a href="https://www.dongnocchi.it/news-ed-eventi/@news/torino-il-progetto-canp-vince-il-premio-regionale-innovazione-e-ricerca">網頁</a></li>
+    <li id="r26">Regione Piemonte. (2021). I vincitori di IR20, il premio del Piemonte a chi fa innovazione e ricerca. <a href="https://www.regione.piemonte.it/web/pinforma/notizie/vincitori-ir20-premio-piemonte-chi-fa-innovazione-e-ricerca">網頁</a></li>
+    <li id="r27">La Stampa. (2021, May 27). Il Maggiore laboratorio delle cure domiciliari: "È la sanità del futuro". <a href="https://www.lastampa.it/topnews/edizioni-locali/novara/2021/05/27/news/l-ospedale-maggiore-partner-del-progetto-vincitore-di-piemonte-innovazione-la-sanita-del-futuro-con-il-centro-sla-sulle-cure-domiciliari-1.40318159">網頁</a></li>
+    <li id="r28">AOU Città della Salute e della Scienza di Torino. Ospedalizzazione a Domicilio. <a href="https://www.cittadellasalute.to.it/index.php?option=com_content&amp;view=article&amp;id=25831">服務頁</a></li>
+    <li id="r29">ANSA Piemonte. (2026, April 30). Città della Salute, 600 ricoveri l'anno con ospedalizzazione a domicilio. <a href="https://www.ansa.it/amp/piemonte/notizie/2026/04/30/citta-della-salute-600-ricoveri-lanno-con-ospedalizzazione-a-domicilio_0ee7ae85-9908-4338-845d-89f6babae2f0.html">報導</a></li>
+  </ol>
+</div></section>
+
+<footer><div class="wrap">把醫院搬回家：義大利都靈 CANP 居家住院與 AAL 系統研究報告<br>本報告依公開資料整理；未公開的營運細節均標示為證據缺口，不以推測填補。</div></footer>
+</body>
+</html>
