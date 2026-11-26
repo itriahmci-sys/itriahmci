@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>在家，也被好好接住：瑞典與日本的智慧輔具、在宅醫療與分層負責</title>
+<meta name="description" content="以可查證資料解讀瑞典安全警報、醫院在家、跨院病歷查閱，完整說明日本國家—都道府縣—市町村—服務機構的在宅醫療分層負責制度，並提出台灣試辦驗證方法。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf6; --paper:#ffffff; --ink:#24292f; --muted:#5d6670; --line:#e4e1d8;
+  --se:#2f6f9f; --se-soft:#e7f0f7; --jp:#b8505a; --jp-soft:#f8e9ea;
+  --tw:#3d8a5f; --tw-soft:#e6f3eb; --amber:#b7791f; --amber-soft:#fbf1df;
+  --violet:#6b5ca5; --violet-soft:#eeebf7;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.85;font-size:17px;}
+a{color:var(--se);text-decoration-thickness:1px;text-underline-offset:3px}
+h1,h2,h3{font-family:"Noto Serif TC","Noto Sans TC",serif;line-height:1.4;color:#1d2228}
+h2{font-size:1.65rem;margin:0 0 .6rem}
+h3{font-size:1.22rem;margin:2rem 0 .6rem}
+p{margin:.7rem 0}
+sup.ref a{font-size:.72em;text-decoration:none;color:var(--muted);padding:0 1px}
+sup.ref a:hover{color:var(--se)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+/* hero */
+header.hero{background:linear-gradient(160deg,#f3f7fb 0%,#fbfaf6 55%,#fbf2f2 100%);border-bottom:1px solid var(--line)}
+.hero .wrap{padding-top:56px;padding-bottom:44px;display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center}
+.kicker{display:inline-block;font-size:.85rem;letter-spacing:.08em;color:var(--se);background:var(--se-soft);border-radius:99px;padding:3px 12px;margin-bottom:14px}
+.hero h1{font-size:2.35rem;margin:0 0 14px}
+.hero p.lead{font-size:1.1rem;color:#3a424b}
+.hero-art svg{width:100%;height:auto}
+/* layout */
+.layout{display:grid;grid-template-columns:230px 1fr;gap:40px;padding-top:36px}
+nav.toc{position:sticky;top:18px;align-self:start;font-size:.92rem;max-height:calc(100vh - 36px);overflow:auto;padding-right:6px}
+nav.toc b{display:block;margin-bottom:8px;color:var(--muted);font-weight:500;letter-spacing:.06em}
+nav.toc a{display:block;color:#3a424b;text-decoration:none;padding:5px 10px;border-left:3px solid transparent;border-radius:0 8px 8px 0}
+nav.toc a:hover{background:#f0eee7;border-left-color:var(--se)}
+nav.toc a.jp{color:var(--jp);font-weight:500}
+main section{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:34px 38px;margin-bottom:28px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.secno{font-size:.82rem;letter-spacing:.12em;color:var(--muted);display:block;margin-bottom:4px}
+section.jp-sec{border-top:5px solid var(--jp)}
+section.se-sec{border-top:5px solid var(--se)}
+section.tw-sec{border-top:5px solid var(--tw)}
+/* components */
+.callout{border-radius:12px;padding:16px 20px;margin:18px 0;background:var(--amber-soft);border-left:5px solid var(--amber)}
+.callout.blue{background:var(--se-soft);border-left-color:var(--se)}
+.callout.red{background:var(--jp-soft);border-left-color:var(--jp)}
+.callout.green{background:var(--tw-soft);border-left-color:var(--tw)}
+.callout b.t{display:block;margin-bottom:4px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:18px 0}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fdfcf9}
+.card h4{margin:6px 0 6px;font-size:1.05rem}
+.card .ico{width:42px;height:42px}
+.card p{font-size:.95rem;margin:.3rem 0}
+.tag{display:inline-block;font-size:.78rem;border-radius:99px;padding:1px 10px;margin-right:6px;background:#efede6;color:#555}
+.tag.ok{background:#e3f2e8;color:#2b6b45}.tag.warn{background:#fbefd8;color:#8a5a12}.tag.no{background:#f7e3e3;color:#8c3434}
+.stat{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0}
+.stat div{flex:1;min-width:160px;border-radius:12px;background:var(--se-soft);padding:14px 16px}
+.stat b{display:block;font-size:1.7rem;color:var(--se);font-family:"Noto Serif TC",serif}
+.stat span{font-size:.9rem;color:#3c4650}
+.tbl{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.94rem;min-width:620px}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:#f4f2ec;font-weight:700;color:#333}
+tr:hover td{background:#fcfbf7}
+figure{margin:22px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:8px;text-align:center}
+ol.steps{counter-reset:s;list-style:none;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:10px 0 10px 52px;border-bottom:1px dashed var(--line)}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:10px;width:36px;height:36px;border-radius:50%;background:var(--tw);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+.layer .lh{padding:16px;color:#fff;font-weight:700;display:flex;flex-direction:column;justify-content:center}
+.layer .lh small{font-weight:400;opacity:.9;font-size:.8rem}
+.layer .lb{padding:14px 20px;background:#fff}
+.layer .lb ul{margin:.3rem 0;padding-left:1.2em}
+.l1 .lh{background:#8e3b46}.l2 .lh{background:#b8505a}.l3 .lh{background:#cf7a68}.l4 .lh{background:#d99a5b}.l5 .lh{background:#9c8f6a}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin:10px 0;background:#fdfcf9}
+details summary{cursor:pointer;font-weight:700}
+.refs ol{padding-left:1.6em;font-size:.9rem}
+.refs li{margin:6px 0;word-break:break-word}
+.refs h3{margin-top:1.4rem}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:30px 0 50px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);justify-content:center}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px}
+  nav.toc b{width:100%}
+  nav.toc a{border:1px solid var(--line);border-radius:99px;padding:3px 12px}
+  .hero .wrap{grid-template-columns:1fr}
+  .grid3,.grid2{grid-template-columns:1fr}
+  main section{padding:24px 20px}
+  .layer{grid-template-columns:1fr}
+  .hero h1{font-size:1.8rem}
+}
+@media print{nav.toc{display:none}.layout{grid-template-columns:1fr}main section{break-inside:avoid-page;box-shadow:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">智慧輔具 × 在宅醫療 × 責任分層</span>
+      <h1>在家，也被好好接住</h1>
+      <p class="lead">瑞典與日本如何讓長者在家安心生活、在家接受治療？本報告逐一核實瑞典的安全警報、醫院在家與跨院病歷查閱，完整拆解日本「國家—都道府縣—市町村—服務機構—本人與家庭」五層分工，最後提出台灣試辦時可以實際驗收的方法。</p>
+      <p style="color:var(--muted);font-size:.95rem">閱讀提示：文中每項事實都附上編號，點擊即可跳到文末參考資料；「設計示例」是依據查得資料推導的建議做法，與法定要求分開標示。</p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 420 300" role="img">
+        <defs>
+          <linearGradient id="roof" x1="0" x2="1"><stop offset="0" stop-color="#2f6f9f"/><stop offset="1" stop-color="#b8505a"/></linearGradient>
+        </defs>
+        <circle cx="210" cy="150" r="128" fill="#eef3f7"/>
+        <path d="M110 150 L210 70 L310 150" fill="none" stroke="url(#roof)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="132" y="146" width="156" height="104" rx="10" fill="#fff" stroke="#cfd6dc" stroke-width="2"/>
+        <rect x="150" y="166" width="46" height="38" rx="6" fill="#e7f0f7"/>
+        <rect x="222" y="196" width="44" height="54" rx="6" fill="#f8e9ea"/>
+        <!-- person -->
+        <circle cx="173" cy="226" r="9" fill="#d99a5b"/>
+        <rect x="163" y="236" width="20" height="14" rx="5" fill="#d99a5b"/>
+        <!-- signals -->
+        <g fill="none" stroke="#2f6f9f" stroke-width="3" stroke-linecap="round">
+          <path d="M300 110 q16 -16 32 0"/><path d="M292 98 q24 -26 48 0"/>
+        </g>
+        <circle cx="316" cy="116" r="5" fill="#2f6f9f"/>
+        <!-- satellites: care team icons -->
+        <g font-family="Noto Sans TC, sans-serif" font-size="12" text-anchor="middle">
+          <circle cx="62" cy="96" r="26" fill="#fff" stroke="#b8505a" stroke-width="2"/><text x="62" y="100" fill="#b8505a">醫師</text>
+          <circle cx="58" cy="210" r="26" fill="#fff" stroke="#3d8a5f" stroke-width="2"/><text x="58" y="214" fill="#3d8a5f">護理</text>
+          <circle cx="362" cy="210" r="26" fill="#fff" stroke="#b7791f" stroke-width="2"/><text x="362" y="214" fill="#b7791f">照顧</text>
+          <circle cx="210" cy="30" r="22" fill="#fff" stroke="#6b5ca5" stroke-width="2"/><text x="210" y="34" fill="#6b5ca5">平台</text>
+        </g>
+        <g stroke="#c9c4b7" stroke-dasharray="4 5" stroke-width="2">
+          <line x1="86" y1="106" x2="140" y2="160"/><line x1="84" y1="205" x2="132" y2="200"/>
+          <line x1="336" y1="205" x2="288" y2="200"/><line x1="210" y1="52" x2="210" y2="70"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+<nav class="toc" aria-label="目錄">
+  <b>目錄</b>
+  <a href="#s1">一、先看結論</a>
+  <a href="#s2">二、瑞典：誰在家提供服務</a>
+  <a href="#s3">三、設備能證明什麼</a>
+  <a href="#s4">四、資料怎麼進病歷</a>
+  <a href="#s5">五、警訊與夜間責任</a>
+  <a href="#s6">六、誰付費、如何核實</a>
+  <a class="jp" href="#s7">七、日本分層負責制度</a>
+  <a class="jp" href="#s8">八、日本的24小時接手鏈</a>
+  <a class="jp" href="#s9">九、日本的資料與科技</a>
+  <a href="#s10">十、三地對照</a>
+  <a href="#s11">十一、台灣試辦驗證</a>
+  <a href="#refs">參考資料</a>
+</nav>
+
+<main>
+
+<!-- 1 -->
+<section id="s1">
+  <span class="secno">01 ／ 主要結論</span>
+  <h2>一句話看懂：設備會響，不等於有人負責</h2>
+  <p>想像一位獨居長者半夜在浴室滑倒。她按下手腕上的求助鍵，訊號送出了。接下來的每一步——誰接聽、誰到場、誰判斷要不要送醫、這件事會不會出現在醫院病歷裡——都不是設備決定的，而是<strong>制度事先把責任分給了誰</strong>。</p>
+  <p>瑞典的做法是把「市政安全警報」「醫院主導的居家監測」「跨機構病歷查閱」分成三條各有主人的軌道<sup class="ref"><a href="#r1">1</a><a href="#r8">8</a><a href="#r9">9</a><a href="#r10">10</a></sup>；日本則以法律與給付把責任疊成五層，從國家定規則、都道府縣畫地圖、市町村搭網絡，到診所與訪問看護站承諾 24 小時接手<sup class="ref"><a href="#r32">32</a><a href="#r36">36</a><a href="#r38">38</a></sup>。兩國共同的啟示是：先畫清責任，再談串接。</p>
+
+  <figure>
+    <svg viewBox="0 0 900 260" role="img" aria-label="瑞典三條服務軌道示意圖">
+      <g font-family="Noto Sans TC, sans-serif">
+        <rect x="10" y="20" width="270" height="220" rx="14" fill="#fbf1df" stroke="#b7791f"/>
+        <rect x="315" y="20" width="270" height="220" rx="14" fill="#e7f0f7" stroke="#2f6f9f"/>
+        <rect x="620" y="20" width="270" height="220" rx="14" fill="#eeebf7" stroke="#6b5ca5"/>
+        <text x="145" y="56" text-anchor="middle" font-size="19" font-weight="700" fill="#8a5a12">市政安全警報</text>
+        <text x="450" y="56" text-anchor="middle" font-size="19" font-weight="700" fill="#2f6f9f">醫院主導居家監測</text>
+        <text x="755" y="56" text-anchor="middle" font-size="19" font-weight="700" fill="#6b5ca5">跨機構病歷查閱</text>
+        <g font-size="14" fill="#333">
+          <text x="30" y="92">對象：經市政核定的使用者</text>
+          <text x="30" y="120">責任人：市政社福／警報中心</text>
+          <text x="30" y="148">資料：求助時間、通話、出勤</text>
+          <text x="30" y="176">法源：社會服務法</text>
+          <text x="335" y="92">對象：醫院收案的病人</text>
+          <text x="335" y="120">責任人：收案臨床團隊</text>
+          <text x="335" y="148">資料：生命徵象、問卷、處置</text>
+          <text x="335" y="176">依據：臨床方案與採購契約</text>
+          <text x="640" y="92">對象：有照護關係的病人</text>
+          <text x="640" y="120">營運：Inera（NPÖ）</text>
+          <text x="640" y="148">資料：各機構「已開放」紀錄</text>
+          <text x="640" y="176">條件：權限、業務需要、同意</text>
+        </g>
+        <text x="145" y="218" text-anchor="middle" font-size="13" fill="#8a5a12">「有人來幫我」</text>
+        <text x="450" y="218" text-anchor="middle" font-size="13" fill="#2f6f9f">「有人看我的數據」</text>
+        <text x="755" y="218" text-anchor="middle" font-size="13" fill="#6b5ca5">「別家醫院看得到」</text>
+      </g>
+    </svg>
+    <figcaption>圖 1　三條軌道各有對象、責任人與資料用途；跨軌道的交接要另外約定。</figcaption>
+  </figure>
+
+  <h3>原稿說法與核實後的表述</h3>
+  <div class="tbl"><table>
+    <tr><th style="width:32%">常見說法</th><th>核實後可採用的表述</th><th style="width:12%">判定</th></tr>
+    <tr><td>斯德哥爾摩已有萬人級醫院在家服務</td><td>2026 年 5 月 18 日公告的是最長八年的技術供應協議，規劃容量最高每年 15,000 名病人，服務區人口逾 200 萬；實際收案數與再住院成效仍待服務統計驗證。<sup class="ref"><a href="#r6">6</a><a href="#r7">7</a></sup></td><td><span class="tag warn">需改寫</span></td></tr>
+    <tr><td>2026 年起所有居家設備都有人 24 小時監看</td><td>2026 年 7 月 1 日起，住在特定居所、接受市政醫療的人，<em>有需要時</em>不分時段可獲評估：護理師評估由市政負責，醫師評估由區域負責，可實體或數位進行，必要時到宅。條文沒有要求每台設備都有人全天候監看。<sup class="ref"><a href="#r2">2</a><a href="#r3">3</a></sup></td><td><span class="tag no">需更正</span></td></tr>
+    <tr><td>NPÖ 已串接國家用藥清單</td><td>NPÖ 於 2025 年 11 月 24 日接上國家用藥清單（NLL），醫療人員可看到領藥紀錄與處方（含劑量分包）。這是處方與領藥資訊，不能據此判定病人是否服藥。<sup class="ref"><a href="#r11">11</a></sup></td><td><span class="tag ok">屬實</span></td></tr>
+    <tr><td>瑞典採全國統一 L0–L4 五級警訊與 FHIR 核銷流程</td><td>查得的是地方警報流程、國家急救與醫療諮詢電話及資訊交換規格；沒有直接依據證實這兩套編排是全國規範，宜當作設計模型。<sup class="ref"><a href="#r9">9</a><a href="#r13">13</a><a href="#r18">18</a></sup></td><td><span class="tag no">無依據</span></td></tr>
+  </table></div>
+</section>
+
+<!-- 2 -->
+<section id="s2" class="se-sec">
+  <span class="secno">02 ／ 瑞典的責任邊界</span>
+  <h2>誰負責在家提供服務？</h2>
+  <p><strong>生活協助、居家醫療、醫院級照護是三種不同的責任。</strong>市政的居家協助（hemtjänst）屬社會服務，處理日常生活；一般住宅內的基礎醫療，則看區域與市政如何簽訂責任移轉協議。國家衛生與福利局（Socialstyrelsen）的統計說明指出，斯德哥爾摩郡除 Norrtälje 外，仍是尚未把這項責任移交市政的例外；即使市政承接基礎居家醫療，醫師服務仍由區域負責。<sup class="ref"><a href="#r1">1</a><a href="#r5">5</a></sup></p>
+
+  <h3>2026 年 7 月 1 日改革：把「半夜誰來看」寫進法律</h3>
+  <div class="grid3">
+    <div class="card"><svg class="ico" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#e7f0f7"/><path d="M20 10v10l7 5" stroke="#2f6f9f" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      <h4>不分時段的醫療評估</h4><p>對《健康與醫療服務法》第 12 章第 1、2 條所指居所中接受市政醫療者，有需要時應提供評估；市政負責護理師、區域負責醫師。<sup class="ref"><a href="#r3">3</a></sup></p></div>
+    <div class="card"><svg class="ico" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#e7f0f7"/><circle cx="20" cy="16" r="5" fill="#2f6f9f"/><path d="M11 30c2-6 16-6 18 0" fill="#2f6f9f"/></svg>
+      <h4>固定醫療聯絡人</h4><p>市政醫療中原則上應指定固定醫療聯絡人（fast vårdkontakt），病人也要知道其姓名與聯絡方式。<sup class="ref"><a href="#r2">2</a><a href="#r4">4</a></sup></p></div>
+    <div class="card"><svg class="ico" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#e7f0f7"/><rect x="12" y="12" width="16" height="16" rx="3" fill="none" stroke="#2f6f9f" stroke-width="3"/><path d="M16 20h8M20 16v8" stroke="#2f6f9f" stroke-width="3"/></svg>
+      <h4>新增復健醫療負責人</h4><p>每個市政須設置復健醫療負責人（MAR）；法規用語也由 hemsjukvård 改為 <em>hälso- och sjukvård i hemmet</em>。<sup class="ref"><a href="#r3">3</a></sup></p></div>
+  </div>
+  <div class="callout blue"><b class="t">易誤讀之處</b>「不分時段評估」是對「有需要的人」的承諾，評估可以透過電話、視訊或到宅完成；它不等於每一部感測器都連到一位 24 小時盯螢幕的護理師。</div>
+
+  <h3>跨機構協調：SIP 協調式個別計畫</h3>
+  <p>固定照顧聯絡人（fast omsorgskontakt）屬社福端，與醫療聯絡人的法源和工作不同。同時需要醫療與社福服務、且市政或區域判斷有必要並取得本人同意時，應訂定協調式個別計畫（SIP），寫明需要哪些服務、各方負責什麼、誰負總體協調責任。<sup class="ref"><a href="#r1">1</a><a href="#r14">14</a></sup>警報或遠距監測的聯絡窗口、值班時段與交接方式，可寫進計畫的執行細節。</p>
+
+  <h3>四種「在家」服務，四種責任</h3>
+  <div class="tbl"><table>
+    <tr><th>服務</th><th>先問的需求</th><th>可核實的服務邊界</th></tr>
+    <tr><td>居家協助 hemtjänst</td><td>在家生活需要哪些日常支持？</td><td>市政社福安排生活協助；安全警報的申請、安裝、收費查當地市政。<sup class="ref"><a href="#r9">9</a><a href="#r14">14</a></sup></td></tr>
+    <tr><td>一般住宅居家醫療</td><td>哪些醫療、護理、復能工作要在家完成？</td><td>地方協議影響市政承接範圍；醫師與護理師的法定責任分別追溯。<sup class="ref"><a href="#r1">1</a><a href="#r2">2</a></sup></td></tr>
+    <tr><td>進階居家醫療 ASIH</td><td>適合在家接受哪些進階處置？</td><td>斯德哥爾摩 1177 列有輸液、氧氣、靜脈抗生素、輸血等例子，需由能執行治療的團隊提供。<sup class="ref"><a href="#r23">23</a></sup></td></tr>
+    <tr><td>醫院在家 hospital-at-home</td><td>這段照護原本應使用哪種醫院服務？</td><td>Karolinska 試點與區域技術採購應分開解讀；比較住院替代率須先定義適格病人與轉回條件。<sup class="ref"><a href="#r6">6</a><a href="#r8">8</a><a href="#r24">24</a></sup></td></tr>
+  </table></div>
+</section>
+
+<!-- 3 -->
+<section id="s3" class="se-sec">
+  <span class="secno">03 ／ 設備與證據</span>
+  <h2>設備在照護現場能證明什麼？</h2>
+  <p>瑞典國家衛生與福利局以「服務目的」界定福祉科技（välfärdsteknik）：為已有或可能出現功能障礙的人，用數位技術維持或增加安全感、活動、參與或自主。<sup class="ref"><a href="#r22">22</a></sup>所以判讀一台設備，先問它要解決什麼問題。同一個人床邊的離床感測器可能是為了讓她安心夜間活動，桌上的血壓計則回應醫師的治療追蹤，兩筆資料的接收人、反應時限與紀錄位置都可能不同。</p>
+
+  <h3>斯德哥爾摩醫院在家採購：三個數字，三種意義</h3>
+  <div class="stat">
+    <div><b>逾 200 萬</b><span>服務區人口（不是病人數）</span></div>
+    <div><b>≤ 15,000</b><span>每年規劃容量上限（不是實際收案）</span></div>
+    <div><b>≤ 8 年</b><span>協議期限上限</span></div>
+  </div>
+  <p>此案由 Karolinska 大學醫院主導招標，選定 Philips、Cuviva 與 Vingmed 團隊；Vingmed 負責到宅量測設備的部署與生命週期管理，Cuviva 提供醫院在家平台。<sup class="ref"><a href="#r6">6</a><a href="#r7">7</a></sup>院方說明的監測情境包括心衰竭、心律不整、慢性阻塞性肺病與心內膜炎。<sup class="ref"><a href="#r8">8</a></sup>目前查得的公告沒有提供實際收案分母、對照組或再住院率。</p>
+
+  <div class="tbl"><table>
+    <tr><th>場景</th><th>可取得的資料</th><th>判讀限制</th></tr>
+    <tr><td>個人安全警報</td><td>Boden 市政核准後安裝通話設備，按鍵求助後由服務端確認所需支援。<sup class="ref"><a href="#r9">9</a></sup></td><td>按鍵時間是求助時間；評估反應速度還需接聽、派遣與到場時間。</td></tr>
+    <tr><td>夜間數位巡視、用藥輔助</td><td>瑞典長者與居家照護人員訪談記錄實際使用經驗。<sup class="ref"><a href="#r15">15</a></sup></td><td>藥包被取出不等於藥已吞下；評估省工時須計入故障處理與補訪。</td></tr>
+    <tr><td>醫療遠距監測</td><td>院方文件列出心衰竭或 COPD 個案每日量體重、血壓與血氧。<sup class="ref"><a href="#r24">24</a></sup></td><td>說明「哪些資料有人收」，未證實已寫入跨院病歷，也不能直接推算避免多少住院。</td></tr>
+  </table></div>
+
+  <div class="callout"><b class="t">質性研究能說什麼、不能說什麼</b>一項 2025 年同儕審查研究訪談瑞典五個市政的 26 位長者與 26 位居家照護人員，結論是福祉科技「好用的時候很方便」，但常見選擇權不足、外觀聲響干擾與技術維護問題。<sup class="ref"><a href="#r15">15</a></sup>這類研究適合解釋「為什麼有的家庭受益、有的家庭反而負擔增加」，不能拿來估算全國跌倒率或住院成本變化。</div>
+
+  <h3>同一筆訊號，容易被誤讀的地方</h3>
+  <div class="tbl"><table>
+    <tr><th>原始訊號</th><th>有意義的追問</th><th>常見誤讀</th></tr>
+    <tr><td>連續數日體重或血壓變化</td><td>同一人、同一設備、相近量測條件？判讀者知道症狀嗎？</td><td>單筆離群值、單位錯誤、補傳資料都會改變圖形。</td></tr>
+    <tr><td>藥盒紀錄「已取藥」</td><td>哪一包、何時釋出、誰取走？有人確認嗎？</td><td>已釋出、已取走、已吞服是三件不同的事。</td></tr>
+    <tr><td>夜間離床訊號</td><td>本人同意的巡視方式？系統失效時誰實地確認？</td><td>離床常是正常活動；一律當跌倒會製造警訊疲勞。</td></tr>
+    <tr><td>症狀問卷</td><td>題目、作答者、時間、量尺一致嗎？</td><td>家屬代答不等於本人作答；沒回覆不等於沒症狀。</td></tr>
+  </table></div>
+</section>
+
+<!-- 4 -->
+<section id="s4" class="se-sec">
+  <span class="secno">04 ／ 互通</span>
+  <h2>從家裡的血壓計，到醫院的工作畫面</h2>
+  <p>以「病人早上在家量一次血壓」為例，院內看得到圖表、跨院調得到紀錄、當班護理師收到待辦，是三項可以分開驗收的能力。下圖的欄位參考 HL7 FHIR R4 設計<sup class="ref"><a href="#r16">16</a></sup>；瑞典實際服務契約須向 Inera 或服務提供者核對<sup class="ref"><a href="#r13">13</a></sup>。</p>
+  <figure>
+    <svg viewBox="0 0 960 250" role="img" aria-label="居家量測資料進入醫院工作流程的五個步驟">
+      <g font-family="Noto Sans TC, sans-serif">
+        <g>
+          <rect x="10" y="40" width="168" height="150" rx="14" fill="#e6f3eb" stroke="#3d8a5f"/>
+          <rect x="200" y="40" width="168" height="150" rx="14" fill="#e7f0f7" stroke="#2f6f9f"/>
+          <rect x="390" y="40" width="168" height="150" rx="14" fill="#fbf1df" stroke="#b7791f"/>
+          <rect x="580" y="40" width="168" height="150" rx="14" fill="#f8e9ea" stroke="#b8505a"/>
+          <rect x="770" y="40" width="180" height="150" rx="14" fill="#eeebf7" stroke="#6b5ca5"/>
+        </g>
+        <g fill="#888"><path d="M180 115 l14 -8 v16z"/><path d="M370 115 l14 -8 v16z"/><path d="M560 115 l14 -8 v16z"/><path d="M750 115 l14 -8 v16z"/></g>
+        <g font-size="16" font-weight="700" text-anchor="middle">
+          <text x="94" y="72" fill="#2b6b45">① 建立監測</text>
+          <text x="284" y="72" fill="#2f6f9f">② 配對收件</text>
+          <text x="474" y="72" fill="#8a5a12">③ 症狀背景</text>
+          <text x="664" y="72" fill="#8c3434">④ 產生待辦</text>
+          <text x="860" y="72" fill="#6b5ca5">⑤ 病歷與跨院</text>
+        </g>
+        <g font-size="12.5" fill="#333" text-anchor="middle">
+          <text x="94" y="102">Patient</text><text x="94" y="122">ServiceRequest</text><text x="94" y="150">起訖、頻率、</text><text x="94" y="168">誰負責閱覽</text>
+          <text x="284" y="102">Device</text><text x="284" y="122">Observation</text><text x="284" y="150">量測時間≠收件時間</text><text x="284" y="168">重傳不重複入帳</text>
+          <text x="474" y="102">QuestionnaireResponse</text><text x="474" y="150">問卷版本、作答者</text><text x="474" y="168">保留逐題答案</text>
+          <text x="664" y="102">Task ／ CarePlan</text><text x="664" y="150">負責者、狀態、</text><text x="664" y="168">到期、結果</text>
+          <text x="860" y="102">地方系統決定</text><text x="860" y="122">納入正式病歷</text><text x="860" y="150">依服務契約</text><text x="860" y="168">提供可分享資料</text>
+        </g>
+        <text x="480" y="225" text-anchor="middle" font-size="13" fill="#5d6670">驗收重點：斷線一天後補傳的舊值仍回到原量測日期；轉班後仍追得到待辦與結果。</text>
+      </g>
+    </svg>
+    <figcaption>圖 2　設計示例。原稿以 Communication 概括問卷，會失去題目與答案的對應，宜改用 QuestionnaireResponse。</figcaption>
+  </figure>
+
+  <h3>瑞典國家級服務：查閱，不是萬用寫入端點</h3>
+  <ul>
+    <li><strong>NPÖ 全國病人總覽</strong>：由 Inera 營運，讓符合條件的醫療人員查閱其他提供者「已開放」的資料；一般查閱需有照護關係、業務需要與病人同意。資料提供端與查詢端是不同角色。<sup class="ref"><a href="#r10">10</a></sup></li>
+    <li><strong>國家用藥清單 NLL</strong>：所有醫療與藥局端原定於 2025 年 12 月 1 日前接上；其中處方原因等部分資料的提供義務，國會已同意延到 2028 年 9 月 1 日。<sup class="ref"><a href="#r12">12</a></sup></li>
+    <li><strong>1177 journal</strong>：供民眾看自己的病歷；預約、傳訊屬更廣的 1177 服務。<sup class="ref"><a href="#r17">17</a></sup></li>
+    <li><strong>安全與權限</strong>：NPÖ 條款涵蓋身分與 HSA 識別；安全服務另分封鎖（spärr）、同意（samtycke）與存取日誌（logg）。存取日誌能回溯誰看過，不能證明服務做了。<sup class="ref"><a href="#r26">26</a></sup></li>
+  </ul>
+  <p>瑞典有本土 FHIR 基礎規格與 UMI on FHIR 工作（UMI 指需提醒臨床人員注意的重要醫療資訊）<sup class="ref"><a href="#r19">19</a></sup>，但不能據此推定每個離床事件都屬 UMI，或國家平台已提供所有設備共用的寫入端點。</p>
+
+  <h3>四個層次的互通驗收</h3>
+  <div class="grid2">
+    <div class="card"><h4>① 技術</h4><p>端點、授權、斷線重試、重複事件。送出成功之後，再確認院端已收件並歸戶。</p></div>
+    <div class="card"><h4>② 格式</h4><p>交換版本與能力聲明：伺服端只支援查詢，還是也支援新增與更正？<sup class="ref"><a href="#r16">16</a></sup></p></div>
+    <div class="card"><h4>③ 語意</h4><p>收縮壓與舒張壓成對、單位、問卷量尺、時間意義。格式相同，定義仍可能不同。</p></div>
+    <div class="card"><h4>④ 組織</h4><p>請實際值班人員示範如何接手、回覆、交班；任一層落空，資料就進不了照護工作。</p></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="s5" class="se-sec">
+  <span class="secno">05 ／ 警訊設計</span>
+  <h2>警訊分層、夜間責任與警訊疲勞</h2>
+  <p>瑞典有直接來源的做法是：地方居家警報由指定服務中心或照護人員接手；臨床監測由收案團隊說明監看時段與聯絡方式；危及生命時直接撥 112，一般醫療諮詢撥 1177。<sup class="ref"><a href="#r8">8</a><a href="#r9">9</a><a href="#r18">18</a></sup>下圖保留原稿五級模型作為<strong>演練用設計</strong>，並非瑞典全國規範。</p>
+  <figure>
+    <svg viewBox="0 0 900 300" role="img" aria-label="L0到L4五級警訊設計模型">
+      <g font-family="Noto Sans TC, sans-serif">
+        <g>
+          <rect x="20" y="230" width="860" height="50" rx="10" fill="#e6f3eb"/>
+          <rect x="80" y="175" width="740" height="50" rx="10" fill="#e7f0f7"/>
+          <rect x="140" y="120" width="620" height="50" rx="10" fill="#fbf1df"/>
+          <rect x="200" y="65" width="500" height="50" rx="10" fill="#f8e9ea"/>
+          <rect x="260" y="10" width="380" height="50" rx="10" fill="#b8505a"/>
+        </g>
+        <g font-size="15">
+          <text x="450" y="261" text-anchor="middle" fill="#2b6b45"><tspan font-weight="700">L0 常規資料</tspan>　依約完成量測 → 平台收件、依計畫定期覆核</text>
+          <text x="450" y="206" text-anchor="middle" fill="#2f6f9f"><tspan font-weight="700">L1 低風險提醒</tspan>　回報逾時、低電量 → 先查操作或通訊</text>
+          <text x="450" y="151" text-anchor="middle" fill="#8a5a12"><tspan font-weight="700">L2 安全求助</tspan>　按下求助鍵 → 地方服務中心評估出勤</text>
+          <text x="450" y="96" text-anchor="middle" fill="#8c3434"><tspan font-weight="700">L3 臨床評估</tspan>　症狀＋多次量測變化 → 臨床團隊接手</text>
+          <text x="450" y="41" text-anchor="middle" fill="#fff"><tspan font-weight="700">L4 緊急救援</tspan>　可能危及生命 → 直接撥 112</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>圖 3　設計模型。遇到危及生命的情況，任何層級都直接走緊急救援，不必逐級等待。</figcaption>
+  </figure>
+  <div class="callout"><b class="t">降低警訊疲勞的具體做法（評估建議，非法定指標）</b>把低電量、資料未回傳與生理異常送往不同窗口；同一事件重複傳送時合併顯示但保留每次原始時間；調整提醒條件時記錄版本與生效日，回顧調整後漏掉了哪些重要事件。建議同時觀察：每百個監測人日的警訊數、有明確處置的比例、未接手件數與等待時間。只看「警訊變少」，分不出是系統更準，還是漏掉了該處理的事。</div>
+</section>
+
+<!-- 6 -->
+<section id="s6" class="se-sec">
+  <span class="secno">06 ／ 給付與核實</span>
+  <h2>誰付費？付的是什麼？怎麼證明服務真的做了？</h2>
+  <p>「誰買設備」「誰付每月服務費」「誰為臨床判讀付費」可能是三個不同答案。以民眾端的安全警報月費為例，瑞典各市政自訂費率，差異相當大：</p>
+  <figure>
+    <svg viewBox="0 0 900 330" role="img" aria-label="瑞典部分市政安全警報月費比較長條圖">
+      <g font-family="Noto Sans TC, sans-serif" font-size="14">
+        <line x1="190" y1="20" x2="190" y2="290" stroke="#bbb"/>
+        <g fill="#5d6670" text-anchor="end">
+          <text x="180" y="47">Malmö（2026）</text>
+          <text x="180" y="92">Linköping</text>
+          <text x="180" y="137">Boden</text>
+          <text x="180" y="182">Sundsvall</text>
+          <text x="180" y="227">Vellinge（2026）</text>
+          <text x="180" y="272">Hammarö（2024）</text>
+        </g>
+        <!-- scale: 1 SEK = 1.35px -->
+        <rect x="190" y="30" width="250" height="26" rx="4" fill="#9cc0dc"/>
+        <rect x="190" y="75" width="279" height="26" rx="4" fill="#9cc0dc"/>
+        <rect x="190" y="120" width="405" height="26" rx="4" fill="#2f6f9f"/>
+        <rect x="190" y="165" width="439" height="26" rx="4" fill="#9cc0dc"/>
+        <rect x="190" y="210" width="490" height="26" rx="4" fill="#9cc0dc"/>
+        <rect x="190" y="255" width="629" height="26" rx="4" fill="#9cc0dc"/>
+        <g fill="#24292f">
+          <text x="448" y="48">185 kr</text>
+          <text x="477" y="93">207 kr ＋ 安裝費 273 kr</text>
+          <text x="603" y="138">300 kr（伴侶同獲核定者 0 kr）</text>
+          <text x="637" y="183">325 kr</text>
+          <text x="688" y="228">363 kr</text>
+          <text x="827" y="273">466 kr</text>
+        </g>
+        <text x="450" y="318" text-anchor="middle" fill="#5d6670" font-size="12.5">單位：瑞典克朗／月；各市公告年份不一，僅示意差異幅度。Malmö 申請與安裝免費。</text>
+      </g>
+    </svg>
+    <figcaption>圖 4　資料來源：各市政官方頁面。<sup class="ref"><a href="#r27">27</a><a href="#r28">28</a><a href="#r9">9</a><a href="#r30">30</a><a href="#r29">29</a><a href="#r31">31</a></sup>Socialstyrelsen 的全國調查亦指出，各市政雖都守住法定收費上限，但上限內含哪些項目差異很大。<sup class="ref"><a href="#r20">20</a></sup></figcaption>
+  </figure>
+  <p>區域採購公告能辨認「買了什麼技術」，市政價目表能看出「民眾付多少」，兩者都回答不了「醫院護理師每天看一次數據能獲得多少支付」。1177 也提醒，居家輔具的費用依區域與市政而不同。<sup class="ref"><a href="#r25">25</a></sup>跨國政策回顧記錄瑞典由區域協商數位健康方案價格<sup class="ref"><a href="#r21">21</a></sup>，支持地方差異，但不能證明全國強制以特定簽章或 FHIR Task 結案核銷。原稿關於免設備租金、統一商保事前授權、四段固定費率的敘述，因缺少相應條款而不予採用。</p>
+
+  <h3>六個節點，串起「服務真的有做」</h3>
+  <figure>
+    <svg viewBox="0 0 900 140" role="img" aria-label="六個可查核節點">
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" text-anchor="middle">
+        <g fill="#fff" stroke="#3d8a5f" stroke-width="2">
+          <circle cx="75" cy="60" r="42"/><circle cx="225" cy="60" r="42"/><circle cx="375" cy="60" r="42"/>
+          <circle cx="525" cy="60" r="42"/><circle cx="675" cy="60" r="42"/><circle cx="825" cy="60" r="42"/>
+        </g>
+        <g stroke="#3d8a5f" stroke-width="2"><line x1="117" y1="60" x2="183" y2="60"/><line x1="267" y1="60" x2="333" y2="60"/><line x1="417" y1="60" x2="483" y2="60"/><line x1="567" y1="60" x2="633" y2="60"/><line x1="717" y1="60" x2="783" y2="60"/></g>
+        <g fill="#2b6b45" font-weight="700"><text x="75" y="56">①核准</text><text x="225" y="56">②交付</text><text x="375" y="56">③量測</text><text x="525" y="56">④接手</text><text x="675" y="56">⑤追蹤</text><text x="825" y="56">⑥請款</text></g>
+        <g fill="#5d6670" font-size="11.5"><text x="75" y="74">範圍與期間</text><text x="225" y="74">配對與歸戶</text><text x="375" y="74">有效值或警報</text><text x="525" y="74">實際處置</text><text x="675" y="74">計畫更新</text><text x="825" y="74">比對契約</text></g>
+        <text x="450" y="130" fill="#5d6670" font-size="13">稽核要能反向走：從一筆判讀費 → 當次判讀紀錄 → 原始量測。</text>
+      </g>
+    </svg>
+    <figcaption>圖 5　設計示例。設備日誌證明資料傳過；處置紀錄、契約條款、保單依據各自證明不同的事。</figcaption>
+  </figure>
+</section>
+
+<!-- 7 JAPAN -->
+<section id="s7" class="jp-sec">
+  <span class="secno">07 ／ 日本</span>
+  <h2>日本的分層負責制度：五層，各有一本帳</h2>
+  <p>如果說瑞典是「三條平行軌道」，日本更像一棟五層樓：<strong>上層定規則與付錢方式，中層畫醫療地圖，基層搭網絡，現場機構承諾接手，最底層是本人與家庭的選擇。</strong>每一層都有自己的法律依據、計畫週期與可被查核的產出。日本把在宅醫療要守住的事拆成四個場面——<strong>出院支援、日常療養支援、急變時應對、臨終看取</strong>——各層都圍繞這四件事分工。<sup class="ref"><a href="#r32">32</a><a href="#r34">34</a></sup></p>
+
+  <figure>
+    <svg viewBox="0 0 900 430" role="img" aria-label="日本在宅醫療與照護五層分工金字塔">
+      <g font-family="Noto Sans TC, sans-serif">
+        <polygon points="450,20 560,95 340,95" fill="#8e3b46"/>
+        <polygon points="340,100 560,100 640,175 260,175" fill="#b8505a"/>
+        <polygon points="260,180 640,180 720,255 180,255" fill="#cf7a68"/>
+        <polygon points="180,260 720,260 800,335 100,335" fill="#d99a5b"/>
+        <polygon points="100,340 800,340 870,410 30,410" fill="#c9bd96"/>
+        <g fill="#fff" text-anchor="middle" font-weight="700">
+          <text x="450" y="72" font-size="16">國家</text>
+          <text x="450" y="135" font-size="16">都道府縣</text><text x="450" y="157" font-size="12" font-weight="400">醫療計畫・地域醫療構想</text>
+          <text x="450" y="215" font-size="16">市町村（介護保險者）</text><text x="450" y="237" font-size="12" font-weight="400">在宅醫療・介護連携推進事業・地域包括支援中心</text>
+          <text x="450" y="295" font-size="16">服務提供機構</text><text x="450" y="317" font-size="12" font-weight="400">在宅療養支援診所／醫院・訪問看護站・定期巡迴・照顧管理專員・藥局</text>
+          <text x="450" y="373" font-size="16" fill="#4a432c">本人與家庭</text><text x="450" y="395" font-size="12" font-weight="400" fill="#4a432c">選擇、同意、預立照護計畫</text>
+        </g>
+        <g font-size="12.5" fill="#5d6670">
+          <text x="575" y="55">法律・基本方針・診療／介護報酬</text>
+          <text x="650" y="135">醫療計畫每 6 年一期</text><text x="650" y="153">（第 8 次：2024–2029）</text>
+          <text x="728" y="215">介護保險事業計畫</text><text x="728" y="233">每 3 年一期</text>
+          <text x="808" y="295">24 小時連絡</text><text x="808" y="313">往診・看護</text><text x="808" y="331">入院</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>圖 6　日本在宅醫療與照護的五層分工。上層的「錢」與下層的「人」透過報酬要件連在一起。</figcaption>
+  </figure>
+
+  <div class="layer l1"><div class="lh">第 1 層　國家<small>厚生勞動省</small></div><div class="lb">
+    <ul>
+      <li><strong>立法與方針</strong>：發布「在宅醫療體制構築指針」，要求都道府縣自第 8 次醫療計畫起，必須在計畫中標定「在宅醫療中扮演積極角色的醫療機構」與「承擔在宅醫療連携的據點」。<sup class="ref"><a href="#r32">32</a><a href="#r33">33</a></sup></li>
+      <li><strong>以支付牽動行為</strong>：診療報酬（醫療保險）與介護報酬（介護保險）訂出在宅療養支援診所的 24 小時體制、訪問看護的 24 小時對應等要件，機構要達標才能請領較高點數。<sup class="ref"><a href="#r38">38</a><a href="#r42">42</a></sup></li>
+      <li><strong>2025 年醫療法修正</strong>：2025 年 12 月成立的修正法，把地域醫療構想從「病床」擴大到入院、門診、在宅醫療及與介護的連携，明確市町村為調整會議成員，並設「在宅醫療等連携機能」等醫療機構機能報告；同法也將線上診療法定化，並推動電子病歷資訊共享服務。<sup class="ref"><a href="#r45">45</a><a href="#r48">48</a></sup>新構想自 2027 年度起陸續實施。<sup class="ref"><a href="#r46">46</a></sup></li>
+    </ul></div></div>
+
+  <div class="layer l2"><div class="lh">第 2 層　都道府縣<small>畫地圖、補缺口</small></div><div class="lb">
+    <ul>
+      <li><strong>醫療計畫</strong>：設定在宅醫療圈域，不必拘泥二次醫療圈，可依市町村或保健所圈域彈性劃設；並把擔任各機能的機構名稱寫進計畫。<sup class="ref"><a href="#r32">32</a></sup>佐賀縣說明資料指出，兩類機構自第 8 次計畫起為必填，每個二次醫療圈至少設定一處。<sup class="ref"><a href="#r33">33</a></sup></li>
+      <li><strong>兩種被標定的角色</strong>：「積極醫療機構」須自行提供 24 小時在宅醫療、支援其他醫療機構並促進多職種連携，通常從在宅療養支援診所／醫院中選定；「連携據點」負責召開地區協議、調整關係機構、構築連携體制，可由醫院、診所、訪問看護事業所、醫師會、保健所或市町村擔任。<sup class="ref"><a href="#r32">32</a><a href="#r35">35</a></sup></li>
+      <li><strong>家庭醫師機能報告</strong>：2025 年 4 月施行的「かかりつけ医機能報告制度」，要求特定機能醫院與牙科以外的醫院、診所每年 1–3 月向都道府縣報告，都道府縣據此在協議場合討論並公布補足方策。<sup class="ref"><a href="#r44">44</a><a href="#r47">47</a></sup></li>
+      <li><strong>後方支援與廣域調整</strong>：在市町村推動連携時，都道府縣與保健所提供後援與跨區協調。<sup class="ref"><a href="#r36">36</a></sup></li>
+    </ul></div></div>
+
+  <div class="layer l3"><div class="lh">第 3 層　市町村<small>介護保險者、搭網絡</small></div><div class="lb">
+    <ul>
+      <li><strong>在宅醫療・介護連携推進事業</strong>（介護保險地域支援事業）：掌握地區醫療與介護資源、抽出課題研擬對策、構築無縫的提供體制、設置連携相談窗口、對居民普及宣導，以及辦理醫療介護人員的資訊共享與研修。<sup class="ref"><a href="#r35">35</a></sup>相談窗口可設在市町村公所、地域包括支援中心或郡市區醫師會。<sup class="ref"><a href="#r36">36</a></sup></li>
+      <li><strong>地域包括支援中心</strong>：依介護保險法第 115 條之 46，由市町村設置，原則配置保健師、社會福祉士、主任照顧管理專員三種專業，負責綜合相談、權利擁護、照顧管理支援與介護預防；全國約 5,487 處，可委託民間法人營運。<sup class="ref"><a href="#r37">37</a></sup></li>
+      <li><strong>緊急通報與見守</strong>：多屬市町村自訂的福祉事業，條件與費用各地不同。例如郡山市免費出借緊急通報裝置或「見守燈泡」，富山市每月收 400 日圓，堺市要求登錄兩位協力員；千葉市則宣布 2026 年 10 月 30 日停止新申請，2027 年 1 月改為補助民眾自選見守服務。<sup class="ref"><a href="#r50">50</a><a href="#r51">51</a><a href="#r52">52</a><a href="#r49">49</a></sup></li>
+    </ul></div></div>
+
+  <div class="layer l4"><div class="lh">第 4 層　服務機構<small>承諾接手</small></div><div class="lb">
+    <ul>
+      <li><strong>在宅療養支援診所／醫院（在支診／在支病）</strong>：基本要件包括 24 小時接聽聯絡、24 小時往診、24 小時訪問看護、緊急入院體制，以及向連携機構提供資訊。<sup class="ref"><a href="#r33">33</a></sup>「機能強化型」另要求更多醫師與實績，例如單獨型過去一年看取實績 4 件以上，連携型合計 4 件以上且各機構至少 2 件。<sup class="ref"><a href="#r38">38</a></sup>2026 年度診療報酬修訂再把業務持續計畫（BCP）的訂定與定期檢討納入在支診／在支病要件。<sup class="ref"><a href="#r40">40</a></sup></li>
+      <li><strong>訪問看護站</strong>：24 小時對應體制加算在 2024 年改為兩級，有採取減輕看護人員負擔措施者給較高評價；在備有應對手冊等條件下，可由護理師以外的職員擔任電話聯絡相談。<sup class="ref"><a href="#r42">42</a><a href="#r43">43</a></sup></li>
+      <li><strong>定期巡迴・隨時對應型訪問介護看護</strong>：2012 年創設，日夜提供訪問介護與訪問看護，除定時巡迴，另由「操作員」接收通報，以電話、ICT 設備應對或派員到宅。<sup class="ref"><a href="#r41">41</a></sup></li>
+      <li><strong>照顧管理專員、藥局等</strong>：照顧計畫把醫療與介護服務排進同一張時間表；地域包括支援中心為他們提供個案支援。<sup class="ref"><a href="#r37">37</a></sup></li>
+    </ul></div></div>
+
+  <div class="layer l5"><div class="lh">第 5 層　本人與家庭<small>選擇與同意</small></div><div class="lb">
+    <p>所有在支診／在支病都須依「人生最終階段醫療照護決定程序指引」訂定意思決定支援指針。<sup class="ref"><a href="#r39">39</a></sup>換句話說，24 小時體制要接住的不只是急症，也包括本人想在哪裡度過最後一段時間的意願。</p></div></div>
+
+  <h3>錢從哪裡來：介護保險的分層財源</h3>
+  <div class="grid2" style="align-items:center">
+    <figure style="margin:0">
+      <svg viewBox="0 0 300 300" role="img" aria-label="介護保險居家給付財源構成圓餅圖">
+        <g transform="translate(150,150)">
+          <!-- 25% national -->
+          <path d="M0 0 L0 -120 A120 120 0 0 1 120 0 Z" fill="#8e3b46"/>
+          <!-- 12.5% pref: 90deg->135deg -->
+          <path d="M0 0 L120 0 A120 120 0 0 1 84.85 84.85 Z" fill="#b8505a"/>
+          <!-- 12.5% muni: 135->180 -->
+          <path d="M0 0 L84.85 84.85 A120 120 0 0 1 0 120 Z" fill="#cf7a68"/>
+          <!-- 23% 1号: 180 -> 262.8 -->
+          <path d="M0 0 L0 120 A120 120 0 0 1 -119.03 15.04 Z" fill="#d99a5b"/>
+          <!-- 27% 2号 -->
+          <path d="M0 0 L-119.03 15.04 A120 120 0 0 1 0 -120 Z" fill="#c9bd96"/>
+          <circle r="52" fill="#fff"/>
+          <text y="-4" text-anchor="middle" font-family="Noto Sans TC" font-size="15" font-weight="700" fill="#333">公費 50%</text>
+          <text y="18" text-anchor="middle" font-family="Noto Sans TC" font-size="13" fill="#555">保險費 50%</text>
+        </g>
+      </svg>
+    </figure>
+    <div>
+      <div class="legend" style="justify-content:flex-start;flex-direction:column;gap:6px;font-size:.95rem;color:#333">
+        <span><i style="background:#8e3b46"></i>國家 25%</span>
+        <span><i style="background:#b8505a"></i>都道府縣 12.5%</span>
+        <span><i style="background:#cf7a68"></i>市町村 12.5%</span>
+        <span><i style="background:#d99a5b"></i>第 1 號保險費（65 歲以上）23%</span>
+        <span><i style="background:#c9bd96"></i>第 2 號保險費（40–64 歲）27%</span>
+      </div>
+      <p style="font-size:.93rem;color:var(--muted)">圖 7　介護保險居家給付的財源構成（厚勞省說明資料）。地域支援事業中的包括性支援事業，則由國家 38.5%、都道府縣與市町村各 19.25%、第 1 號保險費 23% 負擔。<sup class="ref"><a href="#r53">53</a></sup>三級政府都出錢，因此三級都有理由參與規劃與監督。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="s8" class="jp-sec">
+  <span class="secno">08 ／ 日本的 24 小時</span>
+  <h2>半夜出事，日本靠什麼接住？</h2>
+  <p>把前一節的要件放到一個夜晚來看，就能理解「分層負責」在現場的樣子。下圖整理一位接受在宅醫療、同時使用介護服務的長者，夜間狀況變化時的接手順序。這是依各項要件推導的<strong>典型路徑</strong>，實際順序依個案約定，危及生命時直接撥 119。</p>
+  <figure>
+    <svg viewBox="0 0 920 330" role="img" aria-label="日本在宅病人夜間急變的分層接手路徑">
+      <g font-family="Noto Sans TC, sans-serif">
+        <rect x="10" y="125" width="130" height="80" rx="14" fill="#fff" stroke="#9c8f6a" stroke-width="2"/>
+        <text x="75" y="160" text-anchor="middle" font-size="15" font-weight="700" fill="#4a432c">長者／家屬</text>
+        <text x="75" y="182" text-anchor="middle" font-size="12" fill="#5d6670">按鍵・打電話</text>
+
+        <rect x="190" y="20" width="200" height="80" rx="14" fill="#fbf1df" stroke="#b7791f"/>
+        <text x="290" y="52" text-anchor="middle" font-size="14.5" font-weight="700" fill="#8a5a12">緊急通報中心／操作員</text>
+        <text x="290" y="76" text-anchor="middle" font-size="12" fill="#5d6670">確認狀況、聯絡協力員或派員</text>
+
+        <rect x="190" y="125" width="200" height="80" rx="14" fill="#e6f3eb" stroke="#3d8a5f"/>
+        <text x="290" y="157" text-anchor="middle" font-size="14.5" font-weight="700" fill="#2b6b45">訪問看護 24 小時窗口</text>
+        <text x="290" y="181" text-anchor="middle" font-size="12" fill="#5d6670">電話判斷、緊急訪視</text>
+
+        <rect x="440" y="125" width="200" height="80" rx="14" fill="#f8e9ea" stroke="#b8505a"/>
+        <text x="540" y="157" text-anchor="middle" font-size="14.5" font-weight="700" fill="#8c3434">在支診 24 小時往診</text>
+        <text x="540" y="181" text-anchor="middle" font-size="12" fill="#5d6670">醫師評估、處置、看取</text>
+
+        <rect x="690" y="125" width="215" height="80" rx="14" fill="#e7f0f7" stroke="#2f6f9f"/>
+        <text x="797" y="157" text-anchor="middle" font-size="14.5" font-weight="700" fill="#2f6f9f">後方支援醫院</text>
+        <text x="797" y="181" text-anchor="middle" font-size="12" fill="#5d6670">緊急入院・確保病床</text>
+
+        <rect x="440" y="240" width="200" height="70" rx="14" fill="#b8505a"/>
+        <text x="540" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">危及生命 → 119</text>
+        <text x="540" y="293" text-anchor="middle" font-size="12" fill="#fff">消防救護，不必逐級等待</text>
+
+        <g stroke="#888" stroke-width="2" fill="none" marker-end="url(#ar)">
+          <path d="M140 150 C165 120 170 70 186 62"/>
+          <path d="M140 165 L186 165"/>
+          <path d="M390 165 L436 165"/>
+          <path d="M640 165 L686 165"/>
+          <path d="M290 100 L290 121"/>
+          <path d="M120 205 C200 270 360 275 436 275" stroke="#b8505a" stroke-dasharray="5 5"/>
+        </g>
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#888"/></marker></defs>
+        <text x="460" y="112" text-anchor="middle" font-size="12" fill="#5d6670">事先共享聯絡清單、病歷摘要與本人意願</text>
+      </g>
+    </svg>
+    <figcaption>圖 8　設計示例，依在支診、訪問看護、定期巡迴及市町村緊急通報等要件整理。<sup class="ref"><a href="#r33">33</a><a href="#r41">41</a><a href="#r42">42</a><a href="#r50">50</a></sup></figcaption>
+  </figure>
+
+  <h3>日本制度設計的四個巧思</h3>
+  <div class="grid2">
+    <div class="card"><h4>① 用「地圖」而非「口號」分工</h4><p>醫療計畫要寫出機構名稱與圈域，誰是積極醫療機構、誰是連携據點，民眾與同業都查得到。<sup class="ref"><a href="#r32">32</a></sup>大阪府更提醒：積極醫療機構不直接接受往診委託，民眾先找家庭醫師或連携據點。<sup class="ref"><a href="#r34">34</a></sup></p></div>
+    <div class="card"><h4>② 允許「小診所結盟」達成 24 小時</h4><p>機能強化型可由多家診所或 200 床未滿醫院組成連携型，合計達到醫師人數與實績，緊急聯絡窗口一元化並定期開會。<sup class="ref"><a href="#r39">39</a></sup>單一小診所撐不起的夜班，靠網絡分攤。</p></div>
+    <div class="card"><h4>③ 用實績而非宣稱定級</h4><p>緊急往診、看取件數要逐年申報；訪問診療量大卻未達看取等實績者，2024 年起會被減算。<sup class="ref"><a href="#r38">38</a></sup></p></div>
+    <div class="card"><h4>④ 正視夜班人力的可持續性</h4><p>訪問看護 24 小時加算把「減輕看護負擔的措施」納入評價，承認 24 小時體制靠的是人，而人會累。<sup class="ref"><a href="#r42">42</a></sup></p></div>
+  </div>
+
+  <div class="callout red"><b class="t">也要看到限制</b>日本在宅醫療的醫療端與介護端分屬兩套保險、兩套報酬與兩個主管單位，協調成本主要由市町村的連携推進事業與照顧管理專員吸收。厚勞省研究也指出，機能強化型是否確實發揮預期功能，過去缺乏驗證，因此有學者以地方保險申報資料比較其入院、往診與看取次數。<sup class="ref"><a href="#r54">54</a></sup>制度的層次清楚，不代表每一層的成效都已被證明。</div>
+</section>
+
+<!-- 9 -->
+<section id="s9" class="jp-sec">
+  <span class="secno">09 ／ 日本的資料與科技</span>
+  <h2>日本如何讓資料與設備跟著責任走？</h2>
+  <div class="grid2">
+    <div class="card"><svg class="ico" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#f8e9ea"/><rect x="11" y="10" width="18" height="22" rx="2" fill="none" stroke="#b8505a" stroke-width="2.5"/><path d="M15 17h10M15 22h10M15 27h6" stroke="#b8505a" stroke-width="2"/></svg>
+      <h4>電子病歷資訊共享服務</h4>
+      <p>屬「全國醫療資訊平台」的一環，以 HL7 FHIR 格式登錄診療資訊提供書、出院摘要與傷病名、過敏、檢查等資訊，供其他醫療機構、藥局與病人本人查閱。<sup class="ref"><a href="#r48">48</a></sup>厚勞省 2026 年 6 月公布系統廠商技術解說書 2.1.0 版，並註明內容尚未最終確定。<sup class="ref"><a href="#r48">48</a></sup></p></div>
+    <div class="card"><svg class="ico" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#f8e9ea"/><circle cx="20" cy="18" r="7" fill="none" stroke="#b8505a" stroke-width="2.5"/><path d="M14 30h12" stroke="#b8505a" stroke-width="2.5"/></svg>
+      <h4>介護科技：用加算鼓勵「持續用」</h4>
+      <p>2024 年新設生產性向上推進體制加算：（Ⅱ）每月 10 單位，要求設委員會、導入至少一種見守設備等科技並每年向厚勞省報告實績；成果獲確認且導入多項科技者可取得（Ⅰ）每月 100 單位。<sup class="ref"><a href="#r43">43</a><a href="#r55">55</a></sup></p></div>
+  </div>
+  <div class="callout blue"><b class="t">值得台灣借鏡的細節</b>日本的介護科技加算不是「買了設備就給錢」，而是要求機構先成立委員會討論安全與負擔，再交出業務時間、職員心理負擔等實績資料。這把「導入設備」轉成了「證明工作方式真的改善」。</div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <span class="secno">10 ／ 對照</span>
+  <h2>瑞典、日本、台灣：同一個問題，三種答法</h2>
+  <div class="tbl"><table>
+    <tr><th style="width:18%">問題</th><th style="background:#e7f0f7">瑞典</th><th style="background:#f8e9ea">日本</th><th style="background:#e6f3eb">台灣試辦可借鏡</th></tr>
+    <tr><td>誰負責在家醫療？</td><td>區域（醫師）與市政（護理）依協議分工；2026 年起法定不分時段評估。</td><td>都道府縣標定積極醫療機構與連携據點；在支診承諾 24 小時。</td><td>先指定判讀團隊與夜間接手單位，寫進收案文件。</td></tr>
+    <tr><td>生活安全誰接？</td><td>市政安全警報，費率各市自訂。</td><td>市町村緊急通報、定期巡迴操作員。</td><td>長照端指定生活安全窗口，與醫療窗口分開。</td></tr>
+    <tr><td>如何協調？</td><td>SIP 協調式個別計畫，需本人同意。</td><td>市町村連携推進事業、地域包括支援中心、照顧計畫。</td><td>以一份共同個案計畫列明交接點與結案通知。</td></tr>
+    <tr><td>資料怎麼共享？</td><td>NPÖ 查閱、NLL 用藥、1177 民眾端。</td><td>電子病歷資訊共享服務（FHIR）。</td><td>以 TW Core IG 能力聲明確認雙方支援項目。<sup class="ref"><a href="#r56">56</a></sup></td></tr>
+    <tr><td>如何用錢引導？</td><td>區域採購、地方協商價格。</td><td>報酬要件綁 24 小時體制與實績；科技加算要求成果資料。</td><td>付款條件對應可稽核紀錄，而非設備數量。</td></tr>
+  </table></div>
+</section>
+
+<!-- 11 -->
+<section id="s11" class="tw-sec">
+  <span class="secno">11 ／ 台灣</span>
+  <h2>台灣試辦：用一個個案，驗證跨體系合作</h2>
+  <p>建議先選定一種收案情境，例如「出院後短期居家追蹤、且原本已使用長照服務」的個案。由醫療端指定判讀團隊、長照端指定生活安全聯絡窗口、資訊廠商負責設備與傳輸；三方事先約定服務中止、改由家屬操作、夜間求助與轉回醫院時如何交接。台灣衛福部 TW Core IG 提供用戶端與伺服端能力聲明，可作為雙方確認支援項目的起點。<sup class="ref"><a href="#r56">56</a></sup></p>
+  <ol class="steps">
+    <li><strong>選一筆資料走完全程。</strong>例如居家血壓從設備送到診所病歷，保留收縮壓、舒張壓、單位、量測時間與來源；以補傳、重傳、換機測試歸戶與去重，並確認醫療人員在既有工作畫面看得見。</li>
+    <li><strong>把訊號和人的處置分開記錄。</strong>離床訊號先進約定的照護窗口，記錄聯絡結果、是否需要臨床評估與接手者；事先約定夜間、無人回應、設備斷線時的替代流程——這正是日本在支診「24 小時連絡＋往診＋入院」三段式承諾的精神。</li>
+    <li><strong>按服務內容驗收。</strong>設備可用率、有效回傳率、人工判讀工時、警訊處理時效各有不同分母；同時記錄醫院、長照單位與家庭投入的時間，避免把轉嫁給另一方的工作算成節省。</li>
+    <li><strong>借鏡日本，把責任寫成「地圖」。</strong>在試辦區域公開列出誰是判讀團隊、誰是夜間窗口、誰是後送醫院，讓民眾、家屬與同業都查得到。</li>
+  </ol>
+
+  <div class="tbl"><table>
+    <tr><th>試辦問題</th><th>建議量測方式</th><th>結果解讀</th></tr>
+    <tr><td>資料真的進 HIS 嗎？</td><td>以排定量測筆數為分母，分別計算收到、成功歸戶、院端可見；重傳另計。</td><td>收到率高、可見率低，先查介面與歸戶。</td></tr>
+    <tr><td>異常時有人接嗎？</td><td>記錄警訊產生、接手、完成處置三個時間，分平日、夜間、假日，另列未完成案件。</td><td>只報平均結案時間，會掩蓋未接手與長等待者。</td></tr>
+    <tr><td>工作量移到哪？</td><td>按個案日記錄醫院判讀、長照聯絡、設備客服、家屬協助、到宅訪視分鐘數。</td><td>以各方投入說明淨變化。</td></tr>
+    <tr><td>照護有改善嗎？</td><td>預先定義轉回醫院、非計畫就醫、居家生活目標與病人經驗，列出收案分母與追蹤期間。</td><td>單組試辦先報可行性；因果判斷需合適比較組。</td></tr>
+  </table></div>
+
+  <div class="callout green"><b class="t">結論</b>瑞典最值得借鏡的，是每條服務都找得到「主人」；日本最值得借鏡的，是用計畫、名單與報酬要件，把 24 小時接手變成可被查核的承諾。對台灣而言，最有說服力的展示，是請設備商、HIS 廠商、醫療與長照團隊用同一個個案回答四件事：<strong>病人在家產生了什麼資料、誰看得見、誰實際接手、付款方能查到哪份服務紀錄。</strong></div>
+</section>
+
+<!-- REFS -->
+<section id="refs" class="refs">
+  <span class="secno">參考資料</span>
+  <h2>可溯源參考資料</h2>
+  <p style="font-size:.9rem;color:var(--muted)">編號對應正文。法定義務以官方法規與主管機関文件為準；供應商公告只用於辨識採購與規劃規模；地方費率以所引頁面為準。連結查閱時間為 2026 年 11 月。</p>
+  <h3>瑞典</h3>
+  <ol>
+    <li id="r1">瑞典國會，<a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/halso-och-sjukvardslag-201730_sfs-2017-30/">Hälso- och sjukvårdslag (2017:30)</a>，第 12、14、16 章。</li>
+    <li id="r2">瑞典政府，<a href="https://regeringen.se/rattsliga-dokument/proposition/2025/09/prop-20252619/">Prop. 2025/26:19 Nästa steg för en god och nära vård</a>。</li>
+    <li id="r3">Socialstyrelsen，<a href="https://socialstyrelsen.se/kunskapsstod-och-regler/omraden/god-och-nara-vard/nasta-steg-for-en-god-och-nara-vard/">Nästa steg för en god och nära vård（2026-07-01 起之修法說明）</a>；<a href="https://www.socialstyrelsen.se/globalassets/sharepoint-dokument/dokument-webb/ovrigt/nasta-steg-god-nara-vard-regioner-24-3.pdf">區域說明會簡報</a>。</li>
+    <li id="r4">瑞典國會，<a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/patientlag-2014821_sfs-2014-821/">Patientlag (2014:821)</a>，第 6 章。</li>
+    <li id="r5">Socialstyrelsen，<a href="https://www.socialstyrelsen.se/contentassets/ea13f5e4f2484208ac1575193f092264/2025-6-9639.pdf">市政健康與医療照護統計 2025-6-9639</a>。</li>
+    <li id="r6">Philips，2026-05-18，<a href="https://www.philips.com/a-w/about/news/archive/standard/news/press/2026/philips-to-deliver-vital-technology-for-hospital-at-home-care-for-up-to-15000-patients-annually-in-region-stockholm.html">Region Stockholm 醫院在家採購公告</a>。</li>
+    <li id="r7">Vingmed，<a href="https://www.mynewsdesk.com/se/vingmed-rdcf6/pressreleases/vingmed-in-cooperation-with-philips-and-cuviva-to-deliver-clinical-measurement-technology-for-hospital-at-home-care-for-up-to-15000-patients-annually-in-region-stockholm-3448886">與 Philips、Cuviva 合作之新聞稿</a>。</li>
+    <li id="r8">Karolinska University Hospital，<a href="https://www.karolinskahospital.com/care-at-karolinska/tomorrows-healthcare/showcases/remote-monitoring-at-home-for-severely-ill-patients/">Remote monitoring at home for severely ill patients</a>。</li>
+    <li id="r9">Boden 市政，<a href="https://boden.se/en/support-and-care/seniors-and-elderly/help-in-the-home/personal-alarm">Personal alarm</a>；<a href="https://boden.se/en/permits-and-fees/fees/fees-for-home-care-personal-alarms-and-short-term-housing">居家服務與警報費率</a>。</li>
+    <li id="r10">Inera，<a href="https://www.inera.se/tjanster/alla-tjanster-a-o/npo---nationell-patientoversikt/">NPÖ – Nationell patientöversikt</a>。</li>
+    <li id="r11">Inera，<a href="https://www.inera.se/utveckling/rapporter-och-resultat/2025/anpassa-npo-till-nationella-lakemedelslistan/">Anpassning av NPÖ till Nationella läkemedelslistan</a>。</li>
+    <li id="r12">瑞典國會，<a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/_hd01sou5/">Betänkande 2025/26:SoU5 國家用藥清單連線</a>。</li>
+    <li id="r13">Inera，<a href="https://www.inera.se/tjanster/stod-i-teknisk-anslutning/tjanstekontrakt/">Tjänstekontrakt 服務契約與版本</a>。</li>
+    <li id="r14">瑞典國會，<a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/socialtjanstlag-2025400_sfs-2025-400/">Socialtjänstlag (2025:400)</a>。</li>
+    <li id="r15">Svärdh SA 等，PLOS Digital Health 2025;4(4):e0000844，<a href="https://doi.org/10.1371/journal.pdig.0000844">“It is very convenient when it works”</a>；<a href="https://sweah.lu.se/en/article/welfare-technology-not-solution-without-user-engagement">Lund 大學研究摘要</a>。</li>
+    <li id="r16">HL7 International，FHIR R4：<a href="https://hl7.org/fhir/R4/observation.html">Observation</a>、<a href="https://hl7.org/fhir/R4/device.html">Device</a>、<a href="https://hl7.org/fhir/R4/questionnaireresponse.html">QuestionnaireResponse</a>、<a href="https://hl7.org/fhir/R4/task.html">Task</a>、<a href="https://hl7.org/fhir/R4/servicerequest.html">ServiceRequest</a>、<a href="https://hl7.org/fhir/R4/careplan.html">CarePlan</a>、<a href="https://hl7.org/fhir/R4/capabilitystatement.html">CapabilityStatement</a>。</li>
+    <li id="r17">Inera，<a href="https://www.inera.se/tjanster/alla-tjanster-a-o/behallarsida-tjanster/nmi/1177-journal--ett-nmi/">1177 journal</a>。</li>
+    <li id="r18">SOS Alarm，<a href="https://www.sosalarm.se/en/112-and-other-important-numbers/important-phone-numbers/1177--the-number-for-healthcare-advice/">1177 與 112 的適用情境</a>。</li>
+    <li id="r19">HL7 Sweden，<a href="https://hl7.se/en/home/">Swedish Base Profiles 與 UMI on FHIR</a>。</li>
+    <li id="r20">Socialstyrelsen，<a href="https://www.socialstyrelsen.se/contentassets/0ca7edc622c54f5f83cb706d83c90998/2025-1-9412.pdf">Kommunernas avgifter enligt socialtjänstlagen（2025）</a>；<a href="https://www.socialstyrelsen.se/om-socialstyrelsen/pressrum/press/stora-skillnader-i-kommunernas-avgifter-for-aldreomsorg/">新聞稿</a>。</li>
+    <li id="r21">JMIR mHealth and uHealth 2023，<a href="https://doi.org/10.2196/49003">Digital Health Reimbursement Strategies of 8 European Countries and Israel</a>。</li>
+    <li id="r22">Socialstyrelsen，<a href="https://www.socialstyrelsen.se/kunskapsstod-och-regler/regler-och-riktlinjer/juridiskt-stod-for-dokumentation/valfardsteknik/">Välfärdsteknik</a>。</li>
+    <li id="r23">1177 Region Stockholm，<a href="https://www.1177.se/Stockholm/sa-fungerar-varden/varden-i-stockholms-lan/har-du-fatt-en-remiss-och-ska-valja-mottagning/team-som-utfor-avancerad-sjukvard-i-hemmet-asih/">ASIH 服務內容與團隊</a>。</li>
+    <li id="r24">Karolinska／Region Stockholm，<a href="https://www.karolinska.se/4a8600/contentassets/725328291c5c4cff8840fc944e448b9c/slutseminarium-hemsjukhusvard-och-iot-4.pdf">居家醫院與 IoT 專案研討資料</a>；<a href="https://www.karolinska.se/48faa5/globalassets/global/3-staber/stab-kommunikation/centrala/arsberattelser/kar-arsberattelse-2022_sv09_a_tillganglig.pdf">Karolinska 2022 年報</a>。</li>
+    <li id="r25">1177，<a href="https://www.1177.se/uppsala-lan/undersokning-behandling/hjalpmedel/forflyttning/hjalpmedel-i-hemmet/">Hjälpmedel i hemmet</a>。</li>
+    <li id="r26">Inera，<a href="https://www.inera.se/globalassets/inera/media/dokument/kontakta-oss/avtal/btv/nationell-patientoversikt---beskrivning-och-tjanstespecifika-villkor.pdf">NPÖ 服務條款</a>；<a href="https://www.inera.se/globalassets/inera/media/dokument/kontakta-oss/avtal/btv/sakerhetstjanster---sparrsamtyckelogg---beskrivning-och-tjanstespecifika-villkor.pdf">封鎖、同意與日誌服務</a>。</li>
+    <li id="r27">Malmö stad，<a href="https://malmo.se/Bo-och-leva/Stod-och-omsorg/Stod-i-hemmet/Trygghetslarm.html">Trygghetslarm</a>。</li>
+    <li id="r28">Linköpings kommun，<a href="https://www.linkoping.se/contentassets/4d25761b07434bb98d1e252bdbda6591/digitalt-trygghetslarm-och-digital-lasenhet.pdf">Digitalt trygghetslarm och digital låsenhet</a>。</li>
+    <li id="r29">Vellinge kommun，<a href="https://vellinge.se/siteassets/omsorg-och-stod/pdf/avgifter-ordinart-boende-2026.pdf">Avgifter ordinärt boende 2026</a>。</li>
+    <li id="r30">Sundsvalls kommun，<a href="https://www.gymnasium.sundsvall.se/kommun/omsorg-och-hjalp/hjalp-i-hemmet/trygghetslarm">Trygghetslarm</a>。</li>
+    <li id="r31">Hammarö kommun，<a href="https://hammaro.se/download/18.38064c7d192bd24e7b511d4d/1743498008785/Avgiftsbroschyr%202024-3.pdf">Avgiftsbroschyr 2024</a>。</li>
+  </ol>
+  <h3>日本</h3>
+  <ol start="32">
+    <li id="r32">厚生勞動省，<a href="https://www.mhlw.go.jp/content/10802000/001477697.pdf">在宅医療提供体制：積極医療機構與連携拠点之機能整理</a>；<a href="https://www.mhlw.go.jp/content/12602000/001195364.pdf">令和 5 年度医療政策研修会資料</a>。</li>
+    <li id="r33">佐賀縣，<a href="https://www.pref.saga.lg.jp/kiji00398017/3_98017_288316_up_1lwcuuz3.pdf">在宅医療において積極的役割を担う医療機関及び連携拠点の考え方</a>。</li>
+    <li id="r34">大阪府，<a href="https://www.pref.osaka.lg.jp/o100020/iryo/zaitaku/kyoten_sekkyoku.html">在宅医療に必要な連携を担う拠点・積極的役割を担う医療機関</a>。</li>
+    <li id="r35">厚生勞動省，<a href="https://www.mhlw.go.jp/content/001468173.pdf">在宅医療・介護連携推進事業說明</a>；<a href="https://www.mhlw.go.jp/content/001494546.pdf">事業の手引き Ver.3</a>。</li>
+    <li id="r36">厚生勞動省老健局，<a href="https://www.mhlw.go.jp/content/12602000/001195365.pdf">在宅医療・介護連携推進事業の取組について（2024-01-26）</a>。</li>
+    <li id="r37">厚生勞動省，<a href="https://www.mhlw.go.jp/content/12300000/001671185.pdf">地域包括支援センターについて</a>。</li>
+    <li id="r38">厚生勞動省中醫協，<a href="https://www.mhlw.go.jp/content/10808000/001479603.pdf">（參考）在支診・在支病の施設基準（令和 6 年度改定）</a>；日本医事新報社，<a href="https://www.jmedj.co.jp/files/movie/webchannel_kaitei2024_4_zaitaku.pdf">2024 年在宅医療改定重點（減算規定）</a>。</li>
+    <li id="r39">厚生勞動省，<a href="https://www.mhlw.go.jp/bunya/iryouhoken/iryouhoken15/dl/h24_04-27-09.pdf">平成 24 年度診療報酬改定：機能強化型在支診創設</a>；<a href="https://www.fujifilm.com/jp/ja/healthcare/clinic/column/advanced_management-hmc-aim">2022 年意思決定支援指針義務化整理</a>。</li>
+    <li id="r40">厚生勞動省，<a href="https://www.mhlw.go.jp/content/12400000/001666313.pdf">令和 8 年度診療報酬改定：質の高い在宅医療の推進</a>。</li>
+    <li id="r41">厚生勞動省，<a href="https://www.mhlw.go.jp/content/12300000/001733553.pdf">定期巡回・随時対応型訪問介護看護及び夜間対応型訪問介護（介護給付費分科会第 262 回）</a>。</li>
+    <li id="r42">日本理學療法士協會等轉載，<a href="https://www.pt-ot-st.net/pdf/2024/kobetu/1-5-5.pdf">令和 6 年度改定：訪問看護ステーションにおける持続可能な 24 時間対応体制確保</a>。</li>
+    <li id="r43">近畿厚生局，<a href="https://kouseikyoku.mhlw.go.jp/kinki/gyomu/gyomu/hoken_kikan/kango/r04_kijyun_00001.html">訪問看護療養費：24 時間対応体制加算之届出</a>。</li>
+    <li id="r44">厚生勞動省，<a href="https://www.mhlw.go.jp/stf/houdou/newpage_75698.html">かかりつけ医機能報告制度・医療情報ネット提供</a>。</li>
+    <li id="r45">厚生勞動省，<a href="https://www.mhlw.go.jp/content/10901000/001661944.pdf">医療法等の一部を改正する法律の成立について</a>；東京財團，<a href="https://www.tkfd.or.jp/research/detail.php?id=4896">医療 DX に向けた医療法等の一部改正</a>。</li>
+    <li id="r46">厚生勞動省，<a href="https://www.mhlw.go.jp/content/12403550/001670266.pdf">新たな地域医療構想に関する総合確保方針の改正（2026-03-11）</a>。</li>
+    <li id="r47">島根縣，<a href="https://www.pref.shimane.lg.jp/bousai_info/medical/iryo/byouin-shinryosho/kakaritukeikinou.html">かかりつけ医機能報告制度について</a>。</li>
+    <li id="r48">厚生勞動省醫政局，<a href="https://www.mhlw.go.jp/content/001746480.pdf">電子カルテ情報共有サービス：システムベンダ向け技術解説書 2.1.0（2026 年 6 月）</a>；内閣官房，<a href="https://www.cas.go.jp/jp/seisaku/zensedai_hosyo/dai21/02_siryou2.pdf">医療提供体制について（医療法改正概要）</a>。</li>
+    <li id="r49">千葉市，<a href="https://www.city.chiba.jp/hokenfukushi/koreishogai/korei/kinkyuutuuhou.html">高齢者緊急通報システム事業</a>。</li>
+    <li id="r50">郡山市，<a href="https://www.city.koriyama.lg.jp/uploaded/attachment/89241.pdf">ひとり暮らし高齢者等緊急通報システム事業</a>。</li>
+    <li id="r51">富山市，<a href="https://www.city.toyama.lg.jp/_res/projects/default_project/_page_/001/003/667/9.pdf">ひとり暮らし高齢者等緊急通報システム</a>。</li>
+    <li id="r52">堺市，<a href="https://www.city.sakai.lg.jp/kenko/fukushikaigo/koreishafukushi/life_support/kinkyutsuho.html">高齢者緊急通報システム事業</a>。</li>
+    <li id="r53">厚生勞動省老健局，<a href="https://www.mhlw.go.jp/content/12400000/000792260.pdf">在宅医療・介護連携推進事業について（介護保險財源構成）</a>。</li>
+    <li id="r54">厚生勞動科學研究成果，<a href="https://mhlw-grants.niph.go.jp/system/files/report_pdf/202122035A-buntan3_0.pdf">機能強化型在支診等の入院・往診・看取り比較（つくば市レセプト）</a>。</li>
+    <li id="r55">厚生勞動省，<a href="https://www.mhlw.go.jp/content/12300000/001221658.pdf">生産性向上推進体制加算に関する基本的考え方並びに事務処理手順</a>。</li>
+  </ol>
+  <h3>台灣</h3>
+  <ol start="56">
+    <li id="r56">衛生福利部，<a href="https://twcore.mohw.gov.tw/ig/twcore/capabilitystatements.html">臺灣核心實作指引（TW Core IG）：能力聲明</a>。</li>
+  </ol>
+</section>
+
+</main>
+</div>
+<footer>本報告內容供政策討論、服務設計與試辦規劃參考，不構成医療、法律或財務建議。</footer>
+</body>
+</html>
