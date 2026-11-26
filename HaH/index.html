@@ -73,7 +73,7 @@ h2{font-size:clamp(23px,3vw,32px);font-weight:900}
 .empty{display:none;color:var(--mute);padding:20px 0}
 
 .ai{background:linear-gradient(180deg,#f4f1ff 0,var(--bg) 100%)}
-.tip{margin-top:24px;background:#fff;border:1px dashed #d8cfbd;border-radius:14px;padding:14px 18px;font-size:15px;color:var(--mute)}
+.tip{margin:0 0 40px;background:#fff;border:1px dashed #d8cfbd;border-radius:14px;padding:14px 18px;font-size:15px;color:var(--mute)}
 .tip b{color:var(--ink)}
 footer .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 footer img{height:34px;width:auto}
@@ -85,15 +85,11 @@ footer{border-top:1px solid var(--line);padding:22px 0 30px;font-size:13.5px;col
 <header class="hero">
  <div class="wrap">
   <div>
-   <a class="brand" href="https://www.itriahmci.org.tw/"><img src="assets/ahmci-logo.png" alt="健康樂活 智慧醫療照護聯盟" width="720" height="215"></a><br>
-   <span class="kicker">AHMCI 政策案例</span>
-   <h1>把醫院搬回家，<em>各國怎麼分工</em>？</h1>
-   <p class="sub">八個國家的在宅醫療制度拆解，加上三份照護 AI 研究。看誰出錢、誰訂規則、誰接警報，再看 AI 能幫上哪些忙。</p>
-   <div class="nums">
-    <div class="num"><b>8</b><span>國家／地區案例</span></div>
-    <div class="num"><b>3</b><span>照護 AI 研究</span></div>
-    <div class="num"><b>11</b><span>份完整報告</span></div>
-   </div>
+   <a class="brand" id="brand"><img id="logo" alt=""></a><br>
+   <span class="kicker" id="kicker"></span>
+   <h1 id="title"></h1>
+   <p class="sub" id="subtitle"></p>
+   <div class="nums" id="nums"></div>
   </div>
   <div class="art" aria-hidden="true">
    <svg viewBox="0 0 420 300">
@@ -115,108 +111,55 @@ footer{border-top:1px solid var(--line);padding:22px 0 30px;font-size:13.5px;col
  </div>
 </header>
 
-<div class="bar"><div class="wrap" role="toolbar" aria-label="篩選報告">
- <button class="chip" data-f="all" aria-pressed="true">全部</button>
- <button class="chip" data-f="country" aria-pressed="false">各國制度</button>
- <button class="chip" data-f="ai" aria-pressed="false">照護 AI</button>
- <input class="search" type="search" placeholder="搜尋：虛擬病房、FHIR、輔具…" aria-label="搜尋報告">
+<div class="bar"><div class="wrap" role="toolbar" aria-label="篩選報告" id="toolbar">
+ <input class="search" type="search" id="q">
 </div></div>
 
 <main>
 <div class="wrap"><p class="empty" id="empty">找不到符合的報告，換個關鍵字試試。</p></div>
-<section id="countries" data-sec="country">
- <div class="wrap">
-  <div class="sec-h"><h2>各國在宅醫療制度</h2><span class="count">8 份</span></div>
-  <p class="sec-p">每份報告都拆解同一組問題：分層負責、財源給付、智慧輔具、資料互通、警訊分級與緊急支援，最後回到台灣能借鏡什麼。</p>
-  <div class="grid">
-
-   <a class="card" data-cat="country" href="reports/GB_HaH.html" style="--c:#c8102e;--stripe:linear-gradient(90deg,#012169 0 50%,#c8102e 50%)">
-    <div class="top"><div class="badge">英</div><div><div class="place">英格蘭</div><h3>NHS 虛擬病房</h3></div></div>
-    <p>Hospital at Home 的制度架構、醫療與社會照護財源拆分、FHIR 互通與警訊分級。</p>
-    <div class="tags"><span>虛擬病房</span><span>NHS</span><span>FHIR</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/French_HaH.html" style="--c:#0055a4;--stripe:linear-gradient(90deg,#0055a4 0 33%,#e7e2d6 33% 66%,#ef4135 66%)">
-    <div class="top"><div class="badge">法</div><div><div class="place">法國</div><h3>在宅住院 HAD</h3></div></div>
-    <p>HAD、居家自主支持服務、個人自主津貼（APA）、遠距監測與急救調度如何分層負責。</p>
-    <div class="tags"><span>HAD</span><span>APA</span><span>長照</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Denmark_HaH.html" style="--c:#c8102e">
-    <div class="top"><div class="badge">丹</div><div><div class="place">丹麥</div><h3>三層分工與 2027 改革</h3></div></div>
-    <p>國家、區域、自治體怎麼分工與付錢；TeleCare Nord 遠距監測試驗與在宅急症照護調查。</p>
-    <div class="tags"><span>TeleCare Nord</span><span>健康改革</span><span>FHIR R4</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Sweden_HaH.html" style="--c:#006aa7;--stripe:linear-gradient(90deg,#006aa7 0 70%,#fecc00 70%)">
-    <div class="top"><div class="badge">瑞</div><div><div class="place">瑞典・日本</div><h3>在家，也被好好接住</h3></div></div>
-    <p>瑞典安全警報、醫院在家與跨院病歷查閱，對照日本四層責任，並提出台灣試辦驗證方法。</p>
-    <div class="tags"><span>安全警報</span><span>智慧輔具</span><span>試辦設計</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Italy_HaH.html" style="--c:#008c45;--stripe:linear-gradient(90deg,#008c45 0 33%,#e7e2d6 33% 66%,#cd212a 66%)">
-    <div class="top"><div class="badge">義</div><div><div class="place">義大利・都靈</div><h3>CANP 居家住院與 AAL</h3></div></div>
-    <p>皮埃蒙特大區 La Casa nel Parco 計畫：居家住院服務、AAL 智慧照護架構與可移植經驗。</p>
-    <div class="tags"><span>AAL</span><span>事件驅動</span><span>居家住院</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Australia_HaH.html" style="--c:#0b4f6c;--stripe:linear-gradient(90deg,#0b4f6c 0 75%,#f4b740 75%)">
-    <div class="top"><div class="badge">澳</div><div><div class="place">澳洲</div><h3>HITH 在家住院</h3></div></div>
-    <p>聯邦、州、地方衛生區到第一線的五層責任；Support at Home 輔具補助與 My Health Record。</p>
-    <div class="tags"><span>HITH</span><span>AT-HM</span><span>My Health Record</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Japan_HaH.html" style="--c:#bc002d;--stripe:linear-gradient(90deg,#e7e2d6 0 40%,#bc002d 40% 60%,#e7e2d6 60%)">
-    <div class="top"><div class="badge">日</div><div><div class="place">日本</div><h3>在宅醫療與智慧輔具</h3></div></div>
-    <p>醫療與介護保險分工、訪問看護判定、2026–2027 報酬與福祉用具新規、夜間支援。</p>
-    <div class="tags"><span>介護保險</span><span>訪問看護</span><span>福祉用具</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="country" href="reports/Saudi_HAH.html" style="--c:#006c35">
-    <div class="top"><div class="badge">沙</div><div><div class="place">沙烏地阿拉伯</div><h3>JHAH 居家醫院</h3></div></div>
-    <p>Johns Hopkins Aramco Healthcare 的居家醫院分層負責制度，以及多智能體分診框架。</p>
-    <div class="tags"><span>居家醫院</span><span>AI 分診</span><span>案例研究</span></div><span class="go">→</span>
-   </a>
-
-  </div>
- </div>
-</section>
-
-<section id="ai" class="ai" data-sec="ai">
- <div class="wrap">
-  <div class="sec-h"><h2>照護 AI：讓多個代理一起想</h2><span class="count">3 份</span></div>
-  <p class="sec-p">多智能體 AI 在在宅醫療、遠距照護與照護計畫上的用法、證據與治理，共同原則是：AI 提出、人來拍板。</p>
-  <div class="grid">
-
-   <a class="card" data-cat="ai" href="reports/Multiple_Agent_Debate.html" style="--c:#7c5cd6">
-    <div class="top"><div class="badge"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h14v9H10l-4 4v-4H4z"/><path d="M28 13H18v8h4l4 4v-4h2z"/></svg></div><div><div class="place">多代理辯論</div><h3>讓 AI 先吵一架</h3></div></div>
-    <p>Multi-Agent Debate 用於在宅、遠距與長照：證據、架構、裝置 API、SaaS、資安、法規與人為介入。</p>
-    <div class="tags"><span>MAD</span><span>長照</span><span>資安法規</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="ai" href="reports/MAD_HaH.html" style="--c:#4f8ad9">
-    <div class="top"><div class="badge"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h6l3-7 5 14 3-7h7"/></svg></div><div><div class="place">虛擬病房</div><h3>在宅住院的多智能體系統</h3></div></div>
-    <p>從警報疲勞到分層負責：架構、認知編排、演算法分診、偽陽性抑制、互通性與風險治理。</p>
-    <div class="tags"><span>警報疲勞</span><span>分診</span><span>互通性</span></div><span class="go">→</span>
-   </a>
-
-   <a class="card" data-cat="ai" href="reports/CANOE_care_plan_synthesis.html" style="--c:#0f766e">
-    <div class="top"><div class="badge"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="12" width="10" height="8" rx="2"/><path d="M4 6l7 7M4 26l7-7M28 16h-7"/></svg></div><div><div class="place">加拿大・CANOE</div><h3>可爭辯的照護計畫 AI</h3></div></div>
-    <p>多角色 AI 為每個照護選項列出正反理由並算分，再由真人逐條修改；附台灣導入評估。</p>
-    <div class="tags"><span>論證圖</span><span>人機協作</span><span>證據評讀</span></div><span class="go">→</span>
-   </a>
-
-  </div>
-  <div class="tip"><b>閱讀建議：</b>先讀一個國家案例了解「誰負責什麼」，再讀照護 AI 報告，看看 AI 適合放進流程的哪個環節。</div>
- </div>
-</section>
+<div id="sections"></div>
+<div class="wrap"><div class="tip" id="tip"></div></div>
 </main>
 
-<footer><div class="wrap"><img src="assets/ahmci-logo.png" alt="" width="720" height="215"><span>健康樂活與智慧醫療照護聯盟（AHMCI）政策案例｜各報告資料截至 2026 年 11 月，僅供政策研究參考，不構成臨床或法律意見。</span></div></footer>
+<footer><div class="wrap"><img id="flogo" alt=""><span id="footer"></span></div></footer>
 
+<script src="config.js"></script>
 <script>
 {
-const chips=[...document.querySelectorAll('.chip')],cards=[...document.querySelectorAll('.card')],secs=[...document.querySelectorAll('[data-sec]')],q=document.querySelector('.search'),empty=document.getElementById('empty');
+const C=window.SITE_CONFIG,S=C.site,$=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ICONS={
+ chat:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h14v9H10l-4 4v-4H4z"/><path d="M28 13H18v8h4l4 4v-4h2z"/></svg>',
+ pulse:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h6l3-7 5 14 3-7h7"/></svg>',
+ graph:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="12" width="10" height="8" rx="2"/><path d="M4 6l7 7M4 26l7-7M28 16h-7"/></svg>'
+};
+// header & footer
+$('brand').href=S.homeUrl;
+for(const id of ['logo','flogo']){$(id).src=S.logo}
+$('logo').alt=S.logoAlt;
+$('kicker').textContent=S.kicker;
+$('title').innerHTML=esc(S.titleA)+'<br><em>'+esc(S.titleB)+'</em>？';
+$('subtitle').textContent=S.subtitle;
+$('tip').innerHTML=S.tip;$('tip').hidden=!S.tip;
+$('footer').textContent=S.footer;
+$('q').placeholder=S.searchPlaceholder;$('q').setAttribute('aria-label','搜尋報告');
+// stats
+const byCat=id=>C.reports.filter(r=>r.category===id);
+$('nums').innerHTML=C.categories.map(c=>`<div class="num"><b>${byCat(c.id).length}</b><span>${esc(c.statLabel||c.label)}</span></div>`).join('')+`<div class="num"><b>${C.reports.length}</b><span>份完整報告</span></div>`;
+// filter chips
+const chipHtml=[{id:'all',label:'全部'},...C.categories].map((c,i)=>`<button class="chip" data-f="${esc(c.id)}" aria-pressed="${i===0}">${esc(c.label)}</button>`).join('');
+$('toolbar').insertAdjacentHTML('afterbegin',chipHtml);
+// sections & cards
+const card=r=>`<a class="card" data-cat="${esc(r.category)}" href="reports/${encodeURI(r.file)}" style="--c:${esc(r.color)}${r.stripe?';--stripe:'+esc(r.stripe):''}">
+ <div class="top"><div class="badge">${r.icon&&ICONS[r.icon]?ICONS[r.icon]:esc(r.badge||'')}</div><div><div class="place">${esc(r.place)}</div><h3>${esc(r.title)}</h3></div></div>
+ <p>${esc(r.summary)}</p>
+ <div class="tags">${(r.tags||[]).map(t=>`<span>${esc(t)}</span>`).join('')}</div><span class="go">→</span></a>`;
+$('sections').innerHTML=C.categories.map(c=>`<section id="${esc(c.id)}" data-sec="${esc(c.id)}"${c.tinted?' class="ai"':''}><div class="wrap">
+ <div class="sec-h"><h2>${esc(c.heading)}</h2><span class="count">${byCat(c.id).length} 份</span></div>
+ <p class="sec-p">${esc(c.intro)}</p>
+ <div class="grid">${byCat(c.id).map(card).join('')}</div></div></section>`).join('');
+// filtering
+const chips=[...document.querySelectorAll('.chip')],cards=[...document.querySelectorAll('.card')],secs=[...document.querySelectorAll('[data-sec]')],q=$('q'),empty=$('empty');
 let f='all';
 function apply(){
   const k=q.value.trim().toLowerCase();let shown=0;
