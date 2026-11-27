@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>荷蘭在宅混合照護</title>
+<meta name="description" content="荷蘭在宅醫療、智慧輔具與整合照護制度研究：Zorg bij jou 混合照護、分層負責、資料互通與財源拆分。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE 研究報告：清楚、可查證、像醫院給同業的白皮書
+   IDEA 荷蘭照護路徑（zorgpad）路線圖：病人從家出發，沿站點升級或回家
+   PICTURE 首屏一張路線圖：家 → 醫療服務中心 → 主責醫師 → 醫院，112 直達捷徑
+   COLOUR 白底、台夫特藍 #1d3f8f 為主、荷蘭橘 #e3620c 標示升級與緊急、淡天藍面
+   TYPE Noto Sans TC 900 標題 + Noto Sans TC 400 內文
+   LAYOUT 桌機：標題與結論在上、路線圖橫跨；手機：標題、圖、數字依序堆疊 */
+:root{color-scheme:light;--bg:#ffffff;--ink:#14203a;--mute:#4a5670;--blue:#1d3f8f;--blue2:#3d63c4;--sky:#eaf1fb;--sky2:#d6e4f7;--orange:#e3620c;--orl:#fdeee3;--green:#2f7d4f;--grl:#e6f3ea;--yel:#b98500;--yell:#fbf3d9;--line:#d5dce8}
+:root[data-theme=dark],:root[data-theme=light]{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.75 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;overflow-x:clip}
+a{color:var(--blue2)}
+h1,h2,h3{line-height:1.2;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.6vw,50px);font-weight:900;color:var(--blue)}
+h2{font-size:clamp(24px,3vw,34px);font-weight:900;color:var(--blue);margin-bottom:14px}
+h3{font-size:19px;font-weight:700;margin:26px 0 8px}
+p{margin:0 0 14px}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(32px,4.5vw,64px) max(5vw,16px)}
+.tint{background:var(--sky)}
+.lead{font-size:clamp(17px,1.8vw,20px);color:var(--ink);max-width:62ch}
+.sub{color:var(--mute);font-size:15px}
+.hero{background:linear-gradient(180deg,var(--sky) 0%,#fff 100%);padding-bottom:28px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+.route{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:14px}
+.route text{font-family:inherit}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:12px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:clamp(26px,3vw,34px);font-weight:900;color:var(--blue);line-height:1.1;white-space:nowrap}
+.kpi span{font-size:14px;color:var(--mute);display:block;margin-top:4px;line-height:1.5}
+nav.toc{position:relative;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.toc .scroll{display:flex;gap:4px;padding:8px max(5vw,16px);overflow-x:auto;white-space:nowrap}
+nav.toc a{flex:none;text-decoration:none;color:var(--blue);font-size:14.5px;font-weight:500;padding:8px 12px;border-radius:999px}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--sky)}
+@media(min-width:900px){nav.toc{position:sticky;top:0}}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.card h3{margin-top:0}
+.law{border-top:6px solid var(--blue)}
+.law.wlz{border-top-color:var(--orange)}
+.law.wmo{border-top-color:var(--green)}
+.law .tag{display:inline-block;font-weight:900;font-size:22px;color:var(--blue)}
+.law.wlz .tag{color:var(--orange)}
+.law.wmo .tag{color:var(--green)}
+.law dl{margin:10px 0 0;display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:6px 10px;font-size:15px}
+.law dt{color:var(--mute);font-weight:500}
+.law dd{margin:0}
+.note{background:var(--yell);border-left:4px solid var(--yel);padding:12px 16px;border-radius:6px;font-size:15px;margin:16px 0}
+.key{background:var(--orl);border-left:4px solid var(--orange);padding:12px 16px;border-radius:6px;margin:16px 0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;background:#fff}
+th,td{border-bottom:1px solid var(--line);padding:10px 10px;text-align:left;vertical-align:top}
+thead th{background:var(--sky);color:var(--blue);font-weight:700;border-bottom:2px solid var(--blue)}
+td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.chips li{background:#fff;border:1px solid var(--sky2);color:var(--blue);border-radius:999px;padding:4px 12px;font-size:14.5px}
+.bars{display:grid;gap:12px;margin-top:8px}
+.bar{display:grid;grid-template-columns:9.5em minmax(0,1fr) 6.5em;gap:10px;align-items:center}
+.bar .lab{font-size:14.5px;line-height:1.35}
+.bar .lab small{display:block;color:var(--mute);font-size:13px}
+.bar .track{background:var(--sky);height:26px;border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;background:var(--blue2);border-radius:6px}
+.bar .fill.tgt{background:repeating-linear-gradient(135deg,#9fb6e3 0 6px,#c9d7f1 6px 12px)}
+.bar .fill.now{background:var(--blue)}
+.bar .val{font-weight:700;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* layered responsibility */
+.layers{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:22px;align-items:start}
+.stack-list{display:grid;gap:8px}
+.lyr{display:grid;grid-template-columns:3.2em minmax(0,1fr);align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;min-height:56px}
+.lyr .n{display:grid;place-items:center;width:2.6em;height:2.6em;border-radius:50%;background:var(--sky);color:var(--blue);font-weight:900}
+.lyr strong{display:block;font-size:16px}
+.lyr em{font-style:normal;font-size:13.5px;color:var(--mute)}
+.lyr:hover{border-color:var(--blue2)}
+.lyr:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.lyr[aria-pressed=true]{border-color:var(--blue);background:var(--sky)}
+.lyr[aria-pressed=true] .n{background:var(--blue);color:#fff}
+.lyr.em .n{background:var(--orl);color:var(--orange)}
+.lyr.em[aria-pressed=true] .n{background:var(--orange);color:#fff}
+.detail{background:#fff;border:2px solid var(--blue);border-radius:14px;padding:20px 22px;position:sticky;top:70px}
+.detail h3{margin:0 0 4px;font-size:22px;color:var(--blue)}
+.detail .who{color:var(--mute);font-size:14.5px;margin-bottom:12px}
+.detail dl{display:grid;grid-template-columns:6em minmax(0,1fr);gap:10px 14px;margin:0;font-size:15.5px}
+.detail dt{font-weight:700;color:var(--blue)}
+.detail dd{margin:0}
+.ladder{display:grid;gap:0;margin-top:10px}
+.step{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.step .t{font-weight:900;font-size:17px;white-space:nowrap}
+.step.g .t{color:var(--green)}.step.y .t{color:var(--yel)}.step.o .t{color:var(--orange)}.step.r .t{color:#c0261b}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.raci td,.raci th{text-align:center}
+.raci td:first-child,.raci th:first-child{text-align:left}
+.R{background:var(--blue);color:#fff;font-weight:700}
+.A{background:var(--orange);color:#fff;font-weight:700}
+.C{background:var(--sky2);color:var(--blue);font-weight:700}
+.I{background:#f3f5f9;color:var(--mute)}
+.raci td.R,.raci td.A,.raci td.C,.raci td.I{border:2px solid #fff}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mute);margin:10px 0}
+.legend span b{display:inline-block;padding:0 7px;border-radius:4px;margin-right:4px}
+.timeline{display:grid;gap:0;border-left:3px solid var(--sky2);margin-left:8px}
+.tl{position:relative;padding:4px 0 18px 22px}
+.tl::before{content:"";position:absolute;left:-9px;top:10px;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid var(--blue2)}
+.tl.future::before{border-color:var(--orange)}
+.tl b{color:var(--blue);white-space:nowrap}
+.tl.future b{color:var(--orange)}
+.fig{position:relative;min-height:300px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig svg text{paint-order:stroke;stroke:#fff;stroke-width:4px;font-family:inherit}
+.hub{width:100%;height:auto;display:block}
+ol.refs{padding-left:2.2em;font-size:14.5px;line-height:1.65}
+ol.refs li{margin-bottom:8px;overflow-wrap:anywhere}
+ol.refs .d{color:var(--mute)}
+sup.r{font-size:12px;color:var(--blue2);font-weight:500}
+sup.r a{text-decoration:none}
+footer{background:var(--blue);color:#e9efff;font-size:14.5px}
+footer a{color:#fff}
+.principles{counter-reset:p;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;list-style:none;padding:0;margin:0}
+.principles li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.principles li b{display:block;color:var(--blue);font-size:17px;margin-bottom:4px}
+@media(max-width:860px){.layers,.cols2,.cols3,.principles{grid-template-columns:minmax(0,1fr)}.detail{position:static}}
+@media(max-width:600px){body{font-size:16px}table{font-size:13.5px}th,td{padding:7px 6px}.bar{grid-template-columns:7em minmax(0,1fr) 5.4em}.step{grid-template-columns:minmax(0,1fr);gap:2px}.detail dl{grid-template-columns:minmax(0,1fr);gap:2px}.detail dt{margin-top:8px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:8px;border:0;padding:3px 0}.stack td::before{content:attr(data-l);color:var(--mute);font-weight:700}}
+@media(prefers-reduced-motion:no-preference){.token{animation:ride 7s ease-in-out infinite}@keyframes ride{0%,8%{transform:translateX(0)}30%,40%{transform:translateX(150px)}62%,72%{transform:translateX(300px)}92%,100%{transform:translateX(0)}}}
+</style>
+</head>
+<body>
+
+<header class="band hero">
+<div class="wrap hero-grid">
+<div>
+<h1>荷蘭在宅混合照護：能在家就居家，需要時立即回醫院</h1>
+<p class="lead" style="margin-top:16px">荷蘭沒有一部「在宅住院專法」，而是把居家監測放進既有的保險、品質與資料交換法律裡運作。最具規模的實務是 Zorg bij jou：多家醫院共用一個全國分散式醫療服務中心，病人在家量測與回報，護理師先判讀，主責醫師始終保有治療主導權，危急時直接撥 112。</p>
+</div>
+<svg class="route" viewBox="0 0 760 300" role="img" aria-labelledby="rt">
+<title id="rt">照護路線圖：病人在家量測，資料送至醫療服務中心，異常時升級給主責醫師，必要時回醫院；危急時由家中直撥 112</title>
+<defs>
+<linearGradient id="gsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf1fb"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d3f8f"/></marker>
+<marker id="ao" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#e3620c"/></marker>
+</defs>
+<rect width="760" height="300" fill="url(#gsky)" rx="14"/>
+<path d="M120 60 C 250 -10, 520 -10, 640 60" fill="none" stroke="#e3620c" stroke-width="3" stroke-dasharray="8 7" marker-end="url(#ao)"/>
+<rect x="318" y="14" width="124" height="30" rx="15" fill="#e3620c"/>
+<text x="380" y="35" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">危急：直撥 112</text>
+<line x1="70" y1="200" x2="700" y2="200" stroke="#c4d3ee" stroke-width="14" stroke-linecap="round"/>
+<line x1="70" y1="200" x2="700" y2="200" stroke="#1d3f8f" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+<g transform="translate(120 200)">
+<ellipse cx="0" cy="8" rx="46" ry="7" fill="#d6e4f7"/>
+<rect x="-34" y="-58" width="68" height="62" fill="#ffffff" stroke="#1d3f8f" stroke-width="3"/>
+<path d="M-44 -54 L0 -94 L44 -54z" fill="#1d3f8f"/>
+<path d="M-44 -54 L0 -94 L0 -54z" fill="#3d63c4"/>
+<rect x="-10" y="-26" width="20" height="30" fill="#e3620c"/>
+<rect x="-26" y="-48" width="14" height="14" fill="#d6e4f7" stroke="#1d3f8f" stroke-width="2"/>
+<rect x="12" y="-48" width="14" height="14" fill="#d6e4f7" stroke="#1d3f8f" stroke-width="2"/>
+</g>
+<g transform="translate(270 200)">
+<ellipse cx="0" cy="8" rx="46" ry="7" fill="#d6e4f7"/>
+<rect x="-40" y="-70" width="80" height="54" rx="6" fill="#1d3f8f"/>
+<rect x="-34" y="-64" width="68" height="42" rx="3" fill="#eaf1fb"/>
+<polyline points="-30,-40 -18,-40 -12,-54 -4,-28 4,-44 10,-40 30,-40" fill="none" stroke="#e3620c" stroke-width="3"/>
+<rect x="-8" y="-16" width="16" height="12" fill="#1d3f8f"/>
+<rect x="-26" y="-4" width="52" height="8" rx="3" fill="#3d63c4"/>
+</g>
+<g transform="translate(420 200)">
+<ellipse cx="0" cy="8" rx="46" ry="7" fill="#d6e4f7"/>
+<circle cx="0" cy="-62" r="18" fill="#f4d7c0" stroke="#1d3f8f" stroke-width="3"/>
+<path d="M-32 4 C -32 -30, 32 -30, 32 4z" fill="#ffffff" stroke="#1d3f8f" stroke-width="3"/>
+<path d="M-12 -34 C -14 -16, 14 -16, 12 -34" fill="none" stroke="#3d63c4" stroke-width="3"/>
+<circle cx="12" cy="-16" r="5" fill="#3d63c4"/>
+</g>
+<g transform="translate(640 200)">
+<ellipse cx="0" cy="8" rx="56" ry="7" fill="#d6e4f7"/>
+<rect x="-46" y="-86" width="92" height="90" fill="#ffffff" stroke="#1d3f8f" stroke-width="3"/>
+<rect x="-46" y="-86" width="92" height="18" fill="#1d3f8f"/>
+<rect x="-9" y="-60" width="18" height="18" fill="#e3620c"/><rect x="-3" y="-66" width="6" height="30" fill="#e3620c"/><rect x="-15" y="-54" width="30" height="6" fill="#e3620c"/>
+<rect x="-36" y="-30" width="14" height="14" fill="#d6e4f7"/><rect x="22" y="-30" width="14" height="14" fill="#d6e4f7"/>
+<rect x="-10" y="-22" width="20" height="26" fill="#3d63c4"/>
+</g>
+<g class="token"><circle cx="120" cy="200" r="9" fill="#e3620c" stroke="#fff" stroke-width="3"/></g>
+<g font-size="15" text-anchor="middle" fill="#14203a">
+<text x="120" y="236" font-weight="700">家中</text><text x="120" y="256" font-size="13" fill="#4a5670">量測與回報</text>
+<text x="270" y="236" font-weight="700">醫療服務中心</text><text x="270" y="256" font-size="13" fill="#4a5670">護理師先判讀</text>
+<text x="420" y="236" font-weight="700">主責醫師</text><text x="420" y="256" font-size="13" fill="#4a5670">保有治療主導權</text>
+<text x="640" y="236" font-weight="700">醫院</text><text x="640" y="256" font-size="13" fill="#4a5670">快速門診、急診、住院</text>
+</g>
+<text x="380" y="286" text-anchor="middle" font-size="13" fill="#4a5670">穩定時沿路線退回居家；惡化時一站一站升級，或直接走橘色捷徑</text>
+</svg>
+<div class="kpis">
+<div class="kpi"><b>47,000+</b><span>平台首頁所稱使用 Zorg bij jou 的病人數<sup class="r"><a href="#ref1">[1]</a></sup></span></div>
+<div class="kpi"><b>19</b><span>參與名單上具名的醫院與照護機構<sup class="r"><a href="#ref5">[5]</a></sup></span></div>
+<div class="kpi"><b>€194.92</b><span>2026 年專科遠距監測（039133）最高費率，每 120 天至多申報一次<sup class="r"><a href="#ref15">[15]</a><a href="#ref18">[18]</a></sup></span></div>
+<div class="kpi"><b>2029</b><span>基本照護資料集（BgZ）電子交換的法定義務預定生效年<sup class="r"><a href="#ref29">[29]</a></sup></span></div>
+</div>
+</div>
+</header>
+
+<nav class="toc" aria-label="章節"><div class="scroll">
+<a href="#s1">三個重點</a><a href="#s2">三法分工</a><a href="#s3">Zorg bij jou</a><a href="#s4">分層負責</a><a href="#s5">警訊與升級</a><a href="#s6">智慧輔具</a><a href="#s7">資料互通</a><a href="#s8">財源</a><a href="#s9">實證</a><a href="#s10">借鏡台灣</a><a href="#refs">參考資料</a>
+</div></nav>
+
+<main>
+
+<section class="band" id="s1"><div class="wrap">
+<h2>先看結論：荷蘭模式靠的是三個「共用」</h2>
+<div class="cols3">
+<div class="card"><h3>共用一個服務中心</h3><p>醫院不必各自養一支 24 小時監測團隊。Zorg bij jou 的醫療服務中心（Medisch Servicecentrum, MSC）由合作社聘用的居家監測護理師，加上各院可選擇派駐的人員組成，替所有參與機構判讀病人資料<sup class="r"><a href="#ref3">[3]</a></sup>。</p></div>
+<div class="card"><h3>共用一套照護路徑</h3><p>每種疾病一條標準化「照護路徑」（zorgpad），規定量什麼、多久量一次、異常怎麼處理。2025 年 3 月已有 15 條路徑在使用，2023 年底只有 6 條<sup class="r"><a href="#ref6">[6]</a></sup>。</p></div>
+<div class="card"><h3>共用一條資料管線</h3><p>2025 年 12 月起，CWZ 醫院的居家量測經由平台集中送進 ChipSoft HiX 電子病歷，不再每家 App 各接一條介面<sup class="r"><a href="#ref7">[7]</a></sup>。</p></div>
+</div>
+<div class="key"><b>最重要的安全原則：</b>居家監測是門診與住院的延伸，不是急救系統。心衰竭病人手冊寫明，服務中心在兩個工作天內檢視量測，突然喘不過氣、胸悶或暈厥時應打家醫夜診或 112<sup class="r"><a href="#ref9">[9]</a></sup>。</div>
+</div></section>
+
+<section class="band tint" id="s2"><div class="wrap">
+<h2>三部法律分工：醫療、重度長照、地方生活支持</h2>
+<p class="lead">荷蘭的「在家照顧」由三個財源拼成。先分清楚誰付錢、誰評估資格，才看得懂居家監測放在哪一格。</p>
+<div class="cols3">
+<div class="card law"><span class="tag">Zvw</span> 健康保險法
+<dl><dt>對象</dt><dd>所有居民強制投保基本保險</dd><dt>涵蓋</dt><dd>家醫、專科、住院、處方醫材、社區護理（wijkverpleging）與專科遠距監測</dd><dt>付款者</dt><dd>健康保險公司</dd><dt>病人負擔</dt><dd>專科照護計入年度自付額（eigen risico）；社區護理不計入<sup class="r"><a href="#ref23">[23]</a></sup></dd></dl></div>
+<div class="card law wlz"><span class="tag">Wlz</span> 長期照護法
+<dl><dt>對象</dt><dd>永久需要全天候監護或 24 小時近身照護者</dd><dt>資格</dt><dd>由照護需求評估中心 CIZ 核定<sup class="r"><a href="#ref24">[24]</a></sup></dd><dt>形式</dt><dd>入住機構，或在家選全套照護包（VPT）、模組化照護（MPT）、個人預算（PGB）<sup class="r"><a href="#ref22">[22]</a></sup></dd><dt>病人負擔</dt><dd>依所得與資產向 CAK 繳個人分擔額；保費由 SVB 等管理<sup class="r"><a href="#ref27">[27]</a></sup></dd></dl></div>
+<div class="card law wmo"><span class="tag">Wmo</span> 社會支持法
+<dl><dt>對象</dt><dd>需要日常支持以維持自立的居民</dd><dt>執行</dt><dd>各地方政府（gemeenten）</dd><dt>涵蓋</dt><dd>家務協助、日間照顧、喘息、居家無障礙改裝、一般行動輔具</dd><dt>病人負擔</dt><dd>適用月費制的服務，2026 年每月最高 €21.80<sup class="r"><a href="#ref26">[26]</a></sup></dd></dl></div>
+</div>
+<div class="note">居家血壓計、血氧計多半隨醫院照護路徑提供；緊急呼叫按鈕、跌倒偵測、樓梯升降椅則屬地方 Wmo 或 Wlz 範疇，和醫院的監測系統各走各的線。醫材是否給付，要依用途、法定輔具類別與保單判斷<sup class="r"><a href="#ref25">[25]</a></sup>。</div>
+</div></section>
+
+<section class="band" id="s3"><div class="wrap">
+<h2>Zorg bij jou：由七家教學醫院起家的非營利合作網絡</h2>
+<div class="cols2">
+<div>
+<p>Zorg bij jou 起源於 Santeon，一個由七家荷蘭臨床教學醫院組成的聯盟（St. Antonius、Catharina、CWZ、Martini、MST、OLVG、Maasstad）。官方自我定位是不追求獲利的社會組織，取得 NEN 7510 資訊安全認證；其整合公告則稱參與醫院為合作社成員<sup class="r"><a href="#ref2">[2]</a><a href="#ref7">[7]</a></sup>。</p>
+<p>目前參與名單列出 19 個具名機構，除了原本的 Santeon 醫院，還包括 Antoni van Leeuwenhoek 癌症中心、Reade 復健與風濕中心及多家區域醫院；同一醫院的不同院區不重複計算<sup class="r"><a href="#ref5">[5]</a></sup>。病人端使用的工具來自合作廠商：Thuismeten（Luscii 提供）、BeterDichtbij 通訊 App、Patient Journey App 與 Sananet<sup class="r"><a href="#ref2">[2]</a></sup>。</p>
+<p>財務上，平台對醫院採「每位受監測病人一個固定費率」<sup class="r"><a href="#ref4">[4]</a></sup>；病人端，平台說明費用由基本保險支付，但需計入自付額<sup class="r"><a href="#ref1">[1]</a></sup>。</p>
+<h3>2025 年 3 月使用中的 15 條照護路徑<sup class="r"><a href="#ref6">[6]</a></sup></h3>
+<ul class="chips"><li>COPD</li><li>氣喘</li><li>COVID</li><li>中風後</li><li>妊娠糖尿病</li><li>大腸手術後</li><li>心衰竭</li><li>第一型糖尿病</li><li>心房顫動</li><li>孕產照護／妊娠高血壓</li><li>高血壓</li><li>發炎性腸道疾病</li><li>肺癌</li><li>膝髖關節炎</li><li>癌症全身性治療</li></ul>
+</div>
+<div>
+<h3 style="margin-top:0">規模怎麼長大：四個時點、四種口徑</h3>
+<div class="bars" id="scale"></div>
+<p class="sub" style="margin-top:12px">斜紋為目標值，非實績。四個數字的定義（累計或在用、全網或單院）並不一致，不宜直接相減計算成長率。</p>
+<div class="note">CWZ 單院約有 20 條混合照護路徑，部分與 Santeon 共同開發<sup class="r"><a href="#ref13">[13]</a></sup>。院方表示使用 App 的病人住院與急診次數較少，但未公布數據、對照組或病種母數，目前只能視為院方觀察<sup class="r"><a href="#ref13">[13]</a></sup>。</div>
+</div>
+</div>
+</div></section>
+
+<section class="band tint" id="s4"><div class="wrap">
+<h2>分層負責：每一層知道自己管什麼，也知道何時交棒</h2>
+<p class="lead">荷蘭的居家監測不是把病人「交給 App」，而是把照護拆成七層。每層有清楚的任務、不做的事、交棒時點與法律依據。點選左側任一層，看該層的完整說明。</p>
+<div class="layers">
+<div class="stack-list" id="layerBtns" role="group" aria-label="責任層級"></div>
+<div class="detail" id="layerDetail" aria-live="polite"></div>
+</div>
+
+<h3>三條貫穿各層的原則</h3>
+<div class="cols3">
+<div class="card"><h3>主導權不外包</h3><p>服務中心可以判讀、聯繫、衛教，但複雜情況與升級一律與主責醫師（hoofdbehandelaar）討論，由主責醫師保有治療主導權<sup class="r"><a href="#ref3">[3]</a><a href="#ref4">[4]</a></sup>。</p></div>
+<div class="card"><h3>各自為自己的行為負責</h3><p>荷蘭醫師會 KNMG 與相關專業組織的合作指引指出，多方合作時要指定協調者，但每位專業人員仍對自己執行的照護負責<sup class="r"><a href="#ref21">[21]</a></sup>。</p></div>
+<div class="card"><h3>組織要能被檢查</h3><p>衛生監察署 IGJ 自 2021 年起以「成人居家遠距監測」審查框架檢視以人為本的照護、組織管理、資訊記錄與交換、安全四大面向<sup class="r"><a href="#ref20">[20]</a></sup>。</p></div>
+</div>
+
+<h3>責任分配矩陣（RACI）</h3>
+<div class="legend"><span><b class="R">R</b>執行</span><span><b class="A">A</b>最終負責</span><span><b class="C">C</b>須被諮詢</span><span><b class="I">I</b>須被告知</span></div>
+<div class="scroll"><table class="raci" id="raci"></table></div>
+<p class="sub">矩陣依公開資料整理成跨國比較用的分工示意，非荷蘭官方表格；各院與合作社的實際契約可能另有約定。</p>
+</div></section>
+
+<section class="band" id="s5"><div class="wrap">
+<h2>警訊與升級：時限要說清楚，不能讓病人以為有人「即時盯著」</h2>
+<div class="cols2">
+<div>
+<p>荷蘭沒有全國統一的警訊分級或色碼。每條照護路徑各自訂定臨床協議與個人化閾值，由服務中心護理師做第一線判讀，複雜情況與升級一律交主責醫師決定<sup class="r"><a href="#ref3">[3]</a><a href="#ref4">[4]</a></sup>。具體的數值閾值屬於各路徑的臨床操作手冊，並未公開。</p>
+<p>公開資料能確認的處理順序只有三件事：量測與回報由服務中心在約定時限內檢視；需要調整治療時由主責醫師決定，包括改藥、安排門診或回院；危急狀況不經過 App，病人直接撥 112 或家醫夜診<sup class="r"><a href="#ref9">[9]</a></sup>。</p>
+</div>
+<div>
+<h3 style="margin-top:0">心衰竭路徑公開寫明的節奏<sup class="r"><a href="#ref9">[9]</a></sup></h3>
+<div class="scroll"><table>
+<thead><tr><th>環節</th><th>病人手冊寫法</th></tr></thead>
+<tbody>
+<tr><td>量什麼</td><td>體重、心率、血壓，固定日子填症狀問卷</td></tr>
+<tr><td>多久量</td><td>每週 1、5 或 7 次，依病情穩定度調整</td></tr>
+<tr><td>誰看</td><td>醫療服務中心在 2 個工作天內檢視量測</td></tr>
+<tr><td>訊息回覆</td><td>透過 BeterDichtbij 傳的訊息，工作日 48 小時內由護理師回覆</td></tr>
+<tr><td>緊急</td><td>一律撥 112；急性惡化找家醫夜診或 112</td></tr>
+</tbody></table></div>
+<div class="note">平台對專業人員說明，服務中心的規模讓 24/7 監測與分工成為可能<sup class="r"><a href="#ref3">[3]</a></sup>；但病人手冊給的承諾是工作天時限。兩者並不矛盾：前者是組織能力，後者是對病人的服務承諾。設計制度時，應以寫給病人的時限為準，並分病種核對。</div>
+</div>
+</div>
+<h3>值得持續追蹤、但尚未公開的治理指標</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>指標</th><th>回答什麼問題</th><th>公開狀況</th></tr></thead>
+<tbody>
+<tr><td data-l="指標">回應時間</td><td data-l="問題">警訊從送達到首次判讀、到完成處置各要多久</td><td data-l="狀況">僅病人手冊時限，跨院實績未公布</td></tr>
+<tr><td data-l="指標">誤報率</td><td data-l="問題">護理師花多少時間處理沒有臨床意義的警訊</td><td data-l="狀況">未公布</td></tr>
+<tr><td data-l="指標">漏報率</td><td data-l="問題">病情惡化卻沒觸發警訊的比例，需病歷回溯</td><td data-l="狀況">未公布</td></tr>
+<tr><td data-l="指標">升級率</td><td data-l="問題">多少個案需交給主責醫師或急診</td><td data-l="狀況">未公布</td></tr>
+<tr><td data-l="指標">不良事件</td><td data-l="問題">居家期間的嚴重安全事件</td><td data-l="狀況">依 Wkkgz 向 IGJ 通報，無平台專屬年報</td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band tint" id="s6"><div class="wrap">
+<h2>智慧輔具：從「各院自己買」走向共同選型與宅配</h2>
+<div class="scroll"><table class="stack">
+<thead><tr><th>類別</th><th>荷蘭實例</th><th>資料型態</th><th>歸屬與流向</th></tr></thead>
+<tbody>
+<tr><td data-l="類別">生理量測</td><td data-l="實例">血壓計、血氧計、體重計、體溫計、血糖機（依路徑配置）</td><td data-l="資料">數值與量測時間，藍牙自動或手動輸入</td><td data-l="歸屬">經 App 送平台，服務中心判讀；HiX 醫院可在病歷中看到<sup class="r"><a href="#ref7">[7]</a><a href="#ref9">[9]</a></sup></td></tr>
+<tr><td data-l="類別">症狀與病人回報</td><td data-l="實例">Thuismeten（Luscii）、Patient Journey App、Sananet</td><td data-l="資料">量表分數、是否題、文字</td><td data-l="歸屬">定期推播填寫，超過閾值產生待辦<sup class="r"><a href="#ref10">[10]</a><a href="#ref11">[11]</a><a href="#ref12">[12]</a></sup></td></tr>
+<tr><td data-l="類別">醫病溝通</td><td data-l="實例">BeterDichtbij</td><td data-l="資料">加密訊息、照片、紀錄</td><td data-l="歸屬">非同步，工作日時限內回覆<sup class="r"><a href="#ref9">[9]</a></sup></td></tr>
+<tr><td data-l="類別">治療型設備</td><td data-l="實例">居家氧氣、輸液幫浦（個別醫院方案，非平台標配）</td><td data-l="資料">流速、劑量，多由到府護理師記錄</td><td data-l="歸屬">Zvw 處方醫材，由醫材商供應維護<sup class="r"><a href="#ref25">[25]</a></sup></td></tr>
+<tr><td data-l="類別">居家安全</td><td data-l="實例">緊急呼叫、跌倒偵測、用藥提醒藥盒</td><td data-l="資料">警報事件</td><td data-l="歸屬">多屬 Wmo 或 Wlz，連到專門呼叫中心，與醫院系統分流</td></tr>
+</tbody></table></div>
+
+<h3>妊娠高血壓血壓計配送試點<sup class="r"><a href="#ref8">[8]</a></sup></h3>
+<div class="cols2">
+<div><p>Zorg bij jou 與 St. Antonius 醫院在妊娠高血壓路徑試辦：由平台安排把血壓計直接寄到孕婦家中，不再由各醫院自行採購與發放。MST 醫院的婦產科醫師分享經驗，該院過去是與臨床物理師一起挑選與供應血壓計。</p>
+<p>試點期間孕婦可以保留血壓計。下一步要研究如何回收再用、再用前做哪些檢查、如何記錄，並把訂購、寄送與病人說明串起來；文章說明這仍在研究、沒有確定時程。另外正在開發入口網站，讓監測人員查到病人拿到哪一台、寄送進度如何。</p></div>
+<div class="timeline">
+<div class="tl"><b>過去</b><br>各院自行選型、採購、發放，作業重複</div>
+<div class="tl"><b>試點（文章 2026 年 11 月刊出）</b><br>平台統一安排宅配，病人保留設備</div>
+<div class="tl future"><b>研究中</b><br>回收、檢查、清潔與再使用；臨床物理師參與訂定檢查與記錄方式</div>
+<div class="tl future"><b>開發中</b><br>物流入口網站、服務中心自動化訂購</div>
+</div>
+</div>
+</div></section>
+
+<section class="band" id="s7"><div class="wrap">
+<h2>資料互通：法律強制、國家標準、平台整合三層並進</h2>
+<div class="cols2">
+<div>
+<h3 style="margin-top:0">從「每家 App 各接一條」到「平台當樞紐」</h3>
+<svg class="hub" viewBox="0 0 520 340" role="img" aria-labelledby="hubt">
+<title id="hubt">中樞輻射架構：多個病人端 App 匯入 Zorg bij jou 平台，再以一條介面寫入醫院 HiX 電子病歷</title>
+<g fill="none" stroke="#9fb6e3" stroke-width="3">
+<path d="M110 60 C 180 60, 190 170, 250 170"/><path d="M110 140 C 170 140, 190 170, 250 170"/><path d="M110 220 C 170 220, 190 170, 250 170"/><path d="M110 300 C 180 300, 190 170, 250 170"/>
+</g>
+<path d="M340 170 L 400 170" stroke="#1d3f8f" stroke-width="6"/>
+<path d="M400 170 l-12 -8 v16z" fill="#1d3f8f"/>
+<g font-size="14" fill="#14203a">
+<rect x="6" y="40" width="110" height="40" rx="8" fill="#eaf1fb" stroke="#3d63c4"/><text x="61" y="65" text-anchor="middle">Thuismeten</text>
+<rect x="6" y="120" width="110" height="40" rx="8" fill="#eaf1fb" stroke="#3d63c4"/><text x="61" y="145" text-anchor="middle">Patient Journey</text>
+<rect x="6" y="200" width="110" height="40" rx="8" fill="#eaf1fb" stroke="#3d63c4"/><text x="61" y="225" text-anchor="middle">BeterDichtbij</text>
+<rect x="6" y="280" width="110" height="40" rx="8" fill="#eaf1fb" stroke="#3d63c4"/><text x="61" y="305" text-anchor="middle">其他 App</text>
+</g>
+<rect x="250" y="120" width="92" height="100" rx="14" fill="#1d3f8f"/>
+<text x="296" y="160" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">平台</text>
+<text x="296" y="182" text-anchor="middle" font-size="13" fill="#d6e4f7">彙整</text>
+<text x="296" y="200" text-anchor="middle" font-size="13" fill="#d6e4f7">標準化</text>
+<rect x="404" y="110" width="110" height="120" rx="10" fill="#fff" stroke="#1d3f8f" stroke-width="3"/>
+<text x="459" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#1d3f8f">HiX 病歷</text>
+<text x="459" y="174" text-anchor="middle" font-size="13" fill="#4a5670">量測與病人</text>
+<text x="459" y="192" text-anchor="middle" font-size="13" fill="#4a5670">資訊同一畫面</text>
+</svg>
+<p>CWZ 是第一家採用這種架構的醫院。資料流由平台集中處理，量測與病人資訊在 HiX 中集中呈現；這也讓服務中心更容易跨組織監測病人，被視為邁向跨院混合照護的一步。平台表示將推廣到其他成員醫院，並開發與其他電子病歷系統的類似介接，但未點名廠牌<sup class="r"><a href="#ref7">[7]</a></sup>。</p>
+</div>
+<div>
+<h3 style="margin-top:0">《醫療電子資料交換法》（Wegiz）時程</h3>
+<div class="timeline">
+<div class="tl"><b>2023 年 7 月</b><br>Wegiz 生效，授權衛福部以命令分項強制特定資料以電子方式並依指定標準交換。優先項目包括基本照護資料集 BgZ、護理交班 eOverdracht、影像可用性與用藥交換<sup class="r"><a href="#ref28">[28]</a></sup>。</div>
+<div class="tl"><b>2026 年 5 月</b><br>部長致國會函：歐盟健康資料空間（EHDS）自 2029 年起的義務，使 Wegiz 必須先修法再發布命令<sup class="r"><a href="#ref29">[29]</a></sup>。</div>
+<div class="tl future"><b>最早 2028 年初</b><br>Wegiz 命令最早可與《健康資訊系統法》（Wet GIS）同步生效<sup class="r"><a href="#ref29">[29]</a></sup>。</div>
+<div class="tl future"><b>2029 年第一季</b><br>BgZ 法定義務與 EHDS 同步，作為國內補充規定；在此之前實務推動持續，只是法律義務延後<sup class="r"><a href="#ref29">[29]</a></sup>。</div>
+</div>
+<div class="note">病人端另有 MedMij：它不是中央資料庫，而是一套信任規則與認證，讓病人透過自選的個人健康環境（PGO）向醫療機構調閱自己的資料<sup class="r"><a href="#ref32">[32]</a><a href="#ref34">[34]</a></sup>。語意標準由 Nictiz 的照護資訊模組（zib）與 FHIR profile 構成；例如 BgZ-MSZ 2.0 候選版採 STU3 搭配 zib 2017，版本組合不可混用<sup class="r"><a href="#ref31">[31]</a></sup>。</div>
+</div>
+</div>
+
+<h3>FHIR 資源怎麼對應</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>照護資料</th><th>FHIR 資源</th><th>荷蘭現況</th></tr></thead>
+<tbody>
+<tr><td data-l="資料">病人基本資料</td><td data-l="資源">Patient</td><td data-l="現況">BgZ 與 MedMij 標準均涵蓋<sup class="r"><a href="#ref30">[30]</a></sup></td></tr>
+<tr><td data-l="資料">居家量測</td><td data-l="資源">Observation（以 Device 註明來源）</td><td data-l="現況">zib 已定義血壓、體重、脈搏、血氧；CWZ 介接的底層資源未公開<sup class="r"><a href="#ref7">[7]</a><a href="#ref35">[35]</a></sup></td></tr>
+<tr><td data-l="資料">症狀問卷</td><td data-l="資源">Questionnaire／QuestionnaireResponse</td><td data-l="現況">合作 App 收集後匯入平台</td></tr>
+<tr><td data-l="資料">用藥</td><td data-l="資源">MedicationRequest／Statement／Dispense</td><td data-l="現況">Wegiz 優先項目之一<sup class="r"><a href="#ref28">[28]</a></sup></td></tr>
+<tr><td data-l="資料">跨院照護計畫</td><td data-l="資源">CarePlan／CareTeam</td><td data-l="現況">HiX 介接為跨組織協作鋪路，是否採標準 CarePlan 待確認</td></tr>
+<tr><td data-l="資料">警訊與人員接手</td><td data-l="資源">Flag／Communication／Task</td><td data-l="現況">遠距警訊的跨平台訂閱尚無全國標準</td></tr>
+<tr><td data-l="資料">出院與轉診摘要</td><td data-l="資源">Composition／Bundle／DocumentReference</td><td data-l="現況">BgZ 交換採通知後拉取（Notified Pull）<sup class="r"><a href="#ref30">[30]</a></sup></td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band tint" id="s8"><div class="wrap">
+<h2>財源：專科遠距監測有獨立申報項目，轉型另靠整合照護協議</h2>
+<div class="cols2">
+<div>
+<h3 style="margin-top:0">專科遠距監測申報項目 039133 的規則</h3>
+<div class="scroll"><table>
+<thead><tr><th>規則</th><th>內容</th></tr></thead>
+<tbody>
+<tr><td>性質</td><td>2023 年起為附加型「其他照護產品」，NZa 訂最高費率<sup class="r"><a href="#ref15">[15]</a></sup></td></tr>
+<tr><td>2026 年最高費率</td><td class="num">€194.92<sup class="r"><a href="#ref18">[18]</a></sup></td></tr>
+<tr><td>申報頻率</td><td>每 120 天至多一次；病人持續使用就持續申報，期間偶有未量測也適用<sup class="r"><a href="#ref15">[15]</a><a href="#ref17">[17]</a></sup></td></tr>
+<tr><td>前提</td><td>須取代原有的常規專科照護，資料判讀由具專科門戶功能的照護者負責<sup class="r"><a href="#ref17">[17]</a><a href="#ref19">[19]</a></sup></td></tr>
+<tr><td>多重疾病</td><td>不同專科、不同參數的監測可分別申報<sup class="r"><a href="#ref15">[15]</a></sup></td></tr>
+<tr><td>實際價格</td><td>最高費率是上限，醫院可議定較低價；例如 MST 2026 年價目表為 €181.56<sup class="r"><a href="#ref18">[18]</a></sup></td></tr>
+</tbody></table></div>
+<p class="sub" style="margin-top:10px">NZa 問答未列出這項申報需事先簽約；但業界共同指引提醒，部分監測形式仍可能需要依照護路徑與保險人約定，申報前應逐案核對<sup class="r"><a href="#ref15">[15]</a><a href="#ref19">[19]</a></sup>。</p>
+</div>
+<div>
+<h3 style="margin-top:0">錢怎麼流</h3>
+<div class="timeline">
+<div class="tl"><b>病人 → 保險人</b><br>繳基本保費；專科遠距監測計入年度自付額</div>
+<div class="tl"><b>保險人 → 醫院</b><br>支付 039133 等專科照護申報</div>
+<div class="tl"><b>醫院 → Zorg bij jou</b><br>每位受監測病人一個固定費率，購買服務中心與平台服務<sup class="r"><a href="#ref4">[4]</a></sup></div>
+<div class="tl"><b>整合照護協議（IZA）轉型經費</b><br>Santeon 醫院約獲 7,700 萬歐元；VGZ、Zilveren Kruis、CZ、Menzis 參與。Zorg bij jou 承諾成果，例如減少門診、縮短住院、降低每位病人成本<sup class="r"><a href="#ref6">[6]</a></sup>。</div>
+</div>
+<div class="note">常被引用的「釋放 800 個全職人力」，是 VGZ 數位照護轉型經理談僅 Santeon 醫院的潛在影響，屬目標而非已實現成果<sup class="r"><a href="#ref6">[6]</a></sup>。</div>
+</div>
+</div>
+<h3>誘因可能錯置的地方</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>風險</th><th>怎麼發生</th><th>荷蘭的對應</th></tr></thead>
+<tbody>
+<tr><td data-l="風險">醫院收入下降</td><td data-l="怎麼發生">門診與住院減少，按量計酬下營收變少</td><td data-l="對應">轉型經費搭配成果承諾；長期如何分享節省尚未公開</td></tr>
+<tr><td data-l="風險">成本轉嫁</td><td data-l="怎麼發生">提早出院省下住院費，卻加重社區護理或地方支持</td><td data-l="對應">區域計畫要求醫院、保險人與地方共同規劃量能</td></tr>
+<tr><td data-l="風險">重複申報</td><td data-l="怎麼發生">Wlz 居家個案的日常護理已由 Wlz 支付，再申報 Zvw 護理</td><td data-l="對應">依法源分流核對</td></tr>
+<tr><td data-l="風險">設備浪費</td><td data-l="怎麼發生">短期使用後不歸還，每案重買</td><td data-l="對應">回收再用仍在研究<sup class="r"><a href="#ref8">[8]</a></sup></td></tr>
+<tr><td data-l="風險">過渡資金結束</td><td data-l="怎麼發生">轉型經費是階段性的，常態費率未必足以支應人力與 IT</td><td data-l="對應">尚待精算</td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band" id="s9"><div class="wrap">
+<h2>實證：避免入院型在宅住院，死亡相近、較少住進長照機構</h2>
+<div class="cols2">
+<div>
+<p>先分清楚「替代了什麼」。原本只需門診追蹤的病人在家回報體重，替代的是門診；原本需要急性住院、由團隊限期在家提供住院層級治療，才算避免入院型在宅住院。一般出院後追蹤應另計，以免高估省下的病床日。</p>
+<p>Cochrane 2024 年回顧納入 20 篇隨機對照試驗、3,100 位參與者。對經篩選的高齡病人，六個月死亡率大概差不多，住進長照機構的機會大概較低，再住院則差異不大，證據確定性均為中等<sup class="r"><a href="#ref36">[36]</a></sup>。</p>
+<div class="note">這些是跨國急性照護試驗的結果，不能拿來估計 Zorg bij jou 使用者的死亡、再住院或省下的費用。Zorg bij jou 多數路徑屬慢性病追蹤與門診替代，跨 19 家機構的對照研究尚未公開。</div>
+</div>
+<div>
+<h3 style="margin-top:0">在宅住院與住院相比的相對風險（95% 信賴區間）</h3>
+<div class="fig" id="forest" role="img" aria-label="森林圖：六個月死亡 0.88（0.68–1.13）；住進長照機構 0.53（0.41–0.69）；再住院 1.14（0.97–1.34）"><svg></svg></div>
+<p class="sub">數值小於 1 代表在宅住院組較少發生。資料：Cochrane CD007491，2024<sup class="r"><a href="#ref36">[36]</a></sup>。</p>
+</div>
+</div>
+</div></section>
+
+<section class="band tint" id="s10"><div class="wrap">
+<h2>借鏡台灣：先建共用中樞與責任規則，再談規模</h2>
+<ul class="principles">
+<li><b>跨院共用遠距照護中心</b>單院自建是否划算，取決於個案量、服務時段與固定成本。可由數家醫院共同委託區域中心，分攤護理人力與系統，但主責醫師留在原醫院。</li>
+<li><b>給付要求「替代」而非「加掛」</b>參考 039133：獨立申報、設頻率上限，並要求確實取代常規門診或住院，避免居家監測變成額外的量。</li>
+<li><b>一條 FHIR 匯流管線接各院病歷</b>由聯盟或國家層級整合不同廠牌的量測與問卷，轉成 Observation、QuestionnaireResponse 後寫入醫師日常工作畫面。</li>
+<li><b>健保、長照、社福三條線分清楚</b>臨床生理監測歸健保；重度失能 24 小時照顧歸長照；跌倒偵測與無障礙改善歸社福或地方補助，防止重複給付與成本轉嫁。</li>
+<li><b>醫材物流納入服務規格</b>要求提供者建立經醫學工程驗證的選型、宅配、技術支援與回收清潔流程。</li>
+<li><b>把時限寫給病人看</b>明寫幾個工作天內有人看資料、訊息多久回覆、什麼情況直接撥 119，並為不能使用手機的人準備電話或到宅替代方案。</li>
+</ul>
+
+<h3>試辦時值得收集的四組資料</h3>
+<div class="cols2">
+<div class="card"><h3>人力與安全</h3><p>分病種計算每百個監測人日的警訊量與處理分鐘；分別記錄收訊、首次判讀、接案與完成處置時間。漏報要從實際惡化病例回溯，只查系統警報會漏掉個案。</p></div>
+<div class="card"><h3>可近性與公平</h3><p>把未收案、啟用失敗與中途退出者放回分母，依年齡、語言、偏鄉、網路與照顧者支持比較。</p></div>
+<div class="card"><h3>成效與成本</h3><p>事前定義風險相近的對照組與共同起算點，追蹤住院日、急診、非計畫回院與照顧者時間；支付方節省、醫院成本與家庭負擔分列，轉型補助與經常收入分開。</p></div>
+<div class="card"><h3>資料與責任</h3><p>驗收時抽查「有資料但無人接案」「接案未結案」「換機後綁錯個案」三類事件，記錄責任窗口與補救時間。設備事件要分清感測時間、上傳時間與人員確認時間，三者混用會扭曲回應統計<sup class="r"><a href="#ref35">[35]</a></sup>。</p></div>
+</div>
+
+<h3>仍待補齊的證據</h3>
+<div class="scroll"><table class="stack">
+<thead><tr><th>面向</th><th>已知</th><th>未知</th></tr></thead>
+<tbody>
+<tr><td data-l="面向">規模與成效</td><td data-l="已知">首頁稱逾 47,000 人、名單 19 機構</td><td data-l="未知">統一盤點日期、活躍或累計定義；跨院對照研究</td></tr>
+<tr><td data-l="面向">病歷整合</td><td data-l="已知">CWZ 自 2025 年 12 月採 HiX 集中介接</td><td data-l="未知">其他廠牌病歷與家醫系統的雙向介接進度</td></tr>
+<tr><td data-l="面向">警訊參數</td><td data-l="已知">路徑協議、服務中心分流、主責醫師保有主導權</td><td data-l="未知">各病種閾值、夜間人力配置、實際回應時間</td></tr>
+<tr><td data-l="面向">設備循環</td><td data-l="已知">孕產路徑宅配試點</td><td data-l="未知">回收率、清潔與折舊成本、每案節省</td></tr>
+</tbody></table></div>
+</div></section>
+
+<section class="band" id="refs"><div class="wrap">
+<h2>參考資料</h2>
+<p class="sub">各網頁查閱日期為 2026 年 11 月 27 日。動態頁面內容可能更新；文中凡標示「未公開」者，指在下列來源中未查得。</p>
+<ol class="refs" id="refList"></ol>
+</div></section>
+
+</main>
+
+<footer class="band"><div class="wrap">
+<p style="margin:0">荷蘭在宅醫療、智慧輔具與整合照護制度研究。範圍為荷蘭本土，不含加勒比海地區。文中責任矩陣為跨國比較所整理，非荷蘭官方用語。</p>
+</div></footer>
+
+<script>
+{
+const layers=[
+{n:"1",t:"病人與非正式照顧者",s:"自我量測與回報",who:"病人、家屬或其他照顧者（mantelzorger）",
+do:"依路徑頻率量測並回報、誠實填寫症狀、遇危急狀況立即求助。",
+not:"不需自行判讀數值是否危險，也不該為急症等待 App 回覆。",
+hand:"出現胸痛、嚴重喘、暈厥等情況，直接撥 112 或家醫夜診。",
+law:"WGBO 治療契約下的病人配合義務；收案團隊須確認病人理解指示並約定失聯時的聯絡方式。",ref:[9,21]},
+{n:"2",t:"服務中心前台",s:"App 與設備支援",who:"Zorg bij jou 前台人員",
+do:"協助安裝 App、配對設備、排除連線問題；試點中將可查詢病人拿到哪台設備與寄送進度。",
+not:"不回答醫療問題，醫療提問轉給居家監測護理師。",
+hand:"任何涉及症狀或數值的問題，轉給護理師。",
+law:"平台組織責任（Wkkgz）與資訊安全（NEN 7510）。",ref:[3,8]},
+{n:"3",t:"居家監測護理師",s:"第一線判讀與分流",who:"合作社聘用的護理師，以及各院可選擇派駐的人員",
+do:"依路徑協議檢視量測、主動聯繫偏離的病人、回答醫療問題、衛教與提醒補測。",
+not:"不獨自決定改變治療方向；複雜情況與升級不自行結案。",
+hand:"數值持續超標、症狀明顯惡化或情況複雜時，與主責醫師討論。",
+law:"各專業人員對自己執行的照護負責；依協議判讀並及時升級。",ref:[3,4,21]},
+{n:"4",t:"主責醫師",s:"保有治療主導權",who:"收案醫院的主責醫師（hoofdbehandelaar）與專科護理師",
+do:"判斷收案適應症、開立照護路徑、設定個人目標、核定協議、調整用藥、決定是否回院。",
+not:"不必親自看每一筆量測，由服務中心依協議過濾。",
+hand:"居家不再安全時，安排快速門診、急診或住院。",
+law:"WGBO；合作照護中由協調治療者確保連續性，主導權留在主責醫師。",ref:[3,4,21]},
+{n:"5",t:"醫院與合作社組織",s:"把協議、系統與人力準備好",who:"參與醫院、Zorg bij jou 合作社",
+do:"共同制定並更新路徑協議、確保平台穩定與資安、訓練人員、與病歷系統介接、處理設備物流。",
+not:"不能把臨床責任推給軟體供應商。",
+hand:"系統故障或資料中斷時，需有替代聯絡與人工流程。",
+law:"《醫療品質、申訴與爭議法》（Wkkgz）的良好照護義務；IGJ 遠距監測審查框架；GDPR。",ref:[7,20]},
+{n:"6",t:"緊急與基層體系",s:"危急時的捷徑",em:true,who:"112 救護、家醫夜診（huisartsenpost）、醫院急診、社區護理、家庭醫師",
+do:"院前急救與後送、急診接手；社區護理到府執行傷口照護、給藥；家庭醫師承接結案後的常規追蹤。",
+not:"不是遠距監測的延伸窗口，而是獨立運作的系統。",
+hand:"出院或結案時以 BgZ 與護理交班 eOverdracht 標準交接。",
+law:"Zvw 社區護理；Wegiz 優先交換項目。",ref:[9,28]},
+{n:"7",t:"監督與付費者",s:"確保品質與錢用對地方",who:"衛生監察署 IGJ、醫療保健局 NZa、健康保險人、醫材法規",
+do:"IGJ 依審查框架檢查；NZa 訂申報規則與最高費率；保險人採購、核付並提供轉型經費；醫材與軟體須符合歐盟 MDR。",
+not:"不介入個別臨床決策。",
+hand:"嚴重不良事件依 Wkkgz 向 IGJ 通報。",
+law:"Wkkgz、Wmg、MDR、039133 申報規定。",ref:[15,20,6]}
+];
+const btns=document.getElementById('layerBtns'),det=document.getElementById('layerDetail');
+const sup=a=>'<sup class="r">'+a.map(i=>'<a href="#ref'+i+'">['+i+']</a>').join('')+'</sup>';
+btns.innerHTML=layers.map((l,i)=>'<button type="button" class="lyr'+(l.em?' em':'')+'" id="lyr'+i+'" data-i="'+i+'" aria-pressed="'+(i===2)+'"><span class="n">'+l.n+'</span><span><strong>'+l.t+'</strong><em>'+l.s+'</em></span></button>').join('');
+const show=i=>{const l=layers[i];det.innerHTML='<h3>第 '+l.n+' 層：'+l.t+'</h3><div class="who">'+l.who+'</div><dl><dt>負責做</dt><dd>'+l.do+'</dd><dt>不負責</dt><dd>'+l.not+'</dd><dt>交棒時點</dt><dd>'+l.hand+'</dd><dt>依據</dt><dd>'+l.law+sup(l.ref)+'</dd></dl>';btns.querySelectorAll('.lyr').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)))};
+btns.addEventListener('click',e=>{const b=e.target.closest('.lyr');if(b)show(+b.dataset.i)});
+show(2);
+
+const roles=["病人／照顧者","服務中心前台","監測護理師","主責醫師","醫院／合作社","緊急／基層","監督／保險人"];
+const tasks=[["收案與知情同意",["C","I","I","A","R","",""]],["設備配送與操作支援",["C","R","I","I","A","",""]],["居家量測與回報",["R","C","I","I","A","",""]],["日常判讀與聯繫",["I","","R","A","C","",""]],["調整治療計畫",["C","","C","A","I","",""]],["危急處置",["R","","C","I","I","A",""]],["路徑協議制定與更新",["","","C","R","A","","I"]],["平台穩定與資安",["","C","","","A","","I"]],["結案與交接",["I","","R","A","C","C",""]],["品質稽核與給付",["","","","C","R","","A"]]];
+document.getElementById('raci').innerHTML='<thead><tr><th>任務</th>'+roles.map(r=>'<th>'+r+'</th>').join('')+'</tr></thead><tbody>'+tasks.map(t=>'<tr><td>'+t[0]+'</td>'+t[1].map(c=>'<td class="'+(c||'')+'">'+(c||'')+'</td>').join('')+'</tr>').join('')+'</tbody>';
+
+const scale=[["2025 年 3 月","IZA 首年回顧",20000,"",6],["2025 年 9 月","CWZ 訪談，全荷 App 使用者",24000,"",13],["Santeon 共同目標","2026 年 1 月公告",45000,"tgt",14],["2026 年 11 月","平台首頁，逾",47000,"now",1]];
+const mx=50000;
+document.getElementById('scale').innerHTML=scale.map(r=>'<div class="bar"><span class="lab">'+r[0]+'<small>'+r[1]+sup([r[4]])+'</small></span><span class="track"><span class="fill '+r[3]+'" style="display:block;width:'+(r[2]/mx*100).toFixed(1)+'%"></span></span><span class="val">'+r[2].toLocaleString('en-US')+'</span></div>').join('');
+
+const fd=[["六個月死亡",.88,.68,1.13],["住進長照機構",.53,.41,.69],["3–12 個月再住院",1.14,.97,1.34]];
+const fig=document.getElementById('forest'),s=fig.querySelector('svg');
+const draw=()=>{const W=s.clientWidth,H=s.clientHeight;if(!W)return;const narrow=W<520,L=narrow?110:150,R=narrow?92:120,T=20,B=44;const lo=.3,hi=1.6;const x=v=>L+(Math.log(v)-Math.log(lo))/(Math.log(hi)-Math.log(lo))*(W-L-R);const rh=(H-T-B)/fd.length;let o='';const ticks=narrow?[.5,1,1.5]:[.4,.6,.8,1,1.2,1.5];ticks.forEach(t=>{o+='<line x1="'+x(t)+'" x2="'+x(t)+'" y1="'+T+'" y2="'+(H-B)+'" stroke="'+(t===1?'#14203a':'#e1e6ef')+'" stroke-width="'+(t===1?1.5:1)+'"/><text x="'+x(t)+'" y="'+(H-B+20)+'" text-anchor="middle" font-size="13" fill="#4a5670">'+t+'</text>'});o+='<text x="'+x(1)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" fill="#4a5670">← 在宅較少　　住院較少 →</text>';fd.forEach((d,i)=>{const y=T+rh*i+rh/2,c=d[3]<1?'#e3620c':'#1d3f8f';o+='<text x="'+(L-12)+'" y="'+(y+5)+'" text-anchor="end" font-size="14" fill="#14203a">'+d[0]+'</text><line x1="'+x(d[2])+'" x2="'+x(d[3])+'" y1="'+y+'" y2="'+y+'" stroke="'+c+'" stroke-width="3"/><rect x="'+(x(d[1])-8)+'" y="'+(y-8)+'" width="16" height="16" fill="'+c+'"/><text x="'+(W-R+10)+'" y="'+(y+5)+'" font-size="14" font-weight="700" fill="'+c+'">'+d[1].toFixed(2)+'</text><text x="'+(W-R+10)+'" y="'+(y+23)+'" font-size="13" fill="#4a5670">'+d[2]+'–'+d[3]+'</text>'});s.innerHTML=o};
+const ro=new ResizeObserver(draw);ro.observe(s);draw();
+
+const refs=[
+["Zorg bij jou. 首頁：使用人數與保險給付說明。","https://www.zorgbijjou.nl/"],
+["Zorg bij jou. Over Zorg bij jou：Santeon 起源、非營利定位、合作 App、NEN 7510。","https://www.zorgbijjou.nl/over-zorg-bij-jou"],
+["Zorg bij jou. 醫療專業人員專區：醫療服務中心組成、任務與主責醫師保有主導權。","https://www.zorgbijjou.nl/zorgprofessionals"],
+["Zorg bij jou. 專業人員常見問題：服務中心分工、每位受監測病人固定費率。","https://www.zorgbijjou.nl/zorgprofessional/faq"],
+["Zorg bij jou. 參與醫院與機構名單。","https://www.zorgbijjou.nl/ziekenhuizen"],
+["Zorg bij jou. Flinke impuls hybride zorg na eerste jaar IZA-transformatie（2025-03-17）：約 2 萬名病人、15 條路徑、約 7,700 萬歐元、800 FTE 為潛在影響。","https://www.zorgbijjou.nl/artikel/samenwerking-zorgverzekeraars-zorgbijjou"],
+["Zorg bij jou. CWZ en Zorg bij jou lanceren HiX-EPD-koppeling（2025-12-17）。","https://www.zorgbijjou.nl/artikel/zorg-bij-jou-en-cwz-lanceren-hix-epd-koppeling-die-thuismonitoring-overzichtelijker-maakt-en-opschaling-versnelt"],
+["Zorg bij jou. Zorg bij jou gestart met pilot voor slimmer gebruik van meetapparatuur（頁面日期 2026-11-10）。","https://www.zorgbijjou.nl/artikel/zorg-bij-jou-gestart-met-pilot-voor-slimmer-gebruik-van-meetapparatuur"],
+["Zorg bij jou. Thuismeten bij hartfalen：量測頻率、兩個工作天檢視、48 小時回覆與緊急指示。","https://www.zorgbijjou.nl/folders/hartfalen"],
+["Zorg bij jou. Digitale begeleiding bij chronische nierschade。","https://www.zorgbijjou.nl/folders/nierschade"],
+["Zorg bij jou. Thuismeten tijdens jouw kankerbehandeling（癌症全身性治療）。","https://www.zorgbijjou.nl/folders/systemische-therapie"],
+["Zorg bij jou. Digitale begeleiding bij reumatoïde artritis。","https://www.zorgbijjou.nl/folders/reuma"],
+["CWZ. Hybride zorg vijf jaar verder（2025-09-05）：約 20 條路徑、全荷 24,000 名使用者。","https://www.cwz.nl/nieuws/hybride-zorg-vijf-jaar-verder-persoonlijke-zorg-in-een-digitale-wereld"],
+["CWZ. CWZ haalt mooie 'Zorg bij jou' mijlpaal（2026-01-14）：Santeon 共同目標 45,000 人。","https://www.cwz.nl/nieuws/cwz-haalt-mooie-zorg-bij-jou-mijlpaal"],
+["NZa. Wegwijzer bekostiging digitale zorg 2026：039133 申報條件。","https://puc.overheid.nl/nza/doc/PUC_655318_22/1/"],
+["NZa. Regeling medisch-specialistische zorg 2026。","https://puc.overheid.nl/nza/doc/PUC_806723_22/2/"],
+["Staatscourant 2022 nr. 35349. 專科照護規定修正：遠距監測每 120 天至多一次、須取代常規專科照護。","https://zoek.officielebekendmakingen.nl/stcrt-2022-35349.pdf"],
+["醫院 2026 年價目表：Frisius MC（039133 €194.92）、MST（€181.56）。","https://www.frisiusmc.nl/uploads/fckconnector/014b1a7e-2a83-553e-adc0-cc98a5c065a6","https://www.mst.nl/media/2vcn24be/tarievenlijst-mst-2026-v11-01-01-tm-31-12.pdf"],
+["Federatie MS、NVZ、NFU、ZN、NZa. 遠距監測形式說明與判斷流程（039133）。","https://orthopeden.org/media/r1qc1rxw/overzicht-telemonitoring-vormen-duiding-en-beslisschema.pdf"],
+["IGJ. Toetsingskader telemonitoring volwassenen thuis（2021）。","https://www.igj.nl/binaries/igj/documenten/toetsingskaders/2021/11/16/toetsingskader-telemonitoring-volwassenen-thuis/Toetsingskadertelemonitoringvolwassenenthuis.pdf"],
+["KNMG 等. Handreiking verantwoordelijkheidsverdeling bij samenwerking in de zorg。","https://www.knmg.nl/download/handreiking-verantwoordelijkheidsverdeling-bij-samenwerking-in-de-zorg"],
+["Government of the Netherlands. Long-term care act (Wlz)。","https://www.government.nl/themes/family-health-and-care/nursing-homes-and-residential-care/long-term-care-act-wlz"],
+["Government of the Netherlands. Long-term care at home；Nursing and personal care at home。","https://www.government.nl/themes/family-health-and-care/care-and-support-at-home/long-term-care-at-home","https://www.government.nl/documents/question-and-answer/nursing-and-personal-care-at-home"],
+["CIZ. Long-Term Care Act assessment。","https://www.ciz.nl/en"],
+["Zorginstituut Nederland. Hulpmiddelen algemeen (Zvw)。","https://www.zorginstituutnederland.nl/verzekerde-zorg/h/hulpmiddelen-algemeen-zvw"],
+["CAK. Abonnementstarief：Wmo 每月最高個人負擔（2025 年 €21.00、2026 年 €21.80）。","https://www.hetcak.nl/veelgestelde-vragen/abonnementstarief/"],
+["SVB. The Wlz scheme。","https://www.svb.nl/en/the-wlz-scheme/"],
+["Nictiz. Werken aan Wegiz。","https://www.nictiz.nl/programmas/werken-aan-wegiz/"],
+["Eerste Kamer. 部長致國會函（2026-05-18）：Wegiz 命令時程與 BgZ 2029 年生效。","https://www.eerstekamer.nl/eu/behandeling/20260518/brief_van_de_minister_van_lzj_s"],
+["NVZ. Handreiking aan de slag met de BgZ MSZ 2.0 implementatie v1.0（2025-06）。","https://www.nvz-ziekenhuizen.nl/sites/default/files/2025-06/Handreiking%20BgZ%20implementatie%20%20v1.0.pdf"],
+["Nictiz. BgZ-MSZ 2.0.0-rc.1 發布說明。","https://nationalebibliotheek.nictiz.nl/releases/bgz-msz-2-0-rc-1/"],
+["MedMij. MedMij Framework。","https://medmij.nl/en/medmij-framework/"],
+["MedMij. Organisation。","https://medmij.nl/en/organisation/"],
+["MedMij. Frequently Asked Questions；What is a PHE?","https://medmij.nl/en/faq/","https://medmij.nl/en/what-is-a-phe/"],
+["HL7 International. FHIR R4 Observation；Task。","https://hl7.org/fhir/R4/observation.html","https://hl7.org/fhir/R4/task.html"],
+["Cochrane（2024-03-05）. Admission avoidance hospital at home, CD007491。","https://www.cochrane.org/evidence/CD007491_hospital-home-services-avoid-admission-hospital"]
+];
+document.getElementById('refList').innerHTML=refs.map((r,i)=>'<li id="ref'+(i+1)+'">'+r[0]+' '+r.slice(1).map(u=>'<a href="'+u+'">'+u.replace(/^https?:\/\//,'').split('/')[0]+'</a>').join('、')+'</li>').join('');
+}
+</script>
+</body>
+</html>
