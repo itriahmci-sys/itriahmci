@@ -88,6 +88,10 @@ window.SITE_CONFIG = {
       summary: "Johns Hopkins Aramco Healthcare 的居家醫院分層負責制度，以及多智能體分診框架。",
       tags: ["居家醫院", "AI 分診", "案例研究"], color: "#006c35" },
 
+    { category: "country", file: "Netherlands_HAH.html", badge: "荷", place: "荷蘭", title: "Zorg bij jou 混合照護",
+      summary: "跨院共用醫療服務中心的居家監測七層分層負責制度，以及 Zvw／Wlz／Wmo 三法財源與 HiX 資料匯流。",
+      tags: ["混合照護", "分層負責", "案例研究"], color: "#e3620c" },
+     
     { category: "ai", file: "Multiple_Agent_Debate.html", icon: "chat", place: "多代理辯論", title: "讓 AI 先吵一架",
       summary: "Multi-Agent Debate 用於在宅、遠距與長照：證據、架構、裝置 API、SaaS、資安、法規與人為介入。",
       tags: ["MAD", "長照", "資安法規"], color: "#7c5cd6" },
