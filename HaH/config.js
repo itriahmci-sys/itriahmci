@@ -102,6 +102,10 @@ window.SITE_CONFIG = {
 
     { category: "ai", file: "CANOE_care_plan_synthesis.html", icon: "graph", place: "加拿大・CANOE", title: "可爭辯的照護計畫 AI",
       summary: "多角色 AI 為每個照護選項列出正反理由並算分，再由真人逐條修改；附台灣導入評估。",
-      tags: ["論證圖", "人機協作", "證據評讀"], color: "#0f766e" }
+      tags: ["論證圖", "人機協作", "證據評讀"], color: "#0f766e" },
+
+    { category: "ai", file: "HaH_tiered_alert_MAD.html", icon: "graph", place: "美國・Mayo／Atrium", title: "在宅住院的分層負責與警訊預審",
+      summary: "解析 Mayo 與 Atrium 在宅住院的四層升級與責任分工，並以多代理人辯論預審居家警報、降低警訊疲勞。",
+      tags: ["在宅住院", "分層負責", "警訊疲勞"], color: "#2f6fde" }
   ]
 };
